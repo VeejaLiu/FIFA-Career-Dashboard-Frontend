@@ -1,0 +1,14 @@
+.root {
+    display: flex;
+}
+
+.nav {
+    /* 使导航栏不上下滚动 */
+    height: 100vh;
+}
+
+.content {
+    flex: 1; /* 使内容区域占据剩余空间 */
+    height: 100vh;
+    overflow: auto; /* 使内容区域上下滚动 */
+}
