@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev-expose": "vite --host --port 10101 --mode development",
-    "prod-expose": "vite --host --port 10101 --mode production",
+    "dev-expose": "vite --host --port 3000 --mode development",
+    "prod-expose": "vite --host --port 3000 --mode production",
     "build": "tsc && vite build",
     "lint": "eslint antd-demo --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
