@@ -1,16 +1,9 @@
 import * as React from 'react';
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts';
+import { Area, AreaChart, CartesianGrid, Tooltip, YAxis } from 'recharts';
 import { PlayerApis, PlayerTrendData } from '../service/PlayerApis.ts';
 import { useEffect } from 'react';
 import { getAvatarUrl, getColorByPositionType } from './PlayerListPage.tsx';
-import { Col, Row, Space } from '@douyinfe/semi-ui';
+import { Popover, Space } from '@douyinfe/semi-ui';
 import './PlayerTrendsPage.css';
 
 function PlayerTrendsPage(): React.ReactElement {
@@ -31,13 +24,44 @@ function PlayerTrendsPage(): React.ReactElement {
         padding: '5px',
       }}
     >
-      {['GK', 'DEF', 'MID', 'FOR'].map((item) => {
+      {[
+        {
+          position: 'FOR',
+          text: 'Forwards',
+          color: getColorByPositionType('FOR'),
+        },
+        {
+          position: 'MID',
+          text: 'Midfielders',
+          color: getColorByPositionType('MID'),
+        },
+        {
+          position: 'DEF',
+          text: 'Defenders',
+          color: getColorByPositionType('DEF'),
+        },
+        {
+          position: 'GK',
+          text: 'Goalkeepers',
+          color: getColorByPositionType('GK'),
+        },
+      ].map((item) => {
         return (
-          <div>
-            <h1>{item}</h1>
+          <div
+            style={{
+              marginBottom: '20px',
+            }}
+          >
+            <h1
+              style={{
+                color: item.color,
+              }}
+            >
+              {item.text}
+            </h1>
             <Space wrap align={'start'}>
               {data
-                .filter((player) => player.positionType === item)
+                .filter((player) => player.positionType === item.position)
                 .map((player) => {
                   const minOverallRating =
                     Math.min(
@@ -51,57 +75,80 @@ function PlayerTrendsPage(): React.ReactElement {
                   );
                   const imageUrl = getAvatarUrl(player.playerID);
                   return (
-                    <div
+                    <Space
                       key={player.playerID}
                       style={{
                         border: '1px solid gray',
+                        borderRadius: '5px',
                         padding: '10px',
-                        margin: '10px',
                         height: '200px',
-                        width: '400px',
+                        width: '450px',
                       }}
                     >
-                      <div>
-                        <div style={{ display: 'block', alignItems: 'center' }}>
+                      <Space
+                        vertical
+                        spacing={0}
+                        style={{
+                          backgroundColor: '#e4ce78',
+                          borderRadius: '5px',
+                          boxShadow: '0 0 5px #000',
+                          width: '120px',
+                          height: '200px',
+                        }}
+                      >
+                        <div style={{ width: 120, height: 120 }}>
                           <img
-                            style={{ width: 48, height: 48 }}
+                            style={{ width: 120, height: 120 }}
                             src={imageUrl}
                             alt="player"
                             onError={(e) => {
                               e.currentTarget.style.display = 'none';
                             }}
                           />
-                          <b>{player.playerName}</b>
-                          <span
-                            style={{
-                              color: positionColor,
-                              marginLeft: '10px',
-                            }}
-                          >
-                            <b>{player.preferredposition1}</b>
-                          </span>
-                          {/*<div*/}
-                          {/*  style={{*/}
-                          {/*    color: 'gray',*/}
-                          {/*  }}*/}
-                          {/*>*/}
-                          {/*  {player.playerID}*/}
-                          {/*</div>*/}
                         </div>
-                      </div>
+                        <Popover
+                          showArrow
+                          content={
+                            <article>
+                              <h3>{player.playerName}</h3>
+                              Player ID: {player.playerID}
+                            </article>
+                          }
+                          position={'right'}
+                        >
+                          <span className="text-container">
+                            {player.playerName}
+                          </span>{' '}
+                        </Popover>
+
+                        <span style={{ color: positionColor }}>
+                          <b>{player.preferredposition1}</b>
+                        </span>
+                      </Space>
                       <AreaChart
-                        width={400}
+                        // style={{ backgroundColor: 'yellow' }}
+                        width={330}
                         height={200}
                         data={player.trends}
-                        margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+                        margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
                       >
-                        <XAxis dataKey="inGameDate" />
+                        {/*<XAxis*/}
+                        {/*  dataKey="inGameDate"*/}
+                        {/*  style={{*/}
+                        {/*    fontSize: '10px',*/}
+                        {/*  }}*/}
+                        {/*></XAxis>*/}
                         <YAxis
                           domain={[
                             minOverallRating,
                             Math.min(maxPotential, 100),
                           ]}
-                        />
+                          style={
+                            {
+                              // fontSize: '12px',
+                            }
+                          }
+                        ></YAxis>
                         <CartesianGrid strokeDasharray="3 3" />
                         <Tooltip
                           content={({ active, payload }) => {
@@ -110,6 +157,7 @@ function PlayerTrendsPage(): React.ReactElement {
                                 payload[0].payload; // 获取当前数据点的能力值和潜力值
                               return (
                                 <div>
+                                  <p>{payload[0].payload.inGameDate}</p>
                                   <p>
                                     <b>Potential:</b> {potential}
                                   </p>
@@ -126,6 +174,7 @@ function PlayerTrendsPage(): React.ReactElement {
                           type="monotone"
                           dataKey="potential"
                           stroke="#000"
+                          strokeWidth={2}
                           fillOpacity={0.1}
                           fill="green"
                         ></Area>
@@ -133,20 +182,18 @@ function PlayerTrendsPage(): React.ReactElement {
                           type="monotone"
                           dataKey="overallRating"
                           stroke="#000"
+                          strokeWidth={2}
                           fillOpacity={0.8}
                           fill="green"
                         ></Area>
                       </AreaChart>
-                    </div>
+                    </Space>
                   );
                 })}
             </Space>
           </div>
         );
       })}
-
-      <h1>Players Trends</h1>
-      {}
     </div>
   );
 }

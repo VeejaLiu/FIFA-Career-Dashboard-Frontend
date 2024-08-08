@@ -1,5 +1,5 @@
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
-import { Nav } from '@douyinfe/semi-ui';
+import { Nav, Space } from '@douyinfe/semi-ui';
 import './App.css';
 import PlayerListPage from './pages/PlayerListPage.tsx';
 import { useEffect, useState } from 'react';
@@ -25,7 +25,7 @@ export default function App() {
       <Route
         path="/"
         element={
-          <div className="root">
+          <Space className="root">
             {/* A "layout route" is a good place to put markup you want to
           share across all the pages on your site, like navigation. */}
 
@@ -67,7 +67,7 @@ export default function App() {
             <div className={'content'}>
               <Outlet />
             </div>
-          </div>
+          </Space>
         }
       >
         <Route index element={<PlayerListPage />} />

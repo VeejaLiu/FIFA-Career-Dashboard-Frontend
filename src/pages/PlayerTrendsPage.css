@@ -3,3 +3,13 @@
     margin: 5px;
     padding: 5px;
 }
+
+.text-container {
+    width: 120px; /* 设置固定宽度 */
+    overflow: hidden; /* 隐藏超出部分 */
+    text-align: center; /* 文本居中 */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+}

@@ -12,6 +12,7 @@ export interface PlayerOverall {
   position2: string;
   position3: string;
   position4: string;
+  imageUrl?: string;
 }
 
 export interface PlayerTrend {

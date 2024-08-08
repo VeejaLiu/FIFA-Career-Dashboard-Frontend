@@ -6,13 +6,13 @@ import { useEffect } from 'react';
 export function getColorByPositionType(positionType: string) {
   switch (positionType) {
     case 'FOR':
-      return '#1c7ed6';
+      return '#c92a2a';
     case 'MID':
       return '#5c940d';
     case 'DEF':
-      return '#e67700';
+      return '#1c7ed6';
     case 'GK':
-      return '#c92a2a';
+      return '#e67700';
   }
   return 'black';
 }
@@ -29,16 +29,21 @@ export function getAvatarUrl(playerID: number) {
 const PlayerListColumn = [
   {
     title: '',
-    // dataIndex: 'playerMiniface',
+    dataIndex: 'imageUrl',
     render: (text: string, record: PlayerOverall, index: number) => {
-      const imageUrl = getAvatarUrl(record.playerID);
       return (
         <img
           style={{ width: 48, height: 48 }}
-          src={imageUrl}
+          src={record.imageUrl}
           alt="player"
           onError={(e) => {
+            // 图片加载失败时，隐藏图片
             e.currentTarget.style.display = 'none';
+            // 清空 src 属性，防止加载失败时，显示上一次加载的图片
+            e.currentTarget.src = '';
+          }}
+          onLoad={(e) => {
+            e.currentTarget.style.display = 'block'; // 或者使用其他显示方式
           }}
         />
       );
@@ -149,6 +154,9 @@ function PlayerListPage(): React.ReactElement {
 
   const getPlayerList = async () => {
     const players: PlayerOverall[] = await PlayerApis.getPlayerList();
+    players.forEach((player) => {
+      player.imageUrl = getAvatarUrl(player.playerID);
+    });
     setData(players);
   };
 
