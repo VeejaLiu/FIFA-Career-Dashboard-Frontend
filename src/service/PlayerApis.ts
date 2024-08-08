@@ -35,10 +35,7 @@ export class PlayerApis {
   static async getPlayerList(): Promise<PlayerOverall[]> {
     try {
       const response = await axios.get(`${BACKEND_URL}/api/v1/player/`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
+        headers: { Accept: '*/*' },
       });
       if (response.status === 200) {
         return response.data;
@@ -56,10 +53,7 @@ export class PlayerApis {
   static async getPlayerCount(): Promise<number> {
     try {
       const response = await axios.get(`${BACKEND_URL}/api/v1/player/count`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
+        headers: { Accept: '*/*' },
       });
       if (response.status === 200) {
         return response.data;
@@ -77,10 +71,7 @@ export class PlayerApis {
   static async getPlayerTrends(): Promise<PlayerTrendData[]> {
     try {
       const response = await axios.get(`${BACKEND_URL}/api/v1/player/trends`, {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
+        headers: { Accept: '*/*' },
       });
       if (response.status === 200) {
         return response.data;
