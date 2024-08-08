@@ -157,9 +157,12 @@ function PlayerListPage(): React.ReactElement {
   }, []);
 
   return (
-    <div>
-      <span>Players:</span>
-
+    <div
+      style={{
+        padding: '10px',
+      }}
+    >
+      <h1>Players list</h1>
       <Table
         columns={PlayerListColumn}
         dataSource={data}
