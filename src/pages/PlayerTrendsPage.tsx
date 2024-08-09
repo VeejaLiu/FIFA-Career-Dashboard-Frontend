@@ -66,9 +66,11 @@ function PlayerTrendsPage(): React.ReactElement {
   return (
     <div
       style={{
-        padding: '5px',
+        padding: '10px',
       }}
     >
+      <h1>Players Trends</h1>
+
       {[
         {
           position: 'FOR',
@@ -94,16 +96,16 @@ function PlayerTrendsPage(): React.ReactElement {
         return (
           <div
             style={{
-              marginBottom: '20px',
+              marginBottom: '40px',
             }}
           >
-            <h1
+            <h4
               style={{
                 color: item.color,
               }}
             >
               {item.text}
-            </h1>
+            </h4>
             <Space wrap align={'start'}>
               {data
                 .filter((player) => player.positionType === item.position)

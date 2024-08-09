@@ -32,20 +32,27 @@ const PlayerListColumn = [
     dataIndex: 'imageUrl',
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
-        <img
-          style={{ width: 48, height: 48 }}
-          src={record.imageUrl}
-          alt="player"
-          onError={(e) => {
-            // 图片加载失败时，隐藏图片
-            e.currentTarget.style.display = 'none';
-            // 清空 src 属性，防止加载失败时，显示上一次加载的图片
-            e.currentTarget.src = '';
+        <Space
+          style={{
+            height: 48,
+            width: 48,
           }}
-          onLoad={(e) => {
-            e.currentTarget.style.display = 'block'; // 或者使用其他显示方式
-          }}
-        />
+        >
+          <img
+            style={{ width: 48, height: 48 }}
+            src={record.imageUrl}
+            alt="player"
+            onError={(e) => {
+              // 图片加载失败时，隐藏图片
+              e.currentTarget.style.display = 'none';
+              // 清空 src 属性，防止加载失败时，显示上一次加载的图片
+              e.currentTarget.src = '';
+            }}
+            onLoad={(e) => {
+              e.currentTarget.style.display = 'block'; // 或者使用其他显示方式
+            }}
+          />
+        </Space>
       );
     },
   },
@@ -172,6 +179,10 @@ function PlayerListPage(): React.ReactElement {
     >
       <h1>Players list</h1>
       <Table
+        style={{
+          marginTop: '20px',
+          marginBottom: '50px',
+        }}
         columns={PlayerListColumn}
         dataSource={data}
         pagination={false}
