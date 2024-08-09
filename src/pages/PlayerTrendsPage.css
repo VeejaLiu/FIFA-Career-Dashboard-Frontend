@@ -8,6 +8,7 @@
     width: 120px; /* 设置固定宽度 */
     overflow: hidden; /* 隐藏超出部分 */
     text-align: center; /* 文本居中 */
+    line-height: 1.2; /* 调整行间距，1.5 是一个示例值 */
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
