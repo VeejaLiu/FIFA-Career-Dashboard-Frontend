@@ -35,14 +35,14 @@ export default function App() {
                 text: 'FC24 Career Mode',
               }}
               renderWrapper={({ itemElement, isSubNav, isInSubNav, props }) => {
-                const routerMap = {
+                const routerMap: Record<string, string> = {
                   Players: '/players',
                   PlayersTrends: '/players-trends',
                 };
                 return (
                   <Link
                     style={{ textDecoration: 'none' }}
-                    to={routerMap[props.itemKey]}
+                    to={routerMap[props.itemKey || '']}
                   >
                     {itemElement}
                   </Link>
