@@ -5,12 +5,11 @@ import { UserApis } from '../service/UserApis.ts';
 import { IconCopy, IconRefresh2 } from '@douyinfe/semi-icons';
 
 function SettingsPage(): React.ReactElement {
-  const [secretKey, setSecretKey] = React.useState(
-    'wqrqwerqwrqwrqwreqwrqwrqwrqwrxwww',
-  );
+  const [secretKey, setSecretKey] = React.useState('');
 
   const fetchSecretKey = async () => {
     await UserApis.getSecretKey().then((key) => {
+      console.log(`[fetchSecretKey] key: ${key}`);
       setSecretKey(key);
     });
   };
@@ -19,55 +18,61 @@ function SettingsPage(): React.ReactElement {
     fetchSecretKey().then();
   }, []);
 
+  async function doRefreshSecretKey() {
+    await UserApis.doRefreshSecretKey().then((key) => {
+      console.log(`[doRefreshSecretKey] key: ${key}`);
+      setSecretKey(key);
+    });
+  }
+
   return (
     <Space vertical style={{ padding: '10px' }} align={'start'}>
       <h1>Settings</h1>
-
       <Space vertical align={'start'}>
         <Space>
           <Space style={{ width: 'auto' }}>Your Secret API Key:</Space>
           <Input
-            mode="password"
-            defaultValue=""
+            // mode="password"
+            disabled={true}
+            // contentEditable="false"
+            defaultValue={secretKey}
             value={secretKey}
-            suffix={
-              <Popover
-                showArrow
-                position={'top'}
-                content={<p>Click to copy your secret key.</p>}
-              >
-                <IconCopy
-                  onClick={() => {
-                    navigator.clipboard.writeText(secretKey).then(
-                      () => {
-                        Toast.info('Secret key copied to clipboard');
-                      },
-                      (err) => {
-                        Toast.error('Failed to copy secret key');
-                      },
-                    );
-                  }}
-                />
-              </Popover>
-            }
           ></Input>
+          <Popover
+            showArrow
+            position={'top'}
+            content={<p>Click to copy your secret key.</p>}
+          >
+            <Button>
+              <IconCopy
+                onClick={() => {
+                  navigator.clipboard.writeText(secretKey).then(
+                    () => {
+                      Toast.info('Secret key copied to clipboard');
+                    },
+                    (err) => {
+                      Toast.error('Failed to copy secret key');
+                    },
+                  );
+                }}
+              />
+            </Button>
+          </Popover>
           <Popover
             showArrow
             position={'top'}
             content={<p>Click to refresh your secret key.</p>}
           >
-            <Button>
+            <Button
+              onClick={() => {
+                doRefreshSecretKey();
+              }}
+            >
               <IconRefresh2 />
             </Button>
           </Popover>
         </Space>
-        <Space
-          style={
-            {
-              // backgroundColor: '#f5f5f5',
-            }
-          }
-        >
+        <Space>
           <span
             style={{
               color: 'red',

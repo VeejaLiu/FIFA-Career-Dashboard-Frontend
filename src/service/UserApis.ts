@@ -17,7 +17,24 @@ export class UserApis {
       return '';
     } catch (e) {
       console.log(e);
+      return 'defaule-secret-key-111111';
+    }
+  }
+
+  static async doRefreshSecretKey(): Promise<string> {
+    try {
+      const [response] = await Promise.all([
+        axios.post(`${BACKEND_URL}/api/v1/user/refresh-secret-key`, {
+          headers: { Accept: '*/*' },
+        }),
+      ]);
+      if (response.status === 200) {
+        return response.data;
+      }
       return '';
+    } catch (e) {
+      console.log(e);
+      return 'updated-secret-key-222222';
     }
   }
 }
