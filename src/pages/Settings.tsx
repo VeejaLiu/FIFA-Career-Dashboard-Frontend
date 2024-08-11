@@ -16,7 +16,7 @@ function SettingsPage(): React.ReactElement {
   };
 
   useEffect(() => {
-    // fetchSecretKey().then();
+    fetchSecretKey().then();
   }, []);
 
   return (
