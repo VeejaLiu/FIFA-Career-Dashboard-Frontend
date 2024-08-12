@@ -3,6 +3,16 @@ import { BACKEND_URL } from '../constant';
 
 export class UserApis {
   /**
+   * Register user
+   * TODO
+   */
+
+  /**
+   * Login user
+   * TODO
+   */
+
+  /**
    * Get user secret key
    */
   static async getSecretKey(): Promise<string> {
