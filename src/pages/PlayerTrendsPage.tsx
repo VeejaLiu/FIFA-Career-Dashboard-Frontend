@@ -202,33 +202,10 @@ function PlayerTrendsPage(): React.ReactElement {
                           }}
                         ></YAxis>
                         <CartesianGrid strokeDasharray="3 3" />
-                        {/*<Tooltip*/}
-                        {/*  content={({ active, payload }) => {*/}
-                        {/*    if (active && payload && payload.length) {*/}
-                        {/*      const { overallRating, potential } =*/}
-                        {/*        payload[0].payload; // 获取当前数据点的能力值和潜力值*/}
-                        {/*      return (*/}
-                        {/*        <div>*/}
-                        {/*          <p>{payload[0].payload.inGameDate}</p>*/}
-                        {/*          <p>*/}
-                        {/*            <b>Potential:</b> {potential}*/}
-                        {/*          </p>*/}
-                        {/*          <p>*/}
-                        {/*            <b>Overall:</b> {overallRating}*/}
-                        {/*          </p>*/}
-                        {/*        </div>*/}
-                        {/*      );*/}
-                        {/*    }*/}
-                        {/*    return null; // 不显示 Tooltip*/}
-                        {/*  }}*/}
-                        {/*/>*/}
                         <Tooltip />
                         <Area
                           type="monotone"
                           dataKey="potential"
-                          // stroke="#000"
-                          // strokeWidth={2}
-                          // fillOpacity={0.6}
                           fill="#ffc658"
                           stroke="#ffc658"
                         ></Area>
