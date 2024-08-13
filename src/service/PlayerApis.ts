@@ -36,8 +36,13 @@ export class PlayerApis {
    */
   static async getPlayerList(): Promise<PlayerOverall[]> {
     try {
+      const token = localStorage.getItem('fcd-token');
+      // console.log(`[getPlayerList] token: ${token}`);
       const response = await axios.get(`${BACKEND_URL}/api/v1/player/`, {
-        headers: { Accept: '*/*' },
+        headers: {
+          Accept: '*/*',
+          token: token,
+        },
       });
       if (response.status === 200) {
         return response.data;
@@ -58,8 +63,9 @@ export class PlayerApis {
    */
   static async getPlayerCount(): Promise<number> {
     try {
+      const token = localStorage.getItem('fcd-token');
       const response = await axios.get(`${BACKEND_URL}/api/v1/player/count`, {
-        headers: { Accept: '*/*' },
+        headers: { Accept: '*/*', token: token },
       });
       if (response.status === 200) {
         return response.data;
@@ -80,8 +86,9 @@ export class PlayerApis {
    */
   static async getPlayerTrends(): Promise<PlayerTrendData[]> {
     try {
+      const token = localStorage.getItem('fcd-token');
       const response = await axios.get(`${BACKEND_URL}/api/v1/player/trends`, {
-        headers: { Accept: '*/*' },
+        headers: { Accept: '*/*', token: token },
       });
       if (response.status === 200) {
         return response.data;

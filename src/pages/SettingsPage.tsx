@@ -8,21 +8,24 @@ import { Notification } from '@douyinfe/semi-ui';
 function SettingsPage(): React.ReactElement {
   const [secretKey, setSecretKey] = React.useState('');
 
-  const fetchSecretKey = async () => {
-    await UserApis.getSecretKey().then((key) => {
-      console.log(`[fetchSecretKey] key: ${key}`);
-      setSecretKey(key);
-    });
-  };
+  async function fetchSecretKey() {
+    const key = await UserApis.getSecretKey();
+    console.log(`[fetchSecretKey] key: ${key}`);
+    setSecretKey(key);
+  }
 
   useEffect(() => {
     fetchSecretKey().then();
   }, []);
 
   async function doRefreshSecretKey() {
-    await UserApis.doRefreshSecretKey().then((key) => {
-      console.log(`[doRefreshSecretKey] key: ${key}`);
-      setSecretKey(key);
+    const key = await UserApis.doRefreshSecretKey();
+    console.log(`[doRefreshSecretKey] key: ${key}`);
+    setSecretKey(key);
+    Notification.success({
+      title: 'Success',
+      content: 'Secret key refreshed',
+      duration: 3,
     });
   }
 
@@ -97,20 +100,30 @@ function SettingsPage(): React.ReactElement {
         </Space>
       </Space>
 
-      <h1>Login</h1>
-      <Space vertical align={'start'}>
-        <Input placeholder="Username"></Input>
-        <Input placeholder="Password"></Input>
-        <Button>Login</Button>
-      </Space>
-
-      <h1>Register</h1>
-      <Space vertical align={'start'}>
-        <Input placeholder="Username"></Input>
-        <Input placeholder="Email"></Input>
-        <Input placeholder="Password" mode={'password'}></Input>
-        <Button>Register</Button>
-      </Space>
+      <h1>Logout</h1>
+      <Button
+        onClick={() => {
+          UserApis.doLogout().then((result) => {
+            if (result) {
+              Notification.success({
+                title: 'Success',
+                content: 'Logged out successfully',
+                duration: 3,
+              });
+              window.location.href = '/';
+            } else {
+              Notification.error({
+                title: 'Error',
+                content: 'Failed to logout, please try again',
+                duration: 3,
+              });
+              return;
+            }
+          });
+        }}
+      >
+        Click here to logout
+      </Button>
     </Space>
   );
 }
