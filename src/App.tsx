@@ -1,11 +1,12 @@
 import { Routes, Route, Outlet, Link } from 'react-router-dom';
-import { Nav } from '@douyinfe/semi-ui';
+import { Nav, Space } from '@douyinfe/semi-ui';
 import './App.css';
-import PlayerListPage from './pages/PlayerListPage.tsx';
 import { useEffect, useState } from 'react';
 import { PlayerApis } from './service/PlayerApis.ts';
+import PlayerListPage from './pages/PlayerListPage.tsx';
 import PlayerTrendsPage from './pages/PlayerTrendsPage.tsx';
-import { IconMember } from '@douyinfe/semi-icons';
+import SettingsPage from './pages/SettingsPage.tsx';
+import { IconMember, IconSetting } from '@douyinfe/semi-icons';
 import { IconChangelog } from '@douyinfe/semi-icons-lab';
 
 export default function App() {
@@ -25,7 +26,7 @@ export default function App() {
       <Route
         path="/"
         element={
-          <div className="root">
+          <Space className="root">
             {/* A "layout route" is a good place to put markup you want to
           share across all the pages on your site, like navigation. */}
 
@@ -35,14 +36,15 @@ export default function App() {
                 text: 'FC24 Career Mode',
               }}
               renderWrapper={({ itemElement, isSubNav, isInSubNav, props }) => {
-                const routerMap = {
+                const routerMap: Record<string, string> = {
                   Players: '/players',
                   PlayersTrends: '/players-trends',
+                  Settings: '/settings',
                 };
                 return (
                   <Link
                     style={{ textDecoration: 'none' }}
-                    to={routerMap[props.itemKey]}
+                    to={routerMap[props.itemKey || '']}
                   >
                     {itemElement}
                   </Link>
@@ -59,6 +61,11 @@ export default function App() {
                   itemKey: 'PlayersTrends',
                   icon: <IconChangelog />,
                 },
+                {
+                  text: 'Settings',
+                  itemKey: 'Settings',
+                  icon: <IconSetting />,
+                },
               ]}
               footer={{
                 collapseButton: true,
@@ -67,12 +74,13 @@ export default function App() {
             <div className={'content'}>
               <Outlet />
             </div>
-          </div>
+          </Space>
         }
       >
         <Route index element={<PlayerListPage />} />
         <Route path="players" element={<PlayerListPage />} />
         <Route path="players-trends" element={<PlayerTrendsPage />} />
+        <Route path="settings" element={<SettingsPage />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
     </Routes>

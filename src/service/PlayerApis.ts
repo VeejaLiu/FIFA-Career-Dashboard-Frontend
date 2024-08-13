@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { BACKEND_URL } from '../constant';
+import { Toast } from '@douyinfe/semi-ui';
 
 export interface PlayerOverall {
   playerID: number;
@@ -12,6 +13,7 @@ export interface PlayerOverall {
   position2: string;
   position3: string;
   position4: string;
+  imageUrl?: string;
 }
 
 export interface PlayerTrend {
@@ -34,15 +36,24 @@ export class PlayerApis {
    */
   static async getPlayerList(): Promise<PlayerOverall[]> {
     try {
+      const token = localStorage.getItem('fcd-token');
+      // console.log(`[getPlayerList] token: ${token}`);
       const response = await axios.get(`${BACKEND_URL}/api/v1/player/`, {
-        headers: { Accept: '*/*' },
+        headers: {
+          Accept: '*/*',
+          token: token,
+        },
       });
       if (response.status === 200) {
         return response.data;
       }
       return [];
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(`[getPlayerList] error code: ${e.response.status}`);
+      console.log(`[getPlayerList] error message: ${e.message}`);
+      if (e.response.status === 401) {
+        Toast.error('Please login first');
+      }
       return [];
     }
   }
@@ -52,15 +63,20 @@ export class PlayerApis {
    */
   static async getPlayerCount(): Promise<number> {
     try {
+      const token = localStorage.getItem('fcd-token');
       const response = await axios.get(`${BACKEND_URL}/api/v1/player/count`, {
-        headers: { Accept: '*/*' },
+        headers: { Accept: '*/*', token: token },
       });
       if (response.status === 200) {
         return response.data;
       }
       return 0;
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(`[getPlayerCount] error code: ${e.response.status}`);
+      console.log(`[getPlayerCount] error message: ${e.message}`);
+      if (e.response.status === 401) {
+        Toast.error('Please login first');
+      }
       return 0;
     }
   }
@@ -70,15 +86,20 @@ export class PlayerApis {
    */
   static async getPlayerTrends(): Promise<PlayerTrendData[]> {
     try {
+      const token = localStorage.getItem('fcd-token');
       const response = await axios.get(`${BACKEND_URL}/api/v1/player/trends`, {
-        headers: { Accept: '*/*' },
+        headers: { Accept: '*/*', token: token },
       });
       if (response.status === 200) {
         return response.data;
       }
       return [];
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(`[getPlayerCount] error code: ${e.response.status}`);
+      console.log(`[getPlayerCount] error message: ${e.message}`);
+      if (e.response.status === 401) {
+        Toast.error('Please login first');
+      }
       return [];
     }
   }
