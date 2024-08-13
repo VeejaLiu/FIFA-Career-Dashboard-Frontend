@@ -58,7 +58,7 @@ const PlayerListColumn = [
   },
   {
     title: 'Player Name',
-    dataIndex: 'playerID',
+    dataIndex: 'playerName',
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
         <span>
