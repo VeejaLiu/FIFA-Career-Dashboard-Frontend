@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { PlayerApis } from './service/PlayerApis.ts';
 import PlayerListPage from './pages/PlayerListPage.tsx';
 import PlayerTrendsPage from './pages/PlayerTrendsPage.tsx';
-import SettingsPage from './pages/Settings.tsx';
+import SettingsPage from './pages/SettingsPage.tsx';
 import { IconMember, IconSetting } from '@douyinfe/semi-icons';
 import { IconChangelog } from '@douyinfe/semi-icons-lab';
 
