@@ -4,13 +4,56 @@ import { BACKEND_URL } from '../constant';
 export class UserApis {
   /**
    * Register user
-   * TODO
    */
+  static async registerUser({
+    username,
+    email,
+    password,
+  }: {
+    username: string;
+    email: string;
+    password: string;
+  }) {
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/v1/user/register`, {
+        username,
+        email,
+        password,
+      });
+      if (response.status === 200) {
+        return response.data;
+      }
+      return '';
+    } catch (e) {
+      console.log(e);
+      return '';
+    }
+  }
 
   /**
    * Login user
-   * TODO
    */
+  static async loginUser({
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+  }) {
+    try {
+      const response = await axios.post(`${BACKEND_URL}/api/v1/user/login`, {
+        username,
+        password,
+      });
+      if (response.status === 200) {
+        return response.data;
+      }
+      return '';
+    } catch (e) {
+      console.log(e);
+      return '';
+    }
+  }
 
   /**
    * Get user secret key
@@ -33,11 +76,12 @@ export class UserApis {
 
   static async doRefreshSecretKey(): Promise<string> {
     try {
-      const [response] = await Promise.all([
-        axios.post(`${BACKEND_URL}/api/v1/user/refresh-secret-key`, {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/secret/refresh`,
+        {
           headers: { Accept: '*/*' },
-        }),
-      ]);
+        },
+      );
       if (response.status === 200) {
         return response.data;
       }

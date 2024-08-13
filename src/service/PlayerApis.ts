@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { BACKEND_URL } from '../constant';
+import { Toast } from '@douyinfe/semi-ui';
 
 export interface PlayerOverall {
   playerID: number;
@@ -42,8 +43,12 @@ export class PlayerApis {
         return response.data;
       }
       return [];
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(`[getPlayerList] error code: ${e.response.status}`);
+      console.log(`[getPlayerList] error message: ${e.message}`);
+      if (e.response.status === 401) {
+        Toast.error('Please login first');
+      }
       return [];
     }
   }
@@ -60,8 +65,12 @@ export class PlayerApis {
         return response.data;
       }
       return 0;
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(`[getPlayerCount] error code: ${e.response.status}`);
+      console.log(`[getPlayerCount] error message: ${e.message}`);
+      if (e.response.status === 401) {
+        Toast.error('Please login first');
+      }
       return 0;
     }
   }
@@ -78,8 +87,12 @@ export class PlayerApis {
         return response.data;
       }
       return [];
-    } catch (e) {
-      console.log(e);
+    } catch (e: any) {
+      console.log(`[getPlayerCount] error code: ${e.response.status}`);
+      console.log(`[getPlayerCount] error message: ${e.message}`);
+      if (e.response.status === 401) {
+        Toast.error('Please login first');
+      }
       return [];
     }
   }
