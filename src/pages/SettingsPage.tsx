@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Button, Input, Popover, Space, Toast } from '@douyinfe/semi-ui';
+import { Button, Input, Popover, Space } from '@douyinfe/semi-ui';
 import { UserApis } from '../service/UserApis.ts';
 import { IconCopy, IconRefresh2 } from '@douyinfe/semi-icons';
+import { Notification } from '@douyinfe/semi-ui';
 
 function SettingsPage(): React.ReactElement {
   const [secretKey, setSecretKey] = React.useState('');
@@ -43,19 +44,28 @@ function SettingsPage(): React.ReactElement {
             position={'top'}
             content={<p>Click to copy your secret key.</p>}
           >
-            <Button>
-              <IconCopy
-                onClick={() => {
-                  navigator.clipboard.writeText(secretKey).then(
-                    () => {
-                      Toast.info('Secret key copied to clipboard');
-                    },
-                    (err) => {
-                      Toast.error('Failed to copy secret key');
-                    },
-                  );
-                }}
-              />
+            <Button
+              onClick={() => {
+                navigator.clipboard.writeText(secretKey).then(
+                  () => {
+                    Notification.success({
+                      title: 'Success',
+                      content: 'Secret key copied to clipboard',
+                      duration: 3,
+                    });
+                  },
+                  (err) => {
+                    Notification.error({
+                      title: 'Error',
+                      content:
+                        'Failed to copy secret key to clipboard, please try again',
+                      duration: 3,
+                    });
+                  },
+                );
+              }}
+            >
+              <IconCopy />
             </Button>
           </Popover>
           <Popover
@@ -64,8 +74,8 @@ function SettingsPage(): React.ReactElement {
             content={<p>Click to refresh your secret key.</p>}
           >
             <Button
-              onClick={() => {
-                doRefreshSecretKey();
+              onClick={async () => {
+                await doRefreshSecretKey();
               }}
             >
               <IconRefresh2 />
@@ -85,6 +95,21 @@ function SettingsPage(): React.ReactElement {
             Warning: Do not share your secret key with anyone!
           </span>
         </Space>
+      </Space>
+
+      <h1>Login</h1>
+      <Space vertical align={'start'}>
+        <Input placeholder="Username"></Input>
+        <Input placeholder="Password"></Input>
+        <Button>Login</Button>
+      </Space>
+
+      <h1>Register</h1>
+      <Space vertical align={'start'}>
+        <Input placeholder="Username"></Input>
+        <Input placeholder="Email"></Input>
+        <Input placeholder="Password" mode={'password'}></Input>
+        <Button>Register</Button>
       </Space>
     </Space>
   );
