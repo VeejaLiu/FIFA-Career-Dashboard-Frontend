@@ -8,6 +8,7 @@ import PlayerTrendsPage from './pages/PlayerTrendsPage.tsx';
 import SettingsPage from './pages/SettingsPage.tsx';
 import { IconMember, IconSetting } from '@douyinfe/semi-icons';
 import { IconChangelog } from '@douyinfe/semi-icons-lab';
+import GetStartedPage from './pages/GetStartedPage.tsx';
 
 export default function App() {
   const [playerCount, setPlayerCount] = useState(0);
@@ -40,6 +41,7 @@ export default function App() {
                   Players: '/players',
                   PlayersTrends: '/players-trends',
                   Settings: '/settings',
+                  GetStarted: '/get-started',
                 };
                 return (
                   <Link
@@ -66,6 +68,11 @@ export default function App() {
                   itemKey: 'Settings',
                   icon: <IconSetting />,
                 },
+                {
+                  text: 'Get Started',
+                  itemKey: 'GetStarted',
+                  icon: <IconSetting />,
+                },
               ]}
               footer={{
                 collapseButton: true,
@@ -81,6 +88,7 @@ export default function App() {
         <Route path="players" element={<PlayerListPage />} />
         <Route path="players-trends" element={<PlayerTrendsPage />} />
         <Route path="settings" element={<SettingsPage />} />
+        <Route path="get-started" element={<GetStartedPage />} />
         <Route path="*" element={<NoMatch />} />
       </Route>
     </Routes>
