@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet, Link } from 'react-router-dom';
+import { Link, Outlet, Route, Routes } from 'react-router-dom';
 import { Nav, Space } from '@douyinfe/semi-ui';
 import './App.css';
 import { useEffect, useState } from 'react';
@@ -6,8 +6,12 @@ import { PlayerApis } from './service/PlayerApis.ts';
 import PlayerListPage from './pages/PlayerListPage.tsx';
 import PlayerTrendsPage from './pages/PlayerTrendsPage.tsx';
 import SettingsPage from './pages/SettingsPage.tsx';
-import { IconMember, IconSetting } from '@douyinfe/semi-icons';
-import { IconChangelog } from '@douyinfe/semi-icons-lab';
+import {
+  IconArticle,
+  IconHistogram,
+  IconSetting,
+  IconUser,
+} from '@douyinfe/semi-icons';
 import GetStartedPage from './pages/GetStartedPage.tsx';
 
 export default function App() {
@@ -56,12 +60,12 @@ export default function App() {
                 {
                   text: `Players (${playerCount})`,
                   itemKey: 'Players',
-                  icon: <IconMember />,
+                  icon: <IconUser />,
                 },
                 {
                   text: 'Players Trends',
                   itemKey: 'PlayersTrends',
-                  icon: <IconChangelog />,
+                  icon: <IconHistogram />,
                 },
                 {
                   text: 'Settings',
@@ -71,7 +75,7 @@ export default function App() {
                 {
                   text: 'Get Started',
                   itemKey: 'GetStarted',
-                  icon: <IconSetting />,
+                  icon: <IconArticle />,
                 },
               ]}
               footer={{
