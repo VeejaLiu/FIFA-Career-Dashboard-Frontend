@@ -4,6 +4,7 @@ import { Button, CodeHighlight, Notification, Space } from '@douyinfe/semi-ui';
 import { UserApis } from '../../service/UserApis.ts';
 import { Typography } from '@douyinfe/semi-ui';
 import { luaScript } from '../../constant/user-script.ts';
+import { IconLink } from '@douyinfe/semi-icons';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -22,19 +23,22 @@ function SettingsPage(): React.ReactElement {
   }, []);
 
   return (
-    <Space vertical style={{ padding: '10px' }} align={'start'}>
+    <Space vertical style={{ padding: '10px', width: '95%' }} align={'start'}>
       <Paragraph>
-        {/*<h1>Get started</h1>*/}
         <Title heading={1}>Get started</Title>
+      </Paragraph>
 
-        {/*<h1>## Dependencies</h1>*/}
+      <Paragraph spacing="extended">
         <Title heading={2}>1. Dependencies</Title>
         <p>
           - Latest <b>xAranaktu/FC-24-Live-Editor</b>. (
           <Text
+            icon={<IconLink />}
             link={{
               href: 'https://www.patreon.com/collection/96422?view=expanded',
+              target: '_blank',
             }}
+            underline
           >
             Click here{' '}
           </Text>
@@ -43,28 +47,26 @@ function SettingsPage(): React.ReactElement {
 
         <p>- Available internet connection to our backend server.</p>
         <p>
-          - <b>Secret API key.</b> (You can manage it from
-          <Text
-            link={{
-              href: '/settings',
-            }}
-          >
-            &nbsp;Setting Page
+          - <b>Secret API key.</b> (You can manage it from &nbsp;
+          <Text link={{ href: '/settings' }} underline>
+            Setting Page
           </Text>
-          , BUT you don't really need it because I have put it in the code
+          &nbsp;, BUT you don't really need it because I have put it in the code
           snippet below for you)
         </p>
         <p>
           - <b>Lua code snippet </b>(You can copy the code snippet below and the
           secret key will be automatically replaced)
         </p>
+      </Paragraph>
 
-        {/*<h1>## Installation</h1>*/}
+      <Paragraph spacing="extended">
         <Title heading={2}>2. Installation</Title>
         <p>- Open the FC24 with Live Editor.</p>
         <p>- Go to the `Lua script` tab in the live editor.</p>
         <p>- Paste the code snippet below.</p>
       </Paragraph>
+
       <Space>
         <Button
           onClick={() => {
@@ -101,8 +103,10 @@ function SettingsPage(): React.ReactElement {
         Warning: These codes contain your secret key. Do not share these codes
         with others.
       </Text>
+
       <div
         style={{
+          width: '100%',
           maxHeight: isCodeExpanded ? 'none' : '150px',
           overflow: 'scroll',
           transition: 'max-height 0.3s ease',
