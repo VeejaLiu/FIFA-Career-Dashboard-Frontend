@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import App from '../App.tsx';
-import LoginPage from '../pages/LoginPage.tsx';
+import LoginPage from '../pages/LoginPage/LoginPage.tsx';
 import { UserApis } from '../service/UserApis.ts';
 
 export const Auth = () => {

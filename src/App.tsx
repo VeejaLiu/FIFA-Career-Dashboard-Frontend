@@ -3,16 +3,16 @@ import { Nav, Space } from '@douyinfe/semi-ui';
 import './App.css';
 import { useEffect, useState } from 'react';
 import { PlayerApis } from './service/PlayerApis.ts';
-import PlayerListPage from './pages/PlayerListPage.tsx';
-import PlayerTrendsPage from './pages/PlayerTrendsPage.tsx';
-import SettingsPage from './pages/SettingsPage.tsx';
+import PlayerListPage from './pages/PlayerListPage/PlayerListPage.tsx';
+import PlayerTrendsPage from './pages/PlayerTrendsPage/PlayerTrendsPage.tsx';
+import SettingsPage from './pages/SettingsPage/SettingsPage.tsx';
 import {
   IconArticle,
   IconHistogram,
   IconSetting,
   IconUser,
 } from '@douyinfe/semi-icons';
-import GetStartedPage from './pages/GetStartedPage.tsx';
+import GetStartedPage from './pages/GetStartedPage/GetStartedPage.tsx';
 
 export default function App() {
   const [playerCount, setPlayerCount] = useState(0);
