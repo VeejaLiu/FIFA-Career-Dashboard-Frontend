@@ -1,6 +1,6 @@
 import { Space, Table } from '@douyinfe/semi-ui';
 import * as React from 'react';
-import { PlayerApis, PlayerOverall } from '../service/PlayerApis.ts';
+import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
 import { useEffect } from 'react';
 
 export function getColorByPositionType(positionType: string) {

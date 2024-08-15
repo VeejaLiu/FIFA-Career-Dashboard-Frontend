@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Button, CodeHighlight, Notification, Space } from '@douyinfe/semi-ui';
-import { UserApis } from '../service/UserApis.ts';
+import { UserApis } from '../../service/UserApis.ts';
 import { Typography } from '@douyinfe/semi-ui';
-import { luaScript } from '../constant/user-script.ts';
+import { luaScript } from '../../constant/user-script.ts';
 
 const { Title, Text, Paragraph } = Typography;
 

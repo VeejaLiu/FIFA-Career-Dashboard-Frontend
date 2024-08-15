@@ -7,9 +7,12 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { PlayerApis, PlayerTrendData } from '../service/PlayerApis.ts';
+import { PlayerApis, PlayerTrendData } from '../../service/PlayerApis.ts';
 import { useEffect } from 'react';
-import { getAvatarUrl, getColorByPositionType } from './PlayerListPage.tsx';
+import {
+  getAvatarUrl,
+  getColorByPositionType,
+} from '../PlayerListPage/PlayerListPage.tsx';
 import { Popover, Space } from '@douyinfe/semi-ui';
 import './PlayerTrendsPage.css';
 

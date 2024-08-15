@@ -1,7 +1,7 @@
 import { Form, Button, Space, Notification } from '@douyinfe/semi-ui';
 import styles from './LoginPage.module.scss';
 import { useState } from 'react';
-import { UserApis } from '../service/UserApis.ts';
+import { UserApis } from '../../service/UserApis.ts';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');

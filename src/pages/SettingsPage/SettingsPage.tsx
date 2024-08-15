@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { Button, Input, Popover, Space } from '@douyinfe/semi-ui';
-import { UserApis } from '../service/UserApis.ts';
+import { UserApis } from '../../service/UserApis.ts';
 import { IconCopy, IconRefresh2 } from '@douyinfe/semi-icons';
 import { Notification } from '@douyinfe/semi-ui';
 
