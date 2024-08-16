@@ -2,6 +2,10 @@ import { Form, Button, Space, Notification } from '@douyinfe/semi-ui';
 import styles from './LoginPage.module.scss';
 import { useState } from 'react';
 import { UserApis } from '../../service/UserApis.ts';
+import { IconLink } from '@douyinfe/semi-icons';
+import { Typography } from '@douyinfe/semi-ui';
+
+const { Text } = Typography;
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -55,6 +59,7 @@ const LoginPage = () => {
         width: '100vw',
         justifyContent: 'center',
       }}
+      vertical
     >
       <div className={styles.login}>
         <div className={styles.component66}>
@@ -89,6 +94,39 @@ const LoginPage = () => {
             Login
           </Button>
         </div>
+      </div>
+
+      <div
+        style={{
+          width: '500px',
+        }}
+      >
+        <p>
+          We are currently in a closed beta phase. If you are interested in
+          participating, please email
+          <a href="mailto:veejaliu@gmail.com"> veejaliu@gmail.com </a>
+          to request a test account.
+        </p>
+        <p>
+          Once I receive your email, I will manually send you your login
+          information, which you can use to access the application.
+          Additionally, feel free to visit our
+          <Text
+            icon={<IconLink />}
+            link={{
+              href: 'https://github.com/VeejaLiu/FIFA-Career-Dashboard-Frontend',
+              target: '_blank',
+            }}
+            underline
+          >
+            GitHub page
+          </Text>
+          to share your suggestions. Thank you for your cooperation!
+        </p>
+        <p>
+          Please note that while we do not plan to delete your data, we cannot
+          guarantee its persistence due to potential unforeseen issues.
+        </p>
       </div>
     </Space>
   );
