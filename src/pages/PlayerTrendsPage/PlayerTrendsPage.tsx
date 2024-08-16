@@ -13,8 +13,10 @@ import {
   getAvatarUrl,
   getColorByPositionType,
 } from '../PlayerListPage/PlayerListPage.tsx';
-import { Popover, Space } from '@douyinfe/semi-ui';
+import { Popover, Space, Typography } from '@douyinfe/semi-ui';
 import './PlayerTrendsPage.css';
+
+const { Text } = Typography;
 
 function formatDate(inputDate: string) {
   const [, month, day] = inputDate.split('-').map(Number);
@@ -67,168 +69,182 @@ function PlayerTrendsPage(): React.ReactElement {
   }, []);
 
   return (
-    <div
+    <Space
+      align={'start'}
+      vertical
       style={{
         padding: '10px',
       }}
     >
-      <h1>Players Trends</h1>
-
-      {[
-        {
-          position: 'FOR',
-          text: 'Forwards',
-          color: getColorByPositionType('FOR'),
-        },
-        {
-          position: 'MID',
-          text: 'Midfielders',
-          color: getColorByPositionType('MID'),
-        },
-        {
-          position: 'DEF',
-          text: 'Defenders',
-          color: getColorByPositionType('DEF'),
-        },
-        {
-          position: 'GK',
-          text: 'Goalkeepers',
-          color: getColorByPositionType('GK'),
-        },
-      ].map((item) => {
-        return (
-          <div
-            style={{
-              marginBottom: '40px',
-            }}
-          >
-            <h4
+      {data.length === 0 ? (
+        <Space
+          align={'center'}
+          style={{
+            height: '100vh',
+            width: '100%',
+          }}
+        >
+          No data here, please go to
+          <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
+          your journey!
+        </Space>
+      ) : (
+        [
+          {
+            position: 'FOR',
+            text: 'Forwards',
+            color: getColorByPositionType('FOR'),
+          },
+          {
+            position: 'MID',
+            text: 'Midfielders',
+            color: getColorByPositionType('MID'),
+          },
+          {
+            position: 'DEF',
+            text: 'Defenders',
+            color: getColorByPositionType('DEF'),
+          },
+          {
+            position: 'GK',
+            text: 'Goalkeepers',
+            color: getColorByPositionType('GK'),
+          },
+        ].map((item) => {
+          return (
+            <div
               style={{
-                color: item.color,
+                marginBottom: '20px',
               }}
             >
-              {item.text}
-            </h4>
-            <Space wrap align={'start'}>
-              {data
-                .filter((player) => player.positionType === item.position)
-                .sort((a, b) => {
-                  return (
-                    Math.max(...b.trends.map((item) => item.potential)) -
-                    Math.max(...a.trends.map((item) => item.potential))
-                  );
-                })
-                .map((player) => {
-                  const minOverallRating =
-                    Math.min(
-                      ...player.trends.map((item) => item.overallRating),
-                    ) - 10;
-                  // const minOverallRating = 40;
-                  const maxPotential =
-                    Math.max(...player.trends.map((item) => item.potential)) +
-                    3;
-                  // const maxPotential = 100;
-                  const positionColor = getColorByPositionType(
-                    player.positionType,
-                  );
-                  const imageUrl = getAvatarUrl(player.playerID);
-                  return (
-                    <Space
-                      key={player.playerID}
-                      style={{
-                        // border: '1px solid gray',
-                        borderRadius: '3px',
-                        backgroundColor: '#f1f1f1',
-                        padding: '10px',
-                      }}
-                    >
+              <h2
+                style={{
+                  color: item.color,
+                }}
+              >
+                {item.text}
+              </h2>
+              <Space wrap align={'start'}>
+                {data
+                  .filter((player) => player.positionType === item.position)
+                  .sort((a, b) => {
+                    return (
+                      Math.max(...b.trends.map((item) => item.potential)) -
+                      Math.max(...a.trends.map((item) => item.potential))
+                    );
+                  })
+                  .map((player) => {
+                    const minOverallRating =
+                      Math.min(
+                        ...player.trends.map((item) => item.overallRating),
+                      ) - 10;
+                    // const minOverallRating = 40;
+                    const maxPotential =
+                      Math.max(...player.trends.map((item) => item.potential)) +
+                      3;
+                    // const maxPotential = 100;
+                    const positionColor = getColorByPositionType(
+                      player.positionType,
+                    );
+                    const imageUrl = getAvatarUrl(player.playerID);
+                    return (
                       <Space
-                        vertical
-                        spacing={0}
+                        key={player.playerID}
                         style={{
-                          backgroundColor: '#e4ce78',
+                          // border: '1px solid gray',
                           borderRadius: '3px',
-                          // boxShadow: '0 0 5px #000',
-                          width: '120px',
-                          height: '170px',
+                          backgroundColor: '#f1f1f1',
+                          padding: '10px',
                         }}
                       >
-                        <span style={{ color: positionColor }}>
-                          <h4>{player.preferredposition1}</h4>
-                        </span>
-                        <div style={{ width: 100, height: 100 }}>
-                          <img
-                            style={{ width: 100, height: 100 }}
-                            src={imageUrl}
-                            alt="player"
-                            onError={(e) => {
-                              e.currentTarget.style.display = 'none';
-                            }}
-                          />
-                        </div>
-                        <Popover
-                          showArrow
-                          content={
-                            <article>
-                              <h3>{player.playerName}</h3>
-                              Player ID: {player.playerID}
-                            </article>
-                          }
-                          position={'right'}
+                        <Space
+                          vertical
+                          spacing={0}
+                          style={{
+                            backgroundColor: '#e4ce78',
+                            borderRadius: '3px',
+                            // boxShadow: '0 0 5px #000',
+                            width: '120px',
+                            height: '170px',
+                          }}
                         >
-                          <span className="text-container">
-                            {player.playerName}
-                          </span>{' '}
-                        </Popover>
+                          <span style={{ color: positionColor }}>
+                            <h4>{player.preferredposition1}</h4>
+                          </span>
+                          <div style={{ width: 100, height: 100 }}>
+                            <img
+                              style={{ width: 100, height: 100 }}
+                              src={imageUrl}
+                              alt="player"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                              }}
+                            />
+                          </div>
+                          <Popover
+                            showArrow
+                            content={
+                              <article>
+                                <h3>{player.playerName}</h3>
+                                Player ID: {player.playerID}
+                              </article>
+                            }
+                            position={'right'}
+                          >
+                            <span className="text-container">
+                              {player.playerName}
+                            </span>{' '}
+                          </Popover>
+                        </Space>
+                        <AreaChart
+                          // style={{ backgroundColor: 'yellow' }}
+                          width={300}
+                          height={170}
+                          data={player.trends}
+                          margin={{ top: 10, right: 30, left: 0 }}
+                        >
+                          <XAxis
+                            dataKey="inGameDate"
+                            type={'category'}
+                            style={{
+                              fontSize: '10px',
+                            }}
+                          ></XAxis>
+                          <YAxis
+                            domain={[
+                              minOverallRating,
+                              Math.min(maxPotential, 100),
+                            ]}
+                            style={{
+                              fontSize: '10px',
+                            }}
+                          ></YAxis>
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <Tooltip />
+                          <Area
+                            type="monotone"
+                            dataKey="potential"
+                            fill="#ffc658"
+                            stroke="#ffc658"
+                          ></Area>
+                          <Area
+                            type="monotone"
+                            dataKey="overallRating"
+                            stroke="#000"
+                            strokeWidth={1}
+                            // fillOpacity={0.6}
+                            fill="#82ca9d"
+                          ></Area>
+                        </AreaChart>
                       </Space>
-                      <AreaChart
-                        // style={{ backgroundColor: 'yellow' }}
-                        width={300}
-                        height={170}
-                        data={player.trends}
-                        margin={{ top: 10, right: 30, left: 0 }}
-                      >
-                        <XAxis
-                          dataKey="inGameDate"
-                          type={'category'}
-                          style={{
-                            fontSize: '10px',
-                          }}
-                        ></XAxis>
-                        <YAxis
-                          domain={[
-                            minOverallRating,
-                            Math.min(maxPotential, 100),
-                          ]}
-                          style={{
-                            fontSize: '10px',
-                          }}
-                        ></YAxis>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <Tooltip />
-                        <Area
-                          type="monotone"
-                          dataKey="potential"
-                          fill="#ffc658"
-                          stroke="#ffc658"
-                        ></Area>
-                        <Area
-                          type="monotone"
-                          dataKey="overallRating"
-                          stroke="#000"
-                          strokeWidth={1}
-                          // fillOpacity={0.6}
-                          fill="#82ca9d"
-                        ></Area>
-                      </AreaChart>
-                    </Space>
-                  );
-                })}
-            </Space>
-          </div>
-        );
-      })}
-    </div>
+                    );
+                  })}
+              </Space>
+            </div>
+          );
+        })
+      )}
+    </Space>
   );
 }
 

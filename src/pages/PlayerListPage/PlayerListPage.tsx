@@ -1,7 +1,9 @@
-import { Space, Table } from '@douyinfe/semi-ui';
+import { Space, Table, Typography } from '@douyinfe/semi-ui';
 import * as React from 'react';
 import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
 import { useEffect } from 'react';
+
+const { Text } = Typography;
 
 export function getColorByPositionType(positionType: string) {
   switch (positionType) {
@@ -172,23 +174,36 @@ function PlayerListPage(): React.ReactElement {
   }, []);
 
   return (
-    <div
+    <Space
       style={{
-        padding: '10px',
+        width: '100%',
       }}
+      vertical
     >
-      <h1>Players list</h1>
-      <Table
-        style={{
-          marginTop: '20px',
-          marginBottom: '50px',
-        }}
-        columns={PlayerListColumn}
-        dataSource={data}
-        pagination={false}
-        size="small"
-      />
-    </div>
+      {data.length === 0 ? (
+        <Space
+          align="center"
+          style={{
+            height: '100vh',
+          }}
+        >
+          No data here, please go to
+          <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
+          your journey!
+        </Space>
+      ) : (
+        <Table
+          style={{
+            marginTop: '20px',
+            marginBottom: '50px',
+          }}
+          columns={PlayerListColumn}
+          dataSource={data}
+          pagination={false}
+          size="small"
+        />
+      )}
+    </Space>
   );
 }
 
