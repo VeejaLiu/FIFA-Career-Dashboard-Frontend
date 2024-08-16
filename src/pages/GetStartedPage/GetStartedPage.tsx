@@ -7,6 +7,8 @@ import { luaScript } from '../../constant/user-script.ts';
 import { IconLink } from '@douyinfe/semi-icons';
 
 const { Title, Text, Paragraph } = Typography;
+const PostPlayerURL =
+  import.meta.env.VITE_POST_PLAYER_URL || 'http://localhost:8888';
 
 function SettingsPage(): React.ReactElement {
   const [isCodeExpanded, setIsCodeExpanded] = useState(false);
@@ -15,7 +17,11 @@ function SettingsPage(): React.ReactElement {
   async function getLuaCode() {
     const key = await UserApis.getSecretKey();
     console.log(`[fetchSecretKey] key: ${key}`);
-    setCodeStr(luaScript.replace('{{user-secret-key}}', key));
+    setCodeStr(
+      luaScript
+        .replace('{{user-secret-key}}', key)
+        .replace('{{post-player-url}}', PostPlayerURL),
+    );
   }
 
   useEffect(() => {
