@@ -8,6 +8,11 @@ FC24 Career Dashboard:
 - View players' trends of overall rating, potential.
 - Silent operation, real-time updates (weekly in-game updates, configurable)
 
+And more features are coming soon.
+
+- Player details page
+- Notification when a player's overall rating or potential changes
+
 # Version 1.1.0:
 
 - Add Login page
