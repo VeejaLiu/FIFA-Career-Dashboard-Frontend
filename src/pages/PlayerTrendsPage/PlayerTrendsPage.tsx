@@ -52,6 +52,7 @@ function formatDate(inputDate: string) {
 }
 
 function PlayerTrendsPage(): React.ReactElement {
+  const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState<PlayerTrendData[]>([]);
 
   const fetchPlayerTrends = async () => {
@@ -65,18 +66,28 @@ function PlayerTrendsPage(): React.ReactElement {
   };
 
   useEffect(() => {
-    fetchPlayerTrends();
+    fetchPlayerTrends().then(() => {
+      setIsLoading(false);
+    });
   }, []);
 
   return (
     <Space
-      align={'start'}
       vertical
       style={{
-        padding: '10px',
+        width: '100%',
       }}
     >
-      {data.length === 0 ? (
+      {isLoading ? (
+        <Space
+          align={'center'}
+          style={{
+            height: '100vh',
+          }}
+        >
+          Loading...
+        </Space>
+      ) : data.length === 0 ? (
         <Space
           align={'center'}
           style={{

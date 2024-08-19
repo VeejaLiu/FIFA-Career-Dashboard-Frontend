@@ -159,6 +159,7 @@ const PlayerListColumn = [
 ];
 
 function PlayerListPage(): React.ReactElement {
+  const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState<PlayerOverall[]>([]);
 
   const getPlayerList = async () => {
@@ -167,6 +168,7 @@ function PlayerListPage(): React.ReactElement {
       player.imageUrl = getAvatarUrl(player.playerID);
     });
     setData(players);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -180,7 +182,15 @@ function PlayerListPage(): React.ReactElement {
       }}
       vertical
     >
-      {data.length === 0 ? (
+      {isLoading ? (
+        <Space
+          style={{
+            height: '100vh',
+          }}
+        >
+          Loading...
+        </Space>
+      ) : data.length === 0 ? (
         <Space
           align="center"
           style={{

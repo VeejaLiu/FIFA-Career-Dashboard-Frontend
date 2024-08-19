@@ -13,6 +13,7 @@ const PostPlayerURL =
 function SettingsPage(): React.ReactElement {
   const [isCodeExpanded, setIsCodeExpanded] = useState(false);
   const [codeStr, setCodeStr] = React.useState(luaScript);
+  const [isSecretLoading, setIsSecretLoading] = React.useState(true);
 
   async function getLuaCode() {
     const key = await UserApis.getSecretKey();
@@ -25,7 +26,18 @@ function SettingsPage(): React.ReactElement {
   }
 
   useEffect(() => {
-    getLuaCode().then();
+    getLuaCode().then(
+      () => {
+        setIsSecretLoading(false);
+      },
+      (e) => {
+        Notification.error({
+          title: 'Error',
+          content: 'Failed to fetch secret key. Please try again later.',
+          duration: 3,
+        });
+      },
+    );
   }, []);
 
   return (
@@ -75,6 +87,7 @@ function SettingsPage(): React.ReactElement {
 
       <Space>
         <Button
+          disabled={isSecretLoading}
           onClick={() => {
             navigator.clipboard
               .writeText(codeStr)
