@@ -2,7 +2,16 @@
 
 FC24 Career Dashboard:
 
-**Features:**
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+    - [Dependencies](#dependencies)
+    - [Usage](#usage)
+- [Important Note && Tips](#important-note--tips)
+- [Change log](#change-log)
+
+## Features
 
 - View all players in your team, monitor their overall rating, potential.
 - View players' trends of overall rating, potential.
@@ -13,7 +22,34 @@ And more features are coming soon.
 - Player details page
 - Notification when a player's overall rating or potential changes
 
-# Version 1.1.0:
+## Installation
+
+### Dependencies
+
+- Latest **xAranaktu/FC-24-Live-Editor**. (
+  Click [here](https://www.patreon.com/collection/96422?view=expanded) to
+  download)
+- **Secret API key**. (Get it from the settings page)
+- [**lua code snippet**](./lua-scripts/client-script.lua)
+
+> Actually, you don't need to download the lua code snippet and replace the API
+> key.
+> I put everything in the GetStarted page, you can directly copy the code
+> snippet and paste it into the Live Editor of your FC24.
+
+### Usage
+
+- Open the FC24 with Live Editor.
+- Go to the Lua script tab in the live editor.
+- Paste the code snippet in GetStarted page.
+- Click the "Execute" button. It will send a init request to the backend.
+- You can see the player list in the player list page.
+
+## Important Note && Tips
+
+# Change log
+
+## Latest version 1.1.0:
 
 - Add Login page
 - Add settings page(Secret key Management, Logout)
@@ -29,7 +65,7 @@ And more features are coming soon.
 
 ![img_5.png](doc-images/img_5.png)
 
-## Change log
+## Older versions:
 
 <details>
     <summary>expand to view</summary>
@@ -41,7 +77,6 @@ And more features are coming soon.
 ![img_1.png](doc-images/img_1.png)
 
 ![img_2.png](doc-images/img_2.png)
-
 
 # Version 1.0.0:
 
