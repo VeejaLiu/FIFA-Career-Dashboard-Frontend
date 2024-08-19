@@ -1,5 +1,4 @@
 export const luaScript = `
-
 require 'imports/career_mode/helpers'
 require 'imports/other/helpers'
 local json = require("imports/external/json")
