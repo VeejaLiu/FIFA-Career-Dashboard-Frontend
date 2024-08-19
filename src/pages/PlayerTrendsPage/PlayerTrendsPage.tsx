@@ -89,13 +89,11 @@ function PlayerTrendsPage(): React.ReactElement {
         </Space>
       ) : data.length === 0 ? (
         <Space
-          align={'center'}
           style={{
             height: '100vh',
-            width: '100%',
           }}
         >
-          No data here, please go to
+          No data here. Please go to
           <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
           your journey!
         </Space>

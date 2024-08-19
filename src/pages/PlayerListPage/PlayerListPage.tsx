@@ -197,7 +197,7 @@ function PlayerListPage(): React.ReactElement {
             height: '100vh',
           }}
         >
-          No data here, please go to
+          No data here. Please go to
           <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
           your journey!
         </Space>
