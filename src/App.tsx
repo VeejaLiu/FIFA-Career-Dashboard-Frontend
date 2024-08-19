@@ -13,6 +13,7 @@ import {
   IconUser,
 } from '@douyinfe/semi-icons';
 import GetStartedPage from './pages/GetStartedPage/GetStartedPage.tsx';
+import { WebsocketNotification } from './components/WebsocketNotification.tsx';
 
 export default function App() {
   const [playerCount, setPlayerCount] = useState(0);
@@ -27,75 +28,83 @@ export default function App() {
   }, []);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <Space className="root">
-            {/* A "layout route" is a good place to put markup you want to
+    <>
+      <WebsocketNotification />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Space className="root">
+              {/* A "layout route" is a good place to put markup you want to
           share across all the pages on your site, like navigation. */}
 
-            <Nav
-              className="nav"
-              header={{
-                text: 'FC24 Career Mode',
-              }}
-              renderWrapper={({ itemElement, isSubNav, isInSubNav, props }) => {
-                const routerMap: Record<string, string> = {
-                  Players: '/players',
-                  PlayersTrends: '/players-trends',
-                  Settings: '/settings',
-                  GetStarted: '/get-started',
-                };
-                return (
-                  <Link
-                    style={{ textDecoration: 'none' }}
-                    to={routerMap[props.itemKey || '']}
-                  >
-                    {itemElement}
-                  </Link>
-                );
-              }}
-              items={[
-                {
-                  text: `Players (${playerCount})`,
-                  itemKey: 'Players',
-                  icon: <IconUser />,
-                },
-                {
-                  text: 'Players Trends',
-                  itemKey: 'PlayersTrends',
-                  icon: <IconHistogram />,
-                },
-                {
-                  text: 'Settings',
-                  itemKey: 'Settings',
-                  icon: <IconSetting />,
-                },
-                {
-                  text: 'Get Started',
-                  itemKey: 'GetStarted',
-                  icon: <IconArticle />,
-                },
-              ]}
-              footer={{
-                collapseButton: true,
-              }}
-            ></Nav>
-            <div className={'content'}>
-              <Outlet />
-            </div>
-          </Space>
-        }
-      >
-        <Route index element={<PlayerListPage />} />
-        <Route path="players" element={<PlayerListPage />} />
-        <Route path="players-trends" element={<PlayerTrendsPage />} />
-        <Route path="settings" element={<SettingsPage />} />
-        <Route path="get-started" element={<GetStartedPage />} />
-        <Route path="*" element={<NoMatch />} />
-      </Route>
-    </Routes>
+              <Nav
+                className="nav"
+                header={{
+                  text: 'FC24 Career Mode',
+                }}
+                renderWrapper={({
+                  itemElement,
+                  isSubNav,
+                  isInSubNav,
+                  props,
+                }) => {
+                  const routerMap: Record<string, string> = {
+                    Players: '/players',
+                    PlayersTrends: '/players-trends',
+                    Settings: '/settings',
+                    GetStarted: '/get-started',
+                  };
+                  return (
+                    <Link
+                      style={{ textDecoration: 'none' }}
+                      to={routerMap[props.itemKey || '']}
+                    >
+                      {itemElement}
+                    </Link>
+                  );
+                }}
+                items={[
+                  {
+                    text: `Players (${playerCount})`,
+                    itemKey: 'Players',
+                    icon: <IconUser />,
+                  },
+                  {
+                    text: 'Players Trends',
+                    itemKey: 'PlayersTrends',
+                    icon: <IconHistogram />,
+                  },
+                  {
+                    text: 'Settings',
+                    itemKey: 'Settings',
+                    icon: <IconSetting />,
+                  },
+                  {
+                    text: 'Get Started',
+                    itemKey: 'GetStarted',
+                    icon: <IconArticle />,
+                  },
+                ]}
+                footer={{
+                  collapseButton: true,
+                }}
+              ></Nav>
+              <div className={'content'}>
+                <Outlet />
+              </div>
+            </Space>
+          }
+        >
+          <Route index element={<PlayerListPage />} />
+          <Route path="players" element={<PlayerListPage />} />
+          <Route path="players-trends" element={<PlayerTrendsPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+          <Route path="get-started" element={<GetStartedPage />} />
+          <Route path="*" element={<NoMatch />} />
+        </Route>
+      </Routes>
+    </>
   );
 }
 
