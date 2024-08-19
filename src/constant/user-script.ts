@@ -1,4 +1,6 @@
-export const luaScript = `require 'imports/career_mode/helpers'
+export const luaScript = `
+
+require 'imports/career_mode/helpers'
 require 'imports/other/helpers'
 local json = require("imports/external/json")
 
@@ -8,11 +10,15 @@ local post_cm_event_handlers = GetEventHandlers("post__CareerModeEvent")
 print(string.format("You have %d pre__CareerModeEvents and %d post__CareerModeEvents", #pre_cm_event_handlers, #post_cm_event_handlers))
 
 if #pre_cm_event_handlers > 0 then
-    RemoveEventHandler("pre__CareerModeEvent", pre_cm_event_handlers[1].id)
+    for i, handler in ipairs(pre_cm_event_handlers) do
+        RemoveEventHandler("pre__CareerModeEvent", handler.id)
+    end
 end
 
 if #post_cm_event_handlers > 0 then
-    RemoveEventHandler("post__CareerModeEvent", post_cm_event_handlers[1].id)
+    for i, handler in ipairs(post_cm_event_handlers) do
+        RemoveEventHandler("post__CareerModeEvent", handler.id)
+    end
 end
 
 pre_cm_event_handlers = GetEventHandlers("pre__CareerModeEvent")
@@ -170,7 +176,13 @@ function postPlayers(jsonStr, dateStr)
     command = command .. ' -H "secret-key: {{user-secret-key}}"'
 
     local fileName = "fifa_career_dashboard_players-" .. dateStr .. ".json"
-    local file = io.open(fileName, "w")
+    local file, error = io.open(fileName, "w")
+    if not file then
+        print("Error opening file: " .. error)
+        return
+    else
+        print("File opened successfully")
+    end
     file:write(jsonStr)
     file:close()
     command = command .. ' -d "@' .. fileName .. '"'
