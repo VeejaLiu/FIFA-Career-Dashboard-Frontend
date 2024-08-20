@@ -1,4 +1,4 @@
-import { Space, Table, Typography } from '@douyinfe/semi-ui';
+import { Space, Spin, Table, Typography } from '@douyinfe/semi-ui';
 import * as React from 'react';
 import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
 import { useEffect } from 'react';
@@ -188,7 +188,7 @@ function PlayerListPage(): React.ReactElement {
             height: '100vh',
           }}
         >
-          Loading...
+          <Spin size="large" />
         </Space>
       ) : data.length === 0 ? (
         <Space

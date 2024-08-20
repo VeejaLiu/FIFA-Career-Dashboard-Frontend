@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import App from '../App.tsx';
 import LoginPage from '../pages/LoginPage/LoginPage.tsx';
 import { UserApis } from '../service/UserApis.ts';
+import { Spin } from '@douyinfe/semi-ui';
 
 export const Auth = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +21,7 @@ export const Auth = () => {
   return (
     <>
       {isLoading ? (
-        <div>Loading...</div>
+        <Spin size="large" />
       ) : isAuthenticated ? (
         <App />
       ) : (

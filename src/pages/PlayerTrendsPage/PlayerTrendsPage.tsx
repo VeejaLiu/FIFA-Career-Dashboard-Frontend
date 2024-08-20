@@ -13,7 +13,7 @@ import {
   getAvatarUrl,
   getColorByPositionType,
 } from '../PlayerListPage/PlayerListPage.tsx';
-import { Popover, Space, Typography } from '@douyinfe/semi-ui';
+import { Popover, Space, Spin, Typography } from '@douyinfe/semi-ui';
 import './PlayerTrendsPage.css';
 
 const { Text } = Typography;
@@ -85,7 +85,7 @@ function PlayerTrendsPage(): React.ReactElement {
             height: '100vh',
           }}
         >
-          Loading...
+          <Spin size="large" />
         </Space>
       ) : data.length === 0 ? (
         <Space
