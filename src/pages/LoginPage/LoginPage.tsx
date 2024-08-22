@@ -103,14 +103,22 @@ const LoginPage = () => {
       >
         <p>
           We are currently in a closed beta phase. If you are interested in
-          participating, please email
-          <a href="mailto:veejaliu@gmail.com"> veejaliu@gmail.com </a>
-          to request a test account.
+          participating, please email&nbsp;
+          <Text
+            icon={<IconLink />}
+            link={{
+              href: 'mailto:veejaliu@gmail.com',
+              target: '_blank',
+            }}
+          >
+            veejaliu@gmail.com
+          </Text>
+          &nbsp;to request a test account.
         </p>
         <p>
           Once I receive your email, I will manually send you your login
           information, which you can use to access the application.
-          Additionally, feel free to visit our
+          Additionally, feel free to visit our&nbsp;
           <Text
             icon={<IconLink />}
             link={{
@@ -121,11 +129,25 @@ const LoginPage = () => {
           >
             GitHub page
           </Text>
-          to share your suggestions. Thank you for your cooperation!
+          &nbsp;to share your suggestions. Thank you for your cooperation!
         </p>
         <p>
           Please note that while we do not plan to delete your data, we cannot
           guarantee its persistence due to potential unforeseen issues.
+        </p>
+        <p>
+          Or join our&nbsp;
+          <Text
+            icon={<IconLink />}
+            link={{
+              href: 'https://discord.gg/aKfWAtbJ8F',
+              target: '_blank',
+            }}
+            underline
+          >
+            Discord server
+          </Text>
+          &nbsp;to discuss the project and provide feedback.
         </p>
       </div>
     </Space>
