@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Notification } from '@douyinfe/semi-ui';
+import { Notification, Space } from '@douyinfe/semi-ui';
 
 let reconnectInterval = 1000; // 初始重连间隔
 const maxReconnectInterval = 30000; // 最大重连间隔
@@ -31,12 +31,6 @@ export const WebsocketNotification = () => {
       console.log('[WebSocket][onmessage] type:', type, 'payload:', payload);
       switch (type) {
         case 'PlayerUpdate.Overall': {
-          // playerID: playerID,
-          // playerName: playerName,
-          // oldOverallrating: existingPlayer.overallrating,
-          // overallrating: overallrating,
-          // oldPotential: existingPlayer.potential,
-          // potential: potential,
           const {
             playerID,
             playerName,
@@ -45,11 +39,61 @@ export const WebsocketNotification = () => {
             oldPotential,
             potential,
           } = payload;
-
           Notification.success({
             title: 'Player Update',
-            content: `Player ${playerName}[${playerID}] updated: overallrating ${oldOverallrating} -> ${overallrating}, potential ${oldPotential} -> ${potential}`,
-            duration: 30,
+            // content: `Player ${playerName}[${playerID}] updated: overallrating ${oldOverallrating} -> ${overallrating}, potential ${oldPotential} -> ${potential}`,
+            content: (
+              <Space vertical align={'start'}>
+                <div>
+                  <span style={{ fontWeight: 'bold' }}> {playerName}</span>
+                  <span style={{ color: '#999' }}> [ID: {playerID}]</span>
+                </div>
+                <div>
+                  <span style={{ marginRight: '8px' }}>Overall rating: </span>
+                  <span
+                    style={{
+                      marginRight: '8px',
+                      color: '#999',
+                    }}
+                  >
+                    {oldOverallrating}
+                  </span>
+                  <span style={{ marginRight: '8px' }}>{'->'}</span>
+                  <span
+                    style={{
+                      fontWeight: 'bold',
+                      color:
+                        overallrating > oldOverallrating
+                          ? '#2ef72e'
+                          : '#dc3545',
+                    }}
+                  >
+                    {overallrating}
+                  </span>
+                </div>
+                <div>
+                  <span style={{ marginRight: '8px' }}>Potential: </span>
+                  <span
+                    style={{
+                      marginRight: '8px',
+                      color: '#999',
+                    }}
+                  >
+                    {oldPotential}
+                  </span>
+                  <span style={{ marginRight: '8px' }}>{'->'}</span>
+                  <span
+                    style={{
+                      fontWeight: 'bold',
+                      color: potential > oldPotential ? '#2ef72e' : '#dc3545',
+                    }}
+                  >
+                    {potential}
+                  </span>
+                </div>
+              </Space>
+            ),
+            duration: 30000,
           });
           break;
         }
