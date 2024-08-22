@@ -16,7 +16,7 @@ export const WebsocketNotification = () => {
     }
 
     // Create a new WebSocket connection
-    const socket = new WebSocket('ws://localhost:8889', token);
+    const socket = new WebSocket(import.meta.env.VITE_WS_URL, token);
 
     // WebSocket connection established
     socket.onopen = () => {
