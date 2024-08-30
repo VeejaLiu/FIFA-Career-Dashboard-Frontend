@@ -116,7 +116,7 @@ const LoginPage = () => {
           <Text
             icon={<IconMailStroked1 />}
             link={{
-              href: 'mailto:veejaliu@gmail.com',
+              href: 'mailto:support@fccareer.top',
               target: '_blank',
             }}
           >
