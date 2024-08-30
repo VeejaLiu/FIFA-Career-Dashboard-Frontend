@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { BACKEND_URL } from '../constant';
+import { logger } from '@douyinfe/semi-ui/lib/es/table/utils';
+import { Notification } from '@douyinfe/semi-ui';
 
 export class UserApis {
   /**
@@ -79,7 +81,8 @@ export class UserApis {
         {},
         { headers: { token } },
       );
-      if (response.status === 200) {
+      logger.info(`[verifyToken] response: ${JSON.stringify(response)}`);
+      if (response?.status === 200) {
         console.log(
           `[verifyToken] response.data: ${JSON.stringify(response.data)}`,
         );
@@ -88,9 +91,17 @@ export class UserApis {
         return false;
       }
     } catch (e: any) {
-      console.log(`[verifyToken] error.status: ${e.response.status}`);
+      console.log(`[verifyToken] error.message: ${e.message}`);
+      if (e.message === 'Network Error') {
+        Notification.error({
+          title: 'Network Error',
+          content: 'Please check your network connection',
+          duration: 10,
+        });
+      }
+      console.log(`[verifyToken] error.status: ${e?.response?.status}`);
       console.log(
-        `[verifyToken] error.data: ${JSON.stringify(e.response.data)}`,
+        `[verifyToken] error.data: ${JSON.stringify(e?.response?.data)}`,
       );
       return false;
     }

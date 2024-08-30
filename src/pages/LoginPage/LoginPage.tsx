@@ -1,9 +1,18 @@
-import { Form, Button, Space, Notification } from '@douyinfe/semi-ui';
+import {
+  Button,
+  Form,
+  Notification,
+  Space,
+  Typography,
+} from '@douyinfe/semi-ui';
 import styles from './LoginPage.module.scss';
 import { useState } from 'react';
 import { UserApis } from '../../service/UserApis.ts';
-import { IconLink } from '@douyinfe/semi-icons';
-import { Typography } from '@douyinfe/semi-ui';
+import {
+  IconComment,
+  IconGithubLogo,
+  IconMailStroked1,
+} from '@douyinfe/semi-icons';
 
 const { Text } = Typography;
 
@@ -102,25 +111,26 @@ const LoginPage = () => {
         }}
       >
         <p>
-          We are currently in a closed beta phase. If you are interested in
-          participating, please email&nbsp;
+          We are currently in beta phase. If you are interested in it, please
+          email&nbsp;
           <Text
-            icon={<IconLink />}
+            icon={<IconMailStroked1 />}
             link={{
               href: 'mailto:veejaliu@gmail.com',
               target: '_blank',
             }}
           >
-            veejaliu@gmail.com
+            support@fccareer.com
           </Text>
           &nbsp;to request a test account.
         </p>
         <p>
           Once I receive your email, I will manually send you your login
-          information, which you can use to access the application.
+          information.
+          <br />
           Additionally, feel free to visit our&nbsp;
           <Text
-            icon={<IconLink />}
+            icon={<IconGithubLogo />}
             link={{
               href: 'https://github.com/VeejaLiu/FIFA-Career-Dashboard-Frontend',
               target: '_blank',
@@ -129,16 +139,9 @@ const LoginPage = () => {
           >
             GitHub page
           </Text>
-          &nbsp;to share your suggestions. Thank you for your cooperation!
-        </p>
-        <p>
-          Please note that while we do not plan to delete your data, we cannot
-          guarantee its persistence due to potential unforeseen issues.
-        </p>
-        <p>
-          Or join our&nbsp;
+          &nbsp;to share your suggestions. Or join our&nbsp;
           <Text
-            icon={<IconLink />}
+            icon={<IconComment />}
             link={{
               href: 'https://discord.gg/aKfWAtbJ8F',
               target: '_blank',
@@ -147,7 +150,7 @@ const LoginPage = () => {
           >
             Discord server
           </Text>
-          &nbsp;to discuss the project and provide feedback.
+          &nbsp;to discuss.
         </p>
       </div>
     </Space>
