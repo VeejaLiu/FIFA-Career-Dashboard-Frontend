@@ -63,20 +63,28 @@ const PlayerListColumn = [
     dataIndex: 'playerName',
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
-        <span>
-          <b>{record.playerName}</b>
-        </span>
+        <Space vertical align={'baseline'}>
+          <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+            {record.playerName}
+          </span>
+          <span style={{ color: 'grey', fontSize: '1rem' }}>
+            ID: {record.playerID}
+          </span>
+        </Space>
       );
     },
-  },
-  {
-    title: 'ID',
-    dataIndex: 'playerID',
   },
   {
     title: 'Age',
     dataIndex: 'age',
     sorter: (a: PlayerOverall, b: PlayerOverall) => a.age - b.age,
+    render: (text: string, record: PlayerOverall, index: number) => {
+      return (
+        <span style={{ fontWeight: 'bolder', fontSize: '1.2rem' }}>
+          {record.age}
+        </span>
+      );
+    },
   },
   {
     title: 'Position',
@@ -100,13 +108,27 @@ const PlayerListColumn = [
       const color = getColorByPositionType(record.positionType);
       return (
         <div>
-          <Space>
-            <span style={{ color }}>
-              <b>{record.position1}</b>
+          <Space vertical align={'baseline'}>
+            <span style={{ color, fontSize: '1.5rem', fontWeight: 'bolder' }}>
+              {record.position1}
             </span>
-            <span style={{ color: 'gray' }}>{record.position2}</span>
-            <span style={{ color: 'gray' }}>{record.position3}</span>
-            <span style={{ color: 'gray' }}>{record.position4}</span>
+            <Space>
+              {[record.position2, record.position3, record.position4].map(
+                (position, index) => {
+                  if (position) {
+                    return (
+                      <span
+                        key={index}
+                        style={{ color: 'gray', fontSize: '1rem' }}
+                      >
+                        {position}
+                      </span>
+                    );
+                  }
+                  return null;
+                },
+              )}
+            </Space>
           </Space>
         </div>
       );
@@ -129,11 +151,9 @@ const PlayerListColumn = [
       }
 
       return (
-        <>
-          <span style={{ color, fontWeight: 'bold' }}>
-            {record.overallRating}
-          </span>
-        </>
+        <span style={{ color, fontSize: '1.8rem', fontWeight: 'bold' }}>
+          {record.overallRating}
+        </span>
       );
     },
   },
@@ -152,7 +172,7 @@ const PlayerListColumn = [
         color = 'red'; // 较差
       }
       return (
-        <span style={{ color, fontWeight: 'bold' }}>{record.potential}</span>
+        <span style={{ color, fontSize: '1.8rem' }}>{record.potential}</span>
       );
     },
   },
