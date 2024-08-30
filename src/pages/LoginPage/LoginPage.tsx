@@ -92,7 +92,7 @@ const LoginPage = () => {
             <Form.Input
               mode={'password'}
               label={{ text: 'Password' }}
-              field="field1"
+              field="password"
               placeholder="your password"
               style={{ width: '100%' }}
               fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
