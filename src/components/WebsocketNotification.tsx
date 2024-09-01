@@ -21,6 +21,10 @@ export const WebsocketNotification = () => {
     // WebSocket connection established
     socket.onopen = () => {
       console.log('[WebSocket][onopen] connection established');
+      // Send ping message every 10 seconds
+      setInterval(() => {
+        socket.send('ping');
+      }, 10 * 1000);
     };
 
     // Handle incoming messages
@@ -30,16 +34,35 @@ export const WebsocketNotification = () => {
         '[WebSocket][onmessage] event.data=',
         JSON.stringify(newNotification),
       );
-      if (!newNotification) {
+
+      if (!newNotification || newNotification === '') {
         console.log('Received empty message, ignore it');
         return;
       }
+
+      if (newNotification === 'pong') {
+        console.log('Received pong message, ignore it');
+        return;
+      }
+
       if (newNotification === 'Protocol accepted') {
         console.log('Received protocol accepted message, ignore it');
         return;
       }
 
-      const { type, payload } = JSON.parse(newNotification);
+      let type = '';
+      let payload: any = {};
+      try {
+        const parsed = JSON.parse(newNotification);
+        type = parsed.type;
+        payload = parsed.payload;
+      } catch (e) {
+        console.error(
+          '[WebSocket][onmessage] Failed to parse incoming message:',
+          e,
+        );
+        return;
+      }
       console.log('[WebSocket][onmessage] type:', type, 'payload:', payload);
       switch (type) {
         case 'PlayerUpdate.Overall': {
