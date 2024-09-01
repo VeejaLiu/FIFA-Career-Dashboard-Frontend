@@ -4,24 +4,24 @@ import {
   Image,
   Notification,
   Space,
-  Typography,
+  // Typography,
 } from '@douyinfe/semi-ui';
 import styles from './LoginPage.module.scss';
 import { useState } from 'react';
 import { UserApis } from '../../service/UserApis.ts';
-import {
-  IconComment,
-  IconGithubLogo,
-  IconMailStroked1,
-} from '@douyinfe/semi-icons';
+// import {
+//   IconComment,
+//   IconGithubLogo,
+//   IconMailStroked1,
+// } from '@douyinfe/semi-icons';
 
-const { Text } = Typography;
+// const { Text } = Typography;
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(false);
 
   const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
+  // const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   async function doLogin() {
