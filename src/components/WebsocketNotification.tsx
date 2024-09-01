@@ -26,7 +26,19 @@ export const WebsocketNotification = () => {
     // Handle incoming messages
     socket.onmessage = (event) => {
       const newNotification = event.data;
-      console.log('[WebSocket][onmessage] event.data=', newNotification);
+      console.log(
+        '[WebSocket][onmessage] event.data=',
+        JSON.stringify(newNotification),
+      );
+      if (!newNotification) {
+        console.log('Received empty message, ignore it');
+        return;
+      }
+      if (newNotification === 'Protocol accepted') {
+        console.log('Received protocol accepted message, ignore it');
+        return;
+      }
+
       const { type, payload } = JSON.parse(newNotification);
       console.log('[WebSocket][onmessage] type:', type, 'payload:', payload);
       switch (type) {
