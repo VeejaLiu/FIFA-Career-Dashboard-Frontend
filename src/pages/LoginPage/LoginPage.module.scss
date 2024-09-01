@@ -1,19 +1,80 @@
 .login {
-  align-items: center;
+  padding-top: 40px;
   background: var(--semi-color-bg-0);
-  border-radius: 8px;
-  box-shadow: 0px 4px 14px 0px #0000001a, 0px 0px 1px 0px #0000004d;
-  display: flex;
-  flex-direction: column;
-  height: 450px;
-  padding: 48px 56px;
-  row-gap: 30px;
-  width: 440px;
-  flex-shrink: 0;
 
   .component66 {
     align-items: center;
-    border-radius: 8px;
+    display: inline-flex;
+    flex-direction: column;
+    row-gap: 24px;
+    flex-shrink: 0;
+
+
+    .header {
+      align-items: center;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      row-gap: 6px;
+      flex-shrink: 0;
+
+      .title {
+        color: var(--semi-color-text-0);
+        font-size: 32px;
+        font-weight: 600;
+        line-height: 44px;
+        min-width: 128px;
+        vertical-align: middle;
+        flex-shrink: 0;
+      }
+
+      & > .text {
+        color: var(--semi-color-text-2);
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22px;
+        min-width: 163px;
+        vertical-align: middle;
+        flex-shrink: 0;
+
+        .text {
+          font-family: Inter;
+        }
+      }
+    }
+  }
+
+  .form {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    row-gap: 28px;
+    align-self: stretch;
+
+    .inputs {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      row-gap: 24px;
+      align-self: stretch;
+    }
+
+    .button {
+      height: 40px;
+      width: 440px;
+    }
+  }
+}
+
+.register {
+  padding-top: 40px;
+  background: var(--semi-color-bg-0);
+  width: 450px;
+
+  .component66 {
+    align-items: center;
     display: inline-flex;
     flex-direction: column;
     row-gap: 24px;

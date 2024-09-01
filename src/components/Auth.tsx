@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import App from '../App.tsx';
-import LoginPage from '../pages/LoginPage/LoginPage.tsx';
 import { UserApis } from '../service/UserApis.ts';
 import { Space, Spin } from '@douyinfe/semi-ui';
+import LoginPage from '../pages/LoginPage/LoginPage.tsx';
 
 export const Auth = () => {
   const [isLoading, setIsLoading] = useState(true);
