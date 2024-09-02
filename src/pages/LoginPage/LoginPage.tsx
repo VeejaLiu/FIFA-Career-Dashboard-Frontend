@@ -21,7 +21,7 @@ import img_existing from '../../assets/image/img_existing.png';
 const { Text } = Typography;
 
 const LoginPage = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   const [loginUsername, setLoginUsername] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
@@ -114,7 +114,7 @@ const LoginPage = () => {
               <Form className={styles.inputs}>
                 <Form.Input
                   label={{ text: 'Username / Email' }}
-                  field="input"
+                  field="email"
                   placeholder="your username or email"
                   fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
                   onChange={(e) => setLoginUsername(e)}
@@ -172,7 +172,7 @@ const LoginPage = () => {
                 />
                 <Form.Input
                   label={{ text: 'Email' }}
-                  field="email"
+                  field="register.email"
                   placeholder="your email"
                   fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
                   onChange={(e) => setRegisterEmail(e)}
