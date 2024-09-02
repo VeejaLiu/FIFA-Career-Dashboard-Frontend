@@ -14,6 +14,8 @@ import { UserApis } from '../../service/UserApis.ts';
 //   IconGithubLogo,
 //   IconMailStroked1,
 // } from '@douyinfe/semi-icons';
+import img_starter from '../../image/img_starter.png';
+import img_existing from '../../image/img_existing.png';
 
 // const { Text } = Typography;
 
@@ -127,11 +129,7 @@ const LoginPage = () => {
             </div>
           </Space>
         ) : (
-          <Image
-            src={'src/image/img_1.png'}
-            height={'100%'}
-            width={'100%'}
-          ></Image>
+          <Image src={img_starter} height={'100%'} width={'100%'}></Image>
         )}
       </Space>
 
@@ -199,11 +197,7 @@ const LoginPage = () => {
             </div>
           </Space>
         ) : (
-          <Image
-            src={'src/image/img.png'}
-            height={'100%'}
-            width={'100%'}
-          ></Image>
+          <Image src={img_existing} height={'100%'} width={'100%'}></Image>
         )}
       </Space>
 
