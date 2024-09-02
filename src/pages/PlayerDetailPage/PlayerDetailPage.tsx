@@ -1,19 +1,15 @@
 import * as React from 'react';
 import { Button, Space } from '@douyinfe/semi-ui';
-import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
+import {
+  PlayerApis,
+  PlayerDetail,
+  PlayerOverall,
+} from '../../service/PlayerApis.ts';
 import { useEffect } from 'react';
 import { getColorByPositionType } from '../PlayerListPage/PlayerListPage.tsx';
 
 function PlayerDetailPage(): React.ReactElement {
-  const [playerDetail, setPlayerDetail] = React.useState<
-    | {
-        allPlayer: PlayerOverall[];
-        thisPlayer: any;
-        trends: any[];
-      }
-    | null
-    | undefined
-  >();
+  const [playerDetail, setPlayerDetail] = React.useState<PlayerDetail | null>();
   const [playerID, setPlayerID] = React.useState<number | null>(null);
 
   const getPlayerDetail = async () => {
