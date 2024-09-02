@@ -14,6 +14,7 @@ import {
 } from '@douyinfe/semi-icons';
 import GetStartedPage from './pages/GetStartedPage/GetStartedPage.tsx';
 import { WebsocketNotification } from './components/WebsocketNotification.tsx';
+import PlayerDetailPage from './pages/PlayerDetailPage/PlayerDetailPage.tsx';
 
 export default function App() {
   const [playerCount, setPlayerCount] = useState(0);
@@ -51,6 +52,7 @@ export default function App() {
                 }) => {
                   const routerMap: Record<string, string> = {
                     Players: '/players',
+                    PlayerDetail: '/players-detail',
                     PlayersTrends: '/players-trends',
                     Settings: '/settings',
                     GetStarted: '/get-started',
@@ -68,6 +70,11 @@ export default function App() {
                   {
                     text: `Players (${playerCount})`,
                     itemKey: 'Players',
+                    icon: <IconUser />,
+                  },
+                  {
+                    text: 'Player Detail',
+                    itemKey: 'PlayerDetail',
                     icon: <IconUser />,
                   },
                   {
@@ -99,6 +106,7 @@ export default function App() {
           <Route index element={<PlayerListPage />} />
           <Route path="players" element={<PlayerListPage />} />
           <Route path="players-trends" element={<PlayerTrendsPage />} />
+          <Route path="players-detail" element={<PlayerDetailPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="get-started" element={<GetStartedPage />} />
           <Route path="*" element={<NoMatch />} />

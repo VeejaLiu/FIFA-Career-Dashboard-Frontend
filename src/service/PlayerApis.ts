@@ -59,6 +59,39 @@ export class PlayerApis {
   }
 
   /**
+   * Get player detail
+   */
+  static async getPlayerDetail({ playerID }: { playerID?: number }): Promise<{
+    allPlayer: PlayerOverall[];
+    thisPlayer: any;
+    trends: any[];
+  } | null> {
+    try {
+      const token = localStorage.getItem('fcd-token');
+      const response = await axios.get(
+        `${BACKEND_URL}/api/v1/player/detail/${playerID || 0}`,
+        {
+          headers: {
+            Accept: '*/*',
+            token: token,
+          },
+        },
+      );
+      if (response.status === 200) {
+        return response.data;
+      }
+      return null;
+    } catch (e: any) {
+      console.log(`[getPlayerDetail] error code: ${e.response.status}`);
+      console.log(`[getPlayerDetail] error message: ${e.message}`);
+      if (e.response.status === 401) {
+        Toast.error('Please login first');
+      }
+      return null;
+    }
+  }
+
+  /**
    * Get player count
    */
   static async getPlayerCount(): Promise<number> {
