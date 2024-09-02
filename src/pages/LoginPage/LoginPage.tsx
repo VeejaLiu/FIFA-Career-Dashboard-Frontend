@@ -14,8 +14,8 @@ import { UserApis } from '../../service/UserApis.ts';
 //   IconGithubLogo,
 //   IconMailStroked1,
 // } from '@douyinfe/semi-icons';
-import img_starter from '../../image/img_starter.png';
-import img_existing from '../../image/img_existing.png';
+import img_starter from '../../assets/image/img_starter.png';
+import img_existing from '../../assets/image/img_existing.png';
 
 // const { Text } = Typography;
 
