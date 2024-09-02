@@ -2,22 +2,23 @@ import {
   Button,
   Form,
   Image,
+  Modal,
   Notification,
   Space,
-  // Typography,
+  Typography,
 } from '@douyinfe/semi-ui';
 import styles from './LoginPage.module.scss';
 import { useState } from 'react';
 import { UserApis } from '../../service/UserApis.ts';
-// import {
-//   IconComment,
-//   IconGithubLogo,
-//   IconMailStroked1,
-// } from '@douyinfe/semi-icons';
+import {
+  IconComment,
+  IconGithubLogo,
+  IconMailStroked1,
+} from '@douyinfe/semi-icons';
 import img_starter from '../../assets/image/img_starter.png';
 import img_existing from '../../assets/image/img_existing.png';
 
-// const { Text } = Typography;
+const { Text } = Typography;
 
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(false);
@@ -25,6 +26,8 @@ const LoginPage = () => {
   const [username, setUsername] = useState('');
   // const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [showModal, setShowModal] = useState(false);
 
   async function doLogin() {
     const response = await UserApis.loginUser({
@@ -67,12 +70,13 @@ const LoginPage = () => {
   }
 
   async function doRegister() {
-    Notification.error({
-      position: 'top',
-      title: 'Error',
-      content: 'Sorry, registration is not available yet.',
-      duration: 3,
-    });
+    // Notification.error({
+    //   position: 'top',
+    //   title: 'Error',
+    //   content: 'Sorry, registration is not available yet.',
+    //   duration: 3,
+    // });
+    setShowModal(true);
   }
 
   return (
@@ -201,54 +205,51 @@ const LoginPage = () => {
         )}
       </Space>
 
-      {/*<div*/}
-      {/*  style={{*/}
-      {/*    width: '500px',*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <p>*/}
-      {/*    We are currently in beta phase. If you are interested in it, please*/}
-      {/*    email&nbsp;*/}
-      {/*    <Text*/}
-      {/*      icon={<IconMailStroked1 />}*/}
-      {/*      link={{*/}
-      {/*        href: 'mailto:support@fccareer.top',*/}
-      {/*        target: '_blank',*/}
-      {/*      }}*/}
-      {/*    >*/}
-      {/*      support@fccareer.com*/}
-      {/*    </Text>*/}
-      {/*    &nbsp;to request a test account.*/}
-      {/*  </p>*/}
-      {/*  <p>*/}
-      {/*    Once I receive your email, I will manually send you your login*/}
-      {/*    information.*/}
-      {/*    <br />*/}
-      {/*    Additionally, feel free to visit our&nbsp;*/}
-      {/*    <Text*/}
-      {/*      icon={<IconGithubLogo />}*/}
-      {/*      link={{*/}
-      {/*        href: 'https://github.com/VeejaLiu/FIFA-Career-Dashboard-Frontend',*/}
-      {/*        target: '_blank',*/}
-      {/*      }}*/}
-      {/*      underline*/}
-      {/*    >*/}
-      {/*      GitHub page*/}
-      {/*    </Text>*/}
-      {/*    &nbsp;to share your suggestions. Or join our&nbsp;*/}
-      {/*    <Text*/}
-      {/*      icon={<IconComment />}*/}
-      {/*      link={{*/}
-      {/*        href: 'https://discord.gg/aKfWAtbJ8F',*/}
-      {/*        target: '_blank',*/}
-      {/*      }}*/}
-      {/*      underline*/}
-      {/*    >*/}
-      {/*      Discord server*/}
-      {/*    </Text>*/}
-      {/*    &nbsp;to discuss.*/}
-      {/*  </p>*/}
-      {/*</div>*/}
+      <Modal
+        title="Request a account"
+        visible={showModal}
+        closeOnEsc={true}
+        onOk={() => setShowModal(false)}
+        onCancel={() => setShowModal(false)}
+        footer={<Button onClick={() => setShowModal(false)}>OK</Button>}
+      >
+        You can email&nbsp;
+        <Text
+          icon={<IconMailStroked1 />}
+          link={{
+            href: 'mailto:support@fccareer.top',
+            target: '_blank',
+          }}
+        >
+          support@fccareer.com
+        </Text>
+        &nbsp;to request a test account. Once I receive your email, I will
+        manually send you your login information.
+        <br />
+        Feel free to visit our&nbsp;
+        <Text
+          icon={<IconGithubLogo />}
+          link={{
+            href: 'https://github.com/VeejaLiu/FIFA-Career-Dashboard-Frontend',
+            target: '_blank',
+          }}
+          underline
+        >
+          GitHub page
+        </Text>
+        &nbsp;to share your suggestions, or join our&nbsp;
+        <Text
+          icon={<IconComment />}
+          link={{
+            href: 'https://discord.gg/aKfWAtbJ8F',
+            target: '_blank',
+          }}
+          underline
+        >
+          Discord server
+        </Text>
+        &nbsp;to apply or discuss.
+      </Modal>
     </Space>
   );
 };
