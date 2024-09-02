@@ -23,16 +23,20 @@ const { Text } = Typography;
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(false);
 
-  const [username, setUsername] = useState('');
-  // const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [loginUsername, setLoginUsername] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+
+  const [registerUsername, setRegisterUsername] = useState('');
+  const [registerEmail, setRegisterEmail] = useState('');
+  const [registerPassword, setRegisterPassword] = useState('');
+  const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState('');
 
   const [showModal, setShowModal] = useState(false);
 
   async function doLogin() {
     const response = await UserApis.loginUser({
-      username,
-      password,
+      username: loginUsername,
+      password: loginPassword,
     });
     const { success, message, data } = response;
     if (success) {
@@ -76,6 +80,14 @@ const LoginPage = () => {
     //   content: 'Sorry, registration is not available yet.',
     //   duration: 3,
     // });
+    console.log(
+      `[doRegister] formInfo: ${JSON.stringify({
+        username: registerUsername,
+        email: registerEmail,
+        password: registerPassword,
+        passwordConfirm: registerPasswordConfirm,
+      })}`,
+    );
     setShowModal(true);
   }
 
@@ -105,7 +117,7 @@ const LoginPage = () => {
                   field="input"
                   placeholder="your username or email"
                   fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setUsername(e)}
+                  onChange={(e) => setLoginUsername(e)}
                 />
                 <Form.Input
                   mode={'password'}
@@ -113,7 +125,7 @@ const LoginPage = () => {
                   field="password"
                   placeholder="your password"
                   fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setPassword(e)}
+                  onChange={(e) => setLoginPassword(e)}
                 />
               </Form>
               <Button theme="solid" className={styles.button} onClick={doLogin}>
@@ -156,14 +168,14 @@ const LoginPage = () => {
                   field="username"
                   placeholder="your username"
                   fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setUsername(e)}
+                  onChange={(e) => setRegisterUsername(e)}
                 />
                 <Form.Input
                   label={{ text: 'Email' }}
                   field="email"
                   placeholder="your email"
                   fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setUsername(e)}
+                  onChange={(e) => setRegisterEmail(e)}
                 />
                 <Form.Input
                   mode={'password'}
@@ -171,7 +183,7 @@ const LoginPage = () => {
                   field="password"
                   placeholder="your password"
                   fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setPassword(e)}
+                  onChange={(e) => setRegisterPassword(e)}
                 />{' '}
                 <Form.Input
                   mode={'password'}
@@ -179,7 +191,7 @@ const LoginPage = () => {
                   field="password-confirm"
                   placeholder="confirm your password"
                   fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setPassword(e)}
+                  onChange={(e) => setRegisterPasswordConfirm(e)}
                 />
               </Form>
               <Button
