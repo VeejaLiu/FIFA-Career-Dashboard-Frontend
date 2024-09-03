@@ -70,6 +70,7 @@ function overratingChangeNotification(payload: any) {
       </Space>
     ),
     duration: 30000,
+    theme: 'light',
   });
 }
 
