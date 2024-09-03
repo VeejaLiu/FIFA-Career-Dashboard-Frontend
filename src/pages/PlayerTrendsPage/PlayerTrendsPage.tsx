@@ -200,7 +200,16 @@ function PlayerTrendsPage(): React.ReactElement {
                             }
                             position={'right'}
                           >
-                            <span className="text-container">
+                            <span
+                              className="text-container"
+                              style={{
+                                marginTop: '5px',
+                                cursor: 'pointer',
+                              }}
+                              onClick={() => {
+                                window.location.href = `/players-detail?id=${player.playerID}`;
+                              }}
+                            >
                               {player.playerName}
                             </span>{' '}
                           </Popover>

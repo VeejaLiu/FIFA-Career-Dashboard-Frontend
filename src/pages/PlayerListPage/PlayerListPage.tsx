@@ -67,9 +67,18 @@ const PlayerListColumn = [
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
         <Space vertical align={'baseline'}>
-          <span style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+          <Text
+            style={{
+              fontSize: '1.2rem',
+              fontWeight: 'bold',
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              window.location.href = `/players-detail?id=${record.playerID}`;
+            }}
+          >
             {record.playerName}
-          </span>
+          </Text>
           <span style={{ color: 'grey', fontSize: '1rem' }}>
             ID: {record.playerID}
           </span>

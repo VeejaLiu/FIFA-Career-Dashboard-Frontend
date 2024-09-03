@@ -24,13 +24,19 @@ import {
   PLAYER_PRIMARY_POS_NAME,
   PLAYER_PRIMARY_POS_TYPE,
 } from '../../constant/PLAYER_POSITION.ts';
+import { useSearchParams } from 'react-router-dom';
 
 function PlayerDetailPage(): React.ReactElement {
+  const [searchParams] = useSearchParams();
+  const id = searchParams.get('id');
+
   const [playerDetail, setPlayerDetail] = useState<PlayerDetail>();
-  const [playerID, setPlayerID] = useState<number>(0);
+  const [playerID, setPlayerID] = useState<number>(id ? +id : 0);
 
   const getPlayerDetail = async () => {
-    const data = await PlayerApis.getPlayerDetail({ playerID: playerID });
+    const data = await PlayerApis.getPlayerDetail({
+      playerID: playerID,
+    });
     if (data) {
       setPlayerDetail(data);
     }
