@@ -9,6 +9,7 @@ import SettingsPage from './pages/SettingsPage/SettingsPage.tsx';
 import {
   IconArticle,
   IconHistogram,
+  IconIdCard,
   IconSetting,
   IconUser,
 } from '@douyinfe/semi-icons';
@@ -75,7 +76,7 @@ export default function App() {
                   {
                     text: 'Player Detail',
                     itemKey: 'PlayerDetail',
-                    icon: <IconUser />,
+                    icon: <IconIdCard />,
                   },
                   {
                     text: 'Players Trends',
