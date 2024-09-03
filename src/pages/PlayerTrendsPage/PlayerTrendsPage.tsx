@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
   Area,
   AreaChart,
-  CartesianGrid,
+  // CartesianGrid,
   Tooltip,
   XAxis,
   YAxis,
@@ -162,7 +162,7 @@ function PlayerTrendsPage(): React.ReactElement {
                         style={{
                           // border: '1px solid gray',
                           borderRadius: '3px',
-                          backgroundColor: '#f1f1f1',
+                          backgroundColor: '#f4f5f5',
                           padding: '10px',
                         }}
                       >
@@ -228,7 +228,7 @@ function PlayerTrendsPage(): React.ReactElement {
                               fontSize: '10px',
                             }}
                           ></YAxis>
-                          <CartesianGrid strokeDasharray="3 3" />
+                          {/*<CartesianGrid strokeDasharray="3 3" />*/}
                           <Tooltip />
                           <Area
                             type="monotone"

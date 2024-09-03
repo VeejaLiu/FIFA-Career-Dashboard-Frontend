@@ -19,7 +19,10 @@ export function getColorByPositionType(positionType: string) {
   return 'black';
 }
 
-export function getAvatarUrl(playerID: number) {
+export function getAvatarUrl(playerID: number | null | undefined) {
+  if (!playerID) {
+    return '';
+  }
   // playerID example: 158023
   // src example: https://cdn.sofifa.net/players/158/023/24_120.png
   const a = playerID.toString().slice(0, 3);
