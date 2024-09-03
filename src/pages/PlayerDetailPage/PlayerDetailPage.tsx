@@ -495,6 +495,7 @@ function PlayerDetailPage(): React.ReactElement {
               style={{
                 fontSize: '10px',
               }}
+              domain={[40, 100]}
             ></YAxis>
             {/*<CartesianGrid strokeDasharray="3 3" />*/}
             <Tooltip />
