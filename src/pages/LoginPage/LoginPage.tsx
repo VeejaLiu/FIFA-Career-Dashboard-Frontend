@@ -99,7 +99,7 @@ const LoginPage = () => {
       }}
     >
       {/* Left */}
-      <Space vertical style={{ width: '50vw', height: '100vh' }}>
+      <Space vertical style={{ width: '50vw' }}>
         {isLogin ? (
           <Space vertical className={styles.login}>
             <div className={styles.component66}>
@@ -145,12 +145,17 @@ const LoginPage = () => {
             </div>
           </Space>
         ) : (
-          <Image src={img_starter} height={'100%'} width={'100%'}></Image>
+          <Image
+            preview={false}
+            src={img_starter}
+            width={'100%'}
+            // height={'100%'}
+          ></Image>
         )}
       </Space>
 
       {/* Right */}
-      <Space vertical style={{ width: '50vw', height: '100vh' }}>
+      <Space vertical style={{ width: '50vw' }}>
         {!isLogin ? (
           <Space vertical className={styles.register}>
             <div className={styles.component66}>
@@ -213,7 +218,12 @@ const LoginPage = () => {
             </div>
           </Space>
         ) : (
-          <Image src={img_existing} height={'100%'} width={'100%'}></Image>
+          <Image
+            preview={false}
+            src={img_existing}
+            // height={'100%'}
+            width={'100%'}
+          ></Image>
         )}
       </Space>
 
