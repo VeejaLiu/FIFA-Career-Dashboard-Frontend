@@ -16,11 +16,12 @@ FC24 Career Dashboard:
 - View all players in your team, monitor their overall rating, potential.
 - View players' trends of overall rating, potential.
 - Silent operation, real-time updates (weekly in-game updates, configurable)
+- Player details page
+- Notification when a player's overall rating or potential changes
 
 And more features are coming soon.
 
-- Player details page
-- Notification when a player's overall rating or potential changes
+- Notification when a player's weak foot or skill moves changes
 
 ## Installation
 
@@ -47,28 +48,26 @@ And more features are coming soon.
 
 # Change log
 
-## Latest version 1.1.0:
+## Latest version 1.2.0:
 
-- Add Login page
-- Add settings page(Secret key Management, Logout)
-- Add get started page(How to use)
+- New player details page
+- Notification when a player's overall rating or potential changes
+- New login page
 
-![img_1.png](doc-images/img_1.png)
+![img_6.png](doc-images/img_6.png)
 
-![img_2.png](doc-images/img_2.png)
+![img_9.png](doc-images/img_9.png)
 
-![img_3.png](doc-images/img_3.png)
+![img_8.png](doc-images/img_8.png)
 
-![img_4.png](doc-images/img_4.png)
-
-![img_5.png](doc-images/img_5.png)
+![img_7.png](doc-images/img_7.png)
 
 ## Older versions:
 
 <details>
     <summary>expand to view</summary>
 
-### Latest version 1.1.0:
+### OLD Version 1.1.0:
 
 - Add Login page
 - Add settings page(Secret key Management, Logout)
@@ -84,8 +83,7 @@ And more features are coming soon.
 
 ![img_5.png](doc-images/img_5.png)
 
-
-### Version 1.0.1:
+### OLD Version 1.0.1:
 
 - Change the player trends chart style.
 
@@ -93,7 +91,7 @@ And more features are coming soon.
 
 ![img_2.png](doc-images/img_2.png)
 
-### Version 1.0.0:
+### OLD Version 1.0.0:
 
 Player list:
 ![img.png](doc-images/img.png)
