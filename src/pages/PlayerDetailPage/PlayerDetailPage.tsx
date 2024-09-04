@@ -23,7 +23,7 @@ import {
 import {
   PLAYER_PRIMARY_POS_NAME,
   PLAYER_PRIMARY_POS_TYPE,
-} from '../../constant/PLAYER_POSITION.ts';
+} from '../../constant/player.ts';
 import { useSearchParams } from 'react-router-dom';
 
 function PlayerDetailPage(): React.ReactElement {
