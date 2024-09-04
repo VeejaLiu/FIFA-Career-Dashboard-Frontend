@@ -8,19 +8,20 @@ FC24 Career Dashboard:
 - [Installation](#installation)
     - [Dependencies](#dependencies)
     - [Usage](#usage)
-- [Important Note && Tips](#important-note--tips)
 - [Change log](#change-log)
+- [Important Note && Tips](#important-note--tips)
 
 ## Features
 
 - View all players in your team, monitor their overall rating, potential.
 - View players' trends of overall rating, potential.
 - Silent operation, real-time updates (weekly in-game updates, configurable)
+- Player details page
+- Notification when a player's overall rating or potential changes
 
 And more features are coming soon.
 
-- Player details page
-- Notification when a player's overall rating or potential changes
+- Notification when a player's weak foot or skill moves changes
 
 ## Installation
 
@@ -45,6 +46,61 @@ And more features are coming soon.
 - Click the "Execute" button. It will send a init request to the backend.
 - You can see the player list in the player list page.
 
+# Change log
+
+## Latest version 1.2.0:
+
+- New player details page
+- Notification when a player's overall rating or potential changes
+- New login page
+
+![img_6.png](doc-images/img_6.png)
+
+![img_9.png](doc-images/img_9.png)
+
+![img_8.png](doc-images/img_8.png)
+
+![img_7.png](doc-images/img_7.png)
+
+## Older versions:
+
+<details>
+    <summary>expand to view</summary>
+
+### OLD Version 1.1.0:
+
+- Add Login page
+- Add settings page(Secret key Management, Logout)
+- Add get started page(How to use)
+
+![img_1.png](doc-images/img_1.png)
+
+![img_2.png](doc-images/img_2.png)
+
+![img_3.png](doc-images/img_3.png)
+
+![img_4.png](doc-images/img_4.png)
+
+![img_5.png](doc-images/img_5.png)
+
+### OLD Version 1.0.1:
+
+- Change the player trends chart style.
+
+![img_1.png](doc-images/img_1.png)
+
+![img_2.png](doc-images/img_2.png)
+
+### OLD Version 1.0.0:
+
+Player list:
+![img.png](doc-images/img.png)
+
+Player trends:
+![img.png](doc-images/img2.png)
+
+</details>
+
 ## Important Note && Tips
 
 ### 1. In-game Date Might Not Be Perfectly Accurate!
@@ -68,6 +124,7 @@ after you play a match.
 **Our Tip: Run this script right after entering Career Mode!**
 
 ### 2. The Annoying Black Window! It might steal your focus.
+
 Let me explain how this works. Our application relies on the functions
 provided by Live Editor. Whenever the WEEK_PASSED event is triggered in the
 game, our Lua script runs, collecting data from all your current team players
@@ -88,6 +145,7 @@ lookout for a better solution, and I’ll update the application as soon as we
 find one. Thanks for your understanding!
 
 ### 3. Only One Save Slot Supported!
+
 During the closed beta, we’re only supporting one save slot. This is because
 our server resources are limited, and we can’t provide a separate save for
 every single user. Plus, I doubt anyone is switching save files back and
@@ -95,6 +153,7 @@ forth that often, so I think this limitation is fair. In the future, we might
 offer more save slots, but who knows? The future is full of surprises!
 
 ### 4. Issues Caused by Insufficient File System Permissions
+
 Let me explain why this script requires file system permissions. As we
 mentioned earlier, we use the command line to directly execute a curl command
 to send your player data. However, due to the numerous player attributes, the
@@ -105,46 +164,3 @@ concatenate the file's path in the command. Based on this, please ensure you
 have administrative privileges and write permissions for the folder.
 Generally, we will write to the root directory of the EA FC game, and if
 writing fails, an error will be displayed: "Permission denied."
-
-# Change log
-
-## Latest version 1.1.0:
-
-- Add Login page
-- Add settings page(Secret key Management, Logout)
-- Add get started page(How to use)
-
-![img_1.png](doc-images/img_1.png)
-
-![img_2.png](doc-images/img_2.png)
-
-![img_3.png](doc-images/img_3.png)
-
-![img_4.png](doc-images/img_4.png)
-
-![img_5.png](doc-images/img_5.png)
-
-## Older versions:
-
-<details>
-    <summary>expand to view</summary>
-
-# Version 1.0.1:
-
-- Change the player trends chart style.
-
-![img_1.png](doc-images/img_1.png)
-
-![img_2.png](doc-images/img_2.png)
-
-# Version 1.0.0:
-
-Player list:
-![img.png](doc-images/img.png)
-
-Player trends:
-![img.png](doc-images/img2.png)
-
-</details>
-
-
