@@ -82,14 +82,13 @@ function PlayerDetailPage(): React.ReactElement {
       align={'start'}
     >
       {/* Player picker */}
-      <Space
+      <div
         style={{
           width: '100%',
           padding: '5px',
           border: '1px solid rgba(0, 0, 0, 0.1)',
           borderRadius: '2px',
         }}
-        wrap
       >
         {playerDetail?.allPlayer
           ?.sort((a: PlayerOverall, b: PlayerOverall) => {
@@ -106,9 +105,14 @@ function PlayerDetailPage(): React.ReactElement {
             );
           })
           .map((player) => {
-            const color = getColorByPositionType(player.positionType);
             return (
               <Button
+                style={{
+                  margin: '2px',
+                  backgroundColor:
+                    player.playerID === playerID ? '#0064fa' : '',
+                  color: player.playerID === playerID ? 'white' : 'black',
+                }}
                 key={player.playerID}
                 onClick={() => {
                   setPlayerID(player.playerID);
@@ -116,7 +120,7 @@ function PlayerDetailPage(): React.ReactElement {
               >
                 <span
                   style={{
-                    color,
+                    color: getColorByPositionType(player.positionType),
                     fontWeight: 'bolder',
                     marginRight: '5px',
                   }}
@@ -127,7 +131,7 @@ function PlayerDetailPage(): React.ReactElement {
               </Button>
             );
           })}
-      </Space>
+      </div>
 
       <Space
         align="start"
@@ -143,8 +147,8 @@ function PlayerDetailPage(): React.ReactElement {
           <div>
             <Space style={{ padding: '10px' }}>
               <Image
-                width={150}
-                height={150}
+                width={'116px'}
+                height={'116px'}
                 src={getAvatarUrl(playerDetail?.thisPlayer?.player_id)}
                 alt="player_avatar"
                 preview={false}
@@ -607,7 +611,7 @@ function PlayerDetailPage(): React.ReactElement {
               style={{
                 fontSize: '10px',
               }}
-              domain={[40, 100]}
+              domain={[40, 99]}
             ></YAxis>
             {/*<CartesianGrid strokeDasharray="3 3" />*/}
             <Tooltip />
