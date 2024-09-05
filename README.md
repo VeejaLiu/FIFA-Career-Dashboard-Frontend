@@ -54,11 +54,23 @@ And more features are coming soon.
 - Notification when a player's overall rating or potential changes
 - New login page
 
+Player trends:
+
 ![img_6.png](doc-images/img_6.png)
+
+Player details:
 
 ![img_9.png](doc-images/img_9.png)
 
+Notification when a player's overall rating or potential changes:
+
+![img_10.png](doc-images/img_10.png)
+
+Player list:
+
 ![img_8.png](doc-images/img_8.png)
+
+Login page:
 
 ![img_7.png](doc-images/img_7.png)
 
