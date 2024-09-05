@@ -50,8 +50,8 @@ export interface PlayerModel {
   preferredposition4: number;
   skillmoves: number;
   weakfootabilitytypecode: number;
-  attackingworkrate: string;
-  defensiveworkrate: string;
+  attackingworkrate: number;
+  defensiveworkrate: number;
   acceleration: number;
   sprintspeed: number;
   positioning: number;
