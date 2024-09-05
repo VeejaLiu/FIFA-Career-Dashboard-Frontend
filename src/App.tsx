@@ -1,21 +1,23 @@
-import { Link, Outlet, Route, Routes } from 'react-router-dom';
-import { Nav, Space } from '@douyinfe/semi-ui';
-import './App.css';
-import { useEffect, useState } from 'react';
-import { PlayerApis } from './service/PlayerApis.ts';
-import PlayerListPage from './pages/PlayerListPage/PlayerListPage.tsx';
-import PlayerTrendsPage from './pages/PlayerTrendsPage/PlayerTrendsPage.tsx';
-import SettingsPage from './pages/SettingsPage/SettingsPage.tsx';
+/* eslint-disable prettier/prettier */
+import { Link, Outlet, Route, Routes } from "react-router-dom";
+import { Nav, Space } from "@douyinfe/semi-ui";
+import "./App.css";
+import { useEffect, useState } from "react";
+import { PlayerApis } from "./service/PlayerApis.ts";
+import PlayerListPage from "./pages/PlayerListPage/PlayerListPage.tsx";
+import PlayerTrendsPage from "./pages/PlayerTrendsPage/PlayerTrendsPage.tsx";
+import SettingsPage from "./pages/SettingsPage/SettingsPage.tsx";
 import {
   IconArticle,
   IconHistogram,
   IconIdCard,
   IconSetting,
   IconUser,
-} from '@douyinfe/semi-icons';
-import GetStartedPage from './pages/GetStartedPage/GetStartedPage.tsx';
-import { WebsocketNotification } from './components/WebsocketNotification.tsx';
-import PlayerDetailPage from './pages/PlayerDetailPage/PlayerDetailPage.tsx';
+} from "@douyinfe/semi-icons";
+import GetStartedPage from "./pages/GetStartedPage/GetStartedPage.tsx";
+import { WebsocketNotification } from "./components/WebsocketNotification.tsx";
+import PlayerDetailPage from "./pages/PlayerDetailPage/PlayerDetailPage.tsx";
+import StatsTrackerPage from "./pages/StatsTrackerPage/StatsTrackerPage.tsx";
 
 export default function App() {
   const [playerCount, setPlayerCount] = useState(0);
@@ -43,7 +45,7 @@ export default function App() {
               <Nav
                 className="nav"
                 header={{
-                  text: 'FC24 Career Mode',
+                  text: "FC24 Career Mode",
                 }}
                 renderWrapper={({
                   itemElement,
@@ -52,16 +54,17 @@ export default function App() {
                   props,
                 }) => {
                   const routerMap: Record<string, string> = {
-                    Players: '/players',
-                    PlayerDetail: '/players-detail',
-                    PlayersTrends: '/players-trends',
-                    Settings: '/settings',
-                    GetStarted: '/get-started',
+                    Players: "/players",
+                    PlayerDetail: "/players-detail",
+                    PlayersTrends: "/players-trends",
+                    Settings: "/settings",
+                    GetStarted: "/get-started",
+                    StatsTracker: "/stats-tracker",
                   };
                   return (
                     <Link
-                      style={{ textDecoration: 'none' }}
-                      to={routerMap[props.itemKey || '']}
+                      style={{ textDecoration: "none" }}
+                      to={routerMap[props.itemKey || ""]}
                     >
                       {itemElement}
                     </Link>
@@ -70,35 +73,40 @@ export default function App() {
                 items={[
                   {
                     text: `Players (${playerCount})`,
-                    itemKey: 'Players',
+                    itemKey: "Players",
                     icon: <IconUser />,
                   },
                   {
-                    text: 'Player Detail',
-                    itemKey: 'PlayerDetail',
+                    text: "Player Detail",
+                    itemKey: "PlayerDetail",
                     icon: <IconIdCard />,
                   },
                   {
-                    text: 'Players Trends',
-                    itemKey: 'PlayersTrends',
+                    text: "Players Trends",
+                    itemKey: "PlayersTrends",
                     icon: <IconHistogram />,
                   },
                   {
-                    text: 'Settings',
-                    itemKey: 'Settings',
+                    text: "Settings",
+                    itemKey: "Settings",
                     icon: <IconSetting />,
                   },
                   {
-                    text: 'Get Started',
-                    itemKey: 'GetStarted',
+                    text: "Get Started",
+                    itemKey: "GetStarted",
                     icon: <IconArticle />,
+                  },
+                  {
+                    text: "Stats Tracker",
+                    itemKey: "StatsTracker",
+                    icon: <IconHistogram />,
                   },
                 ]}
                 footer={{
                   collapseButton: true,
                 }}
               ></Nav>
-              <div className={'content'}>
+              <div className={"content"}>
                 <Outlet />
               </div>
             </Space>
@@ -110,6 +118,7 @@ export default function App() {
           <Route path="players-detail" element={<PlayerDetailPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="get-started" element={<GetStartedPage />} />
+          <Route path="stats-tracker" element={<StatsTrackerPage />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
       </Routes>
