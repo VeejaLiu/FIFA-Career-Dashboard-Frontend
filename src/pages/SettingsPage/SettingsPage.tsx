@@ -26,6 +26,24 @@ function SettingsPage(): React.ReactElement {
     setUserSetting(userSetting);
     setIsUserSettingLoading(false);
   }
+  async function updateUserSetting({
+    category,
+    subItem,
+    value,
+  }: {
+    category: string;
+    subItem?: string;
+    value: boolean;
+  }) {
+    setIsUserSettingLoading(true);
+    await UserApis.updateUserSetting({
+      category,
+      subItem: subItem,
+      value,
+    });
+    fetchUserSetting().then();
+    setIsUserSettingLoading(false);
+  }
 
   useEffect(() => {
     fetchSecretKey().then();
@@ -143,7 +161,13 @@ function SettingsPage(): React.ReactElement {
           <Switch
             checked={userSetting?.enableNotification}
             loading={isUserSettingLoading}
-            onChange={(v, e) => console.log(v)}
+            onChange={(v, e) => {
+              console.log('[onChange] enableNotification:', v);
+              updateUserSetting({
+                category: 'enable_notification',
+                value: v,
+              }).then();
+            }}
             aria-label="a switch for demo"
           ></Switch>
         </Space>
@@ -152,27 +176,57 @@ function SettingsPage(): React.ReactElement {
             Player Overall/Potential Update
           </Space>
           <Switch
-            checked={userSetting?.notificationItems?.PlayerUpdate_Overall}
+            checked={
+              userSetting?.enableNotification &&
+              userSetting?.notificationItems?.PlayerUpdate_Overall
+            }
             loading={isUserSettingLoading}
-            onChange={(v, e) => console.log(v)}
+            onChange={(v, e) => {
+              console.log('[onChange] PlayerUpdate_Overall:', v);
+              updateUserSetting({
+                category: 'notification_items',
+                subItem: 'PlayerUpdate.Overall',
+                value: v,
+              }).then();
+            }}
             aria-label="a switch for demo"
           ></Switch>
         </Space>
         <Space>
           <Space style={{ width: '300px' }}>Player Skill Move Update</Space>
           <Switch
-            checked={userSetting?.notificationItems?.PlayerUpdate_SkillMove}
+            checked={
+              userSetting?.enableNotification &&
+              userSetting?.notificationItems?.PlayerUpdate_SkillMove
+            }
             loading={isUserSettingLoading}
-            onChange={(v, e) => console.log(v)}
+            onChange={(v, e) => {
+              console.log('[onChange] PlayerUpdate_SkillMove:', v);
+              updateUserSetting({
+                category: 'notification_items',
+                subItem: 'PlayerUpdate.SkillMove',
+                value: v,
+              }).then();
+            }}
             aria-label="a switch for demo"
           ></Switch>
         </Space>
         <Space>
           <Space style={{ width: '300px' }}>Player Weak Foot Update</Space>
           <Switch
-            checked={userSetting?.notificationItems?.PlayerUpdate_WeakFoot}
+            checked={
+              userSetting?.enableNotification &&
+              userSetting?.notificationItems?.PlayerUpdate_WeakFoot
+            }
             loading={isUserSettingLoading}
-            onChange={(v, e) => console.log(v)}
+            onChange={(v, e) => {
+              console.log('[onChange] PlayerUpdate_WeakFoot:', v);
+              updateUserSetting({
+                category: 'notification_items',
+                subItem: 'PlayerUpdate.WeakFoot',
+                value: v,
+              }).then();
+            }}
             aria-label="a switch for demo"
           ></Switch>
         </Space>
