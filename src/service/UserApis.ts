@@ -241,4 +241,42 @@ export class UserApis {
       };
     }
   }
+
+  static async updateUserSetting({
+    category,
+    subItem,
+    value,
+  }: {
+    category: string;
+    subItem?: string;
+    value: boolean;
+  }) {
+    try {
+      const token = localStorage.getItem('fcd-token');
+      // console.log(`[getPlayerList] token: ${token}`);
+
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/setting`,
+        {
+          category,
+          subItem,
+          value,
+        },
+        {
+          headers: {
+            Accept: '*/*',
+            token: token,
+          },
+        },
+      );
+      console.log(`[updateUserSetting] response: ${JSON.stringify(response)}`);
+      return response.data;
+    } catch (e) {
+      console.log(`[updateUserSetting] error: ${e}`);
+      return {
+        success: false,
+        message: 'Failed to update user setting',
+      };
+    }
+  }
 }
