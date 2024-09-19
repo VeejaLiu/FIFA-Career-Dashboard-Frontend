@@ -192,4 +192,53 @@ export class UserApis {
       return '';
     }
   }
+
+  /**
+   * Get user setting
+   */
+  static async getUserSetting(): Promise<{
+    success: boolean;
+    message: string;
+    data?: {
+      userId: number | string;
+      enableNotification: boolean;
+      notificationItems: {
+        PlayerUpdate_Overall: boolean;
+        PlayerUpdate_SkillMove: boolean;
+        PlayerUpdate_WeakFoot: boolean;
+      };
+    };
+  }> {
+    try {
+      const token = localStorage.getItem('fcd-token');
+      // console.log(`[getPlayerList] token: ${token}`);
+      const response = await axios.get(`${BACKEND_URL}/api/v1/user/setting`, {
+        headers: {
+          Accept: '*/*',
+          token: token,
+        },
+      });
+      console.log(`[getUserSetting] response: ${JSON.stringify(response)}`);
+
+      if (response.status !== 200) {
+        return {
+          success: false,
+          message: 'Failed to fetch user setting',
+        };
+      }
+      if (!response.data.success) {
+        return {
+          success: false,
+          message: 'Failed to fetch user setting',
+        };
+      }
+      return response.data.data;
+    } catch (e) {
+      console.log(e);
+      return {
+        success: false,
+        message: 'Failed to fetch user setting',
+      };
+    }
+  }
 }

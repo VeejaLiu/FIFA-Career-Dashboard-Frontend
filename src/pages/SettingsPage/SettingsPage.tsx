@@ -1,24 +1,39 @@
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Button, Input, Popover, Space } from '@douyinfe/semi-ui';
+import { Button, Input, Popover, Space, Switch } from '@douyinfe/semi-ui';
 import { UserApis } from '../../service/UserApis.ts';
 import { IconCopy, IconRefresh2 } from '@douyinfe/semi-icons';
 import { Notification } from '@douyinfe/semi-ui';
 
 function SettingsPage(): React.ReactElement {
   const [secretKey, setSecretKey] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState<boolean>(true);
+
+  const [userSetting, setUserSetting] = React.useState<any>(null);
+  const [isUserSettingLoading, setIsUserSettingLoading] =
+    React.useState<boolean>(true);
 
   async function fetchSecretKey() {
     const key = await UserApis.getSecretKey();
     console.log(`[fetchSecretKey] key: ${key}`);
     setSecretKey(key);
+    setIsLoading(false);
+  }
+
+  async function fetchUserSetting() {
+    const userSetting = await UserApis.getUserSetting();
+    console.log(`[getUserSetting] userSetting: ${JSON.stringify(userSetting)}`);
+    setUserSetting(userSetting);
+    setIsUserSettingLoading(false);
   }
 
   useEffect(() => {
     fetchSecretKey().then();
+    fetchUserSetting().then();
   }, []);
 
   async function doRefreshSecretKey() {
+    setIsLoading(true);
     const key = await UserApis.doRefreshSecretKey();
     console.log(`[doRefreshSecretKey] key: ${key}`);
     setSecretKey(key);
@@ -27,14 +42,25 @@ function SettingsPage(): React.ReactElement {
       content: 'Secret key refreshed',
       duration: 3,
     });
+    setIsLoading(false);
   }
 
   return (
     <Space vertical style={{ padding: '10px' }} align={'start'}>
       <h1>Settings</h1>
-      <Space vertical align={'start'}>
+      <Space
+        vertical
+        align={'start'}
+        style={{
+          width: '100%',
+          padding: '10px',
+          border: '1px solid #e8e8e8',
+          borderRadius: '5px',
+        }}
+      >
+        <h4>API Secret Key</h4>
         <Space>
-          <Space style={{ width: 'auto' }}>Your Secret API Key:</Space>
+          <Space style={{ width: '300px' }}>Secret API Key:</Space>
           <Input
             // mode="password"
             disabled={true}
@@ -48,6 +74,7 @@ function SettingsPage(): React.ReactElement {
             content={<p>Click to copy your secret key.</p>}
           >
             <Button
+              disabled={isLoading}
               onClick={() => {
                 navigator.clipboard.writeText(secretKey).then(
                   () => {
@@ -97,6 +124,57 @@ function SettingsPage(): React.ReactElement {
           >
             Warning: Do not share your secret key with anyone!
           </span>
+        </Space>
+      </Space>
+
+      <Space
+        vertical
+        align={'start'}
+        style={{
+          width: '100%',
+          padding: '10px',
+          border: '1px solid #e8e8e8',
+          borderRadius: '5px',
+        }}
+      >
+        <h4>Notifications</h4>
+        <Space>
+          <Space style={{ width: '300px' }}>Enable Notifications</Space>
+          <Switch
+            checked={userSetting?.enableNotification}
+            loading={isUserSettingLoading}
+            onChange={(v, e) => console.log(v)}
+            aria-label="a switch for demo"
+          ></Switch>
+        </Space>
+        <Space>
+          <Space style={{ width: '300px' }}>
+            Player Overall/Potential Update
+          </Space>
+          <Switch
+            checked={userSetting?.notificationItems?.PlayerUpdate_Overall}
+            loading={isUserSettingLoading}
+            onChange={(v, e) => console.log(v)}
+            aria-label="a switch for demo"
+          ></Switch>
+        </Space>
+        <Space>
+          <Space style={{ width: '300px' }}>Player Skill Move Update</Space>
+          <Switch
+            checked={userSetting?.notificationItems?.PlayerUpdate_SkillMove}
+            loading={isUserSettingLoading}
+            onChange={(v, e) => console.log(v)}
+            aria-label="a switch for demo"
+          ></Switch>
+        </Space>
+        <Space>
+          <Space style={{ width: '300px' }}>Player Weak Foot Update</Space>
+          <Switch
+            checked={userSetting?.notificationItems?.PlayerUpdate_WeakFoot}
+            loading={isUserSettingLoading}
+            onChange={(v, e) => console.log(v)}
+            aria-label="a switch for demo"
+          ></Switch>
         </Space>
       </Space>
 
