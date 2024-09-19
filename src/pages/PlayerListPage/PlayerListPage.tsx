@@ -8,15 +8,35 @@ const { Text } = Typography;
 export function getColorByPositionType(positionType: string) {
   switch (positionType) {
     case 'FOR':
-      return '#c92a2a';
+      return '#306eff';
     case 'MID':
-      return '#5c940d';
+      return '#268535';
     case 'DEF':
-      return '#1c7ed6';
+      return '#f7b702';
     case 'GK':
-      return '#e67700';
+      return '#f87e0b';
   }
   return 'black';
+}
+
+export function getColorByOverallRating(overallRating: number) {
+  // 40 - #d31332
+  // 50 - #d31332
+  // 60 - #f7b702
+  // 70 - #36b84b
+  // 80 - #268535
+  // 90 - #268535
+  if (overallRating < 50) {
+    return '#d31332';
+  } else if (overallRating < 60) {
+    return '#f7b702';
+  } else if (overallRating < 70) {
+    return '#36b84b';
+  } else if (overallRating < 80) {
+    return '#268535';
+  } else {
+    return '#268535';
+  }
 }
 
 export function getAvatarUrl(playerID: number | null | undefined) {
@@ -129,10 +149,7 @@ const PlayerListColumn = [
                 (position, index) => {
                   if (position) {
                     return (
-                      <span
-                        key={index}
-                        style={{ color: 'gray', fontSize: '1rem' }}
-                      >
+                      <span key={index} style={{ color: 'gray' }}>
                         {position}
                       </span>
                     );
@@ -152,18 +169,14 @@ const PlayerListColumn = [
     sorter: (a: PlayerOverall, b: PlayerOverall) =>
       a.overallRating - b.overallRating,
     render: (text: string, record: PlayerOverall, index: number) => {
-      let color;
-
-      if (record.overallRating >= 90) {
-        color = 'green'; // 优秀
-      } else if (record.overallRating >= 75) {
-        color = 'orange'; // 中等
-      } else {
-        color = 'red'; // 较差
-      }
-
       return (
-        <span style={{ color, fontSize: '1.8rem', fontWeight: 'bold' }}>
+        <span
+          style={{
+            color: getColorByOverallRating(record.overallRating),
+            fontSize: '2rem',
+            fontWeight: 'bold',
+          }}
+        >
           {record.overallRating}
         </span>
       );
@@ -174,17 +187,19 @@ const PlayerListColumn = [
     dataIndex: 'potential',
     sorter: (a: PlayerOverall, b: PlayerOverall) => a.potential - b.potential,
     render: (text: string, record: PlayerOverall, index: number) => {
-      let color;
-
-      if (record.potential >= 90) {
-        color = 'green'; // 优秀
-      } else if (record.potential >= 75) {
-        color = 'orange'; // 中等
-      } else {
-        color = 'red'; // 较差
-      }
       return (
-        <span style={{ color, fontSize: '1.8rem' }}>{record.potential}</span>
+        <span
+          style={{
+            color:
+              record.potential > record.overallRating
+                ? getColorByOverallRating(record.potential)
+                : 'darkgray',
+            fontSize: '2rem',
+            fontWeight: 'bold',
+          }}
+        >
+          {record.potential}
+        </span>
       );
     },
   },

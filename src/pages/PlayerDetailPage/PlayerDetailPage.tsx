@@ -1,20 +1,28 @@
 import * as React from 'react';
-import { Button, Col, Image, Rating, Row, Space } from '@douyinfe/semi-ui';
+import { useEffect, useState } from 'react';
+import {
+  Button,
+  Col,
+  Image,
+  Progress,
+  Rating,
+  Row,
+  Space,
+} from '@douyinfe/semi-ui';
 import {
   PlayerApis,
   PlayerDetail,
   PlayerOverall,
 } from '../../service/PlayerApis.ts';
-import { useEffect, useState } from 'react';
 import {
   getAvatarUrl,
+  getColorByOverallRating,
   getColorByPositionType,
 } from '../PlayerListPage/PlayerListPage.tsx';
 import './PlayerDetailPage.css';
 import {
   Area,
   AreaChart,
-  // CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -25,6 +33,22 @@ import {
   PLAYER_PRIMARY_POS_TYPE,
 } from '../../constant/player.ts';
 import { useSearchParams } from 'react-router-dom';
+
+function getWorkRateText(value: number | string | undefined) {
+  switch (value) {
+    case 0:
+    case '0':
+      return 'Low';
+    case 1:
+    case '1':
+      return 'Medium';
+    case 2:
+    case '2':
+      return 'High';
+    default:
+      return 'unknown';
+  }
+}
 
 function PlayerDetailPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
@@ -58,14 +82,13 @@ function PlayerDetailPage(): React.ReactElement {
       align={'start'}
     >
       {/* Player picker */}
-      <Space
+      <div
         style={{
           width: '100%',
           padding: '5px',
           border: '1px solid rgba(0, 0, 0, 0.1)',
           borderRadius: '2px',
         }}
-        wrap
       >
         {playerDetail?.allPlayer
           ?.sort((a: PlayerOverall, b: PlayerOverall) => {
@@ -82,9 +105,14 @@ function PlayerDetailPage(): React.ReactElement {
             );
           })
           .map((player) => {
-            const color = getColorByPositionType(player.positionType);
             return (
               <Button
+                style={{
+                  margin: '2px',
+                  backgroundColor:
+                    player.playerID === playerID ? '#0064fa' : '',
+                  color: player.playerID === playerID ? 'white' : 'black',
+                }}
                 key={player.playerID}
                 onClick={() => {
                   setPlayerID(player.playerID);
@@ -92,7 +120,7 @@ function PlayerDetailPage(): React.ReactElement {
               >
                 <span
                   style={{
-                    color,
+                    color: getColorByPositionType(player.positionType),
                     fontWeight: 'bolder',
                     marginRight: '5px',
                   }}
@@ -103,7 +131,7 @@ function PlayerDetailPage(): React.ReactElement {
               </Button>
             );
           })}
-      </Space>
+      </div>
 
       <Space
         align="start"
@@ -119,10 +147,11 @@ function PlayerDetailPage(): React.ReactElement {
           <div>
             <Space style={{ padding: '10px' }}>
               <Image
-                width={150}
-                height={150}
+                width={'116px'}
+                height={'116px'}
                 src={getAvatarUrl(playerDetail?.thisPlayer?.player_id)}
                 alt="player_avatar"
+                preview={false}
               />
               <Space vertical style={{ width: '200px' }}>
                 <span style={{ fontWeight: 'bold' }}>
@@ -144,13 +173,21 @@ function PlayerDetailPage(): React.ReactElement {
                   }
                 </h1>
                 <Space style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-                  <span style={{ color: '#82ca9d' }}>
+                  <span
+                    style={{
+                      color: getColorByOverallRating(
+                        playerDetail?.thisPlayer?.overallrating || 0,
+                      ),
+                    }}
+                  >
                     {playerDetail?.thisPlayer?.overallrating}
                   </span>
                   {'→'}
                   <span
                     style={{
-                      color: 'red',
+                      color: getColorByOverallRating(
+                        playerDetail?.thisPlayer?.potential || 0,
+                      ),
                     }}
                   >
                     {playerDetail?.thisPlayer?.potential}
@@ -183,8 +220,8 @@ function PlayerDetailPage(): React.ReactElement {
                 <Rating
                   disabled
                   size={'small'}
-                  count={playerDetail?.thisPlayer?.skillmoves}
-                  value={playerDetail?.thisPlayer?.skillmoves}
+                  count={(playerDetail?.thisPlayer?.skillmoves || 0) + 1}
+                  value={(playerDetail?.thisPlayer?.skillmoves || 0) + 1}
                 />
               </span>
             </div>
@@ -204,7 +241,9 @@ function PlayerDetailPage(): React.ReactElement {
             <div className="stat">
               <span className="stat-label">Foot:</span>
               <span className="stat-info-value">
-                {playerDetail?.thisPlayer?.preferredfoot}
+                {(playerDetail?.thisPlayer?.preferredfoot || 1) === 1
+                  ? 'Right'
+                  : 'Left'}
               </span>
             </div>
             {/*Height	177cm | 5'10"*/}
@@ -225,14 +264,14 @@ function PlayerDetailPage(): React.ReactElement {
             <div className="stat">
               <span className="stat-label">Att. WR:</span>
               <span className="stat-info-value">
-                {playerDetail?.thisPlayer?.attackingworkrate}
+                {getWorkRateText(playerDetail?.thisPlayer?.attackingworkrate)}
               </span>
             </div>
             {/*Def. WR	High*/}
             <div className="stat">
               <span className="stat-label">Def. WR:</span>
               <span className="stat-info-value">
-                {playerDetail?.thisPlayer?.defensiveworkrate}
+                {getWorkRateText(playerDetail?.thisPlayer?.defensiveworkrate)}
               </span>
             </div>
           </div>
@@ -244,6 +283,15 @@ function PlayerDetailPage(): React.ReactElement {
             <Col span={8}>
               <div className="col-content">
                 <h2>Pace</h2>
+                <Progress
+                  percent={
+                    ((playerDetail?.thisPlayer?.acceleration || 0) +
+                      (playerDetail?.thisPlayer?.sprintspeed || 0)) /
+                    2
+                  }
+                  style={{ height: '8px' }}
+                  aria-label="disk usage"
+                />
                 <div className="stat">
                   <span className="stat-label">Acceleration:</span>
                   <span className="stat-value">
@@ -261,6 +309,19 @@ function PlayerDetailPage(): React.ReactElement {
             <Col span={8}>
               <div className="col-content">
                 <h2>Shooting</h2>
+                <Progress
+                  percent={
+                    ((playerDetail?.thisPlayer?.positioning || 0) +
+                      (playerDetail?.thisPlayer?.finishing || 0) +
+                      (playerDetail?.thisPlayer?.shotpower || 0) +
+                      (playerDetail?.thisPlayer?.longshots || 0) +
+                      (playerDetail?.thisPlayer?.volleys || 0) +
+                      (playerDetail?.thisPlayer?.penalties || 0)) /
+                    6
+                  }
+                  style={{ height: '8px' }}
+                  aria-label="disk usage"
+                />
                 <div className="stat">
                   <span className="stat-label">Att. Position:</span>
                   <span className="stat-value">
@@ -305,6 +366,19 @@ function PlayerDetailPage(): React.ReactElement {
             <Col span={8}>
               <div className="col-content">
                 <h2>Passing</h2>
+                <Progress
+                  percent={
+                    ((playerDetail?.thisPlayer?.vision || 0) +
+                      (playerDetail?.thisPlayer?.crossing || 0) +
+                      (playerDetail?.thisPlayer?.freekickaccuracy || 0) +
+                      (playerDetail?.thisPlayer?.shortpassing || 0) +
+                      (playerDetail?.thisPlayer?.longpassing || 0) +
+                      (playerDetail?.thisPlayer?.curve || 0)) /
+                    6
+                  }
+                  style={{ height: '8px' }}
+                  aria-label="disk usage"
+                />
                 {/*Vision*/}
                 <div className="stat">
                   <span className="stat-label">Vision:</span>
@@ -354,6 +428,19 @@ function PlayerDetailPage(): React.ReactElement {
             <Col span={8}>
               <div className="col-content">
                 <h2>Dribbling</h2>
+                <Progress
+                  percent={
+                    ((playerDetail?.thisPlayer?.agility || 0) +
+                      (playerDetail?.thisPlayer?.balance || 0) +
+                      (playerDetail?.thisPlayer?.reactions || 0) +
+                      (playerDetail?.thisPlayer?.ballcontrol || 0) +
+                      (playerDetail?.thisPlayer?.dribbling || 0) +
+                      (playerDetail?.thisPlayer?.composure || 0)) /
+                    6
+                  }
+                  style={{ height: '8px' }}
+                  aria-label="disk usage"
+                />
                 {/*Agility*/}
                 <div className="stat">
                   <span className="stat-label">Agility:</span>
@@ -401,6 +488,18 @@ function PlayerDetailPage(): React.ReactElement {
             <Col span={8}>
               <div className="col-content">
                 <h2>Defending</h2>
+                <Progress
+                  percent={
+                    ((playerDetail?.thisPlayer?.interceptions || 0) +
+                      (playerDetail?.thisPlayer?.headingaccuracy || 0) +
+                      (playerDetail?.thisPlayer?.defensiveawareness || 0) +
+                      (playerDetail?.thisPlayer?.standingtackle || 0) +
+                      (playerDetail?.thisPlayer?.slidingtackle || 0)) /
+                    5
+                  }
+                  style={{ height: '8px' }}
+                  aria-label="disk usage"
+                />
                 {/*Interceptions*/}
                 <div className="stat">
                   <span className="stat-label">Interceptions:</span>
@@ -441,6 +540,17 @@ function PlayerDetailPage(): React.ReactElement {
             <Col span={8}>
               <div className="col-content">
                 <h2>Physical</h2>
+                <Progress
+                  percent={
+                    ((playerDetail?.thisPlayer?.jumping || 0) +
+                      (playerDetail?.thisPlayer?.stamina || 0) +
+                      (playerDetail?.thisPlayer?.strength || 0) +
+                      (playerDetail?.thisPlayer?.aggression || 0)) /
+                    4
+                  }
+                  style={{ height: '8px' }}
+                  aria-label="disk usage"
+                />
                 {/*Jumping*/}
                 <div className="stat">
                   <span className="stat-label">Jumping:</span>
@@ -501,7 +611,7 @@ function PlayerDetailPage(): React.ReactElement {
               style={{
                 fontSize: '10px',
               }}
-              domain={[40, 100]}
+              domain={[40, 99]}
             ></YAxis>
             {/*<CartesianGrid strokeDasharray="3 3" />*/}
             <Tooltip />
