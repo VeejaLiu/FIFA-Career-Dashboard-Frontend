@@ -20,6 +20,50 @@ import img_existing from '../../assets/image/img_existing.webp';
 
 const { Text } = Typography;
 
+function getContactUs() {
+  return (
+    <Space
+      vertical
+      align={'start'}
+      style={{
+        marginTop: '50px',
+      }}
+    >
+      <b>
+        Discord:{' '}
+        <Text link={{ href: 'https://discord.gg/aKfWAtbJ8F' }}>
+          https://discord.gg/aKfWAtbJ8F
+        </Text>
+      </b>
+      <b>
+        GitHub:{' '}
+        <Text
+          icon={<IconGithubLogo />}
+          link={{
+            href: 'https://github.com/VeejaLiu/FIFA-Career-Dashboard-Frontend',
+            target: '_blank',
+          }}
+          underline
+        >
+          FIFA-Career-Dashboard
+        </Text>
+      </b>
+      <b>
+        Email:{' '}
+        <Text
+          icon={<IconMailStroked1 />}
+          link={{
+            href: 'mailto:support@fccareer.top',
+            target: '_blank',
+          }}
+        >
+          support@fccareer.com
+        </Text>
+      </b>
+    </Space>
+  );
+}
+
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
 
@@ -131,7 +175,6 @@ const LoginPage = () => {
               <Button theme="solid" className={styles.button} onClick={doLogin}>
                 Login
               </Button>
-
               <Button
                 theme="outline"
                 className={styles.button}
@@ -143,6 +186,7 @@ const LoginPage = () => {
                 Don't have an account? Register
               </Button>
             </div>
+            {getContactUs()}
           </Space>
         ) : (
           <Image
@@ -216,6 +260,7 @@ const LoginPage = () => {
                 Already have an account? Login
               </Button>
             </div>
+            {getContactUs()}
           </Space>
         ) : (
           <Image
