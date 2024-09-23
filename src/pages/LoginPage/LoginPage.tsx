@@ -20,6 +20,50 @@ import img_existing from '../../assets/image/img_existing.webp';
 
 const { Text } = Typography;
 
+function getContactUs() {
+  return (
+    <Space
+      vertical
+      align={'start'}
+      style={{
+        marginTop: '50px',
+      }}
+    >
+      <b>
+        Discord:{' '}
+        <Text link={{ href: 'https://discord.gg/aKfWAtbJ8F' }}>
+          https://discord.gg/aKfWAtbJ8F
+        </Text>
+      </b>
+      <b>
+        GitHub:{' '}
+        <Text
+          icon={<IconGithubLogo />}
+          link={{
+            href: 'https://github.com/VeejaLiu/FIFA-Career-Dashboard-Frontend',
+            target: '_blank',
+          }}
+          underline
+        >
+          FIFA-Career-Dashboard
+        </Text>
+      </b>
+      <b>
+        Email:{' '}
+        <Text
+          icon={<IconMailStroked1 />}
+          link={{
+            href: 'mailto:support@fccareer.top',
+            target: '_blank',
+          }}
+        >
+          support@fccareer.com
+        </Text>
+      </b>
+    </Space>
+  );
+}
+
 const LoginPage = () => {
   const [isLogin, setIsLogin] = useState(true);
 
@@ -74,12 +118,14 @@ const LoginPage = () => {
   }
 
   async function doRegister() {
-    // Notification.error({
-    //   position: 'top',
-    //   title: 'Error',
-    //   content: 'Sorry, registration is not available yet.',
-    //   duration: 3,
-    // });
+    if (registerPassword !== registerPasswordConfirm) {
+      Notification.error({
+        position: 'top',
+        title: 'Error',
+        content: 'Passwords do not match.',
+        duration: 3,
+      });
+    }
     console.log(
       `[doRegister] formInfo: ${JSON.stringify({
         username: registerUsername,
@@ -88,7 +134,31 @@ const LoginPage = () => {
         passwordConfirm: registerPasswordConfirm,
       })}`,
     );
-    setShowModal(true);
+    // setShowModal(true);
+    const response = await UserApis.registerUser({
+      username: registerUsername,
+      email: registerEmail,
+      password: registerPassword,
+      confirmPassword: registerPasswordConfirm,
+    });
+    if (response.success) {
+      Notification.success({
+        position: 'top',
+        title: 'Welcome!!!',
+        content: 'Register success! Will redirect to login page in 3 seconds',
+        duration: 3,
+      });
+      // 3 seconds later, redirect to login page
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      setIsLogin(true);
+    } else {
+      Notification.error({
+        position: 'top',
+        title: 'Error',
+        content: response.message,
+        duration: 3,
+      });
+    }
   }
 
   return (
@@ -131,7 +201,6 @@ const LoginPage = () => {
               <Button theme="solid" className={styles.button} onClick={doLogin}>
                 Login
               </Button>
-
               <Button
                 theme="outline"
                 className={styles.button}
@@ -143,6 +212,7 @@ const LoginPage = () => {
                 Don't have an account? Register
               </Button>
             </div>
+            {getContactUs()}
           </Space>
         ) : (
           <Image
@@ -216,6 +286,7 @@ const LoginPage = () => {
                 Already have an account? Login
               </Button>
             </div>
+            {getContactUs()}
           </Space>
         ) : (
           <Image

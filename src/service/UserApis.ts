@@ -11,24 +11,33 @@ export class UserApis {
     username,
     email,
     password,
+    confirmPassword,
   }: {
     username: string;
     email: string;
     password: string;
+    confirmPassword: string;
   }) {
     try {
       const response = await axios.post(`${BACKEND_URL}/api/v1/user/register`, {
         username,
         email,
         password,
+        confirmPassword,
       });
-      if (response.status === 200) {
-        return response.data;
+      if (response.status !== 200) {
+        return {
+          success: false,
+          message: 'Something went wrong, please try again',
+        };
       }
-      return '';
+      return response.data;
     } catch (e) {
-      console.log(e);
-      return '';
+      console.log(`[registerUser] error: ${e}`);
+      return {
+        success: false,
+        message: 'Something went wrong, please try again',
+      };
     }
   }
 
@@ -238,6 +247,44 @@ export class UserApis {
       return {
         success: false,
         message: 'Failed to fetch user setting',
+      };
+    }
+  }
+
+  static async updateUserSetting({
+    category,
+    subItem,
+    value,
+  }: {
+    category: string;
+    subItem?: string;
+    value: boolean;
+  }) {
+    try {
+      const token = localStorage.getItem('fcd-token');
+      // console.log(`[getPlayerList] token: ${token}`);
+
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/setting`,
+        {
+          category,
+          subItem,
+          value,
+        },
+        {
+          headers: {
+            Accept: '*/*',
+            token: token,
+          },
+        },
+      );
+      console.log(`[updateUserSetting] response: ${JSON.stringify(response)}`);
+      return response.data;
+    } catch (e) {
+      console.log(`[updateUserSetting] error: ${e}`);
+      return {
+        success: false,
+        message: 'Failed to update user setting',
       };
     }
   }

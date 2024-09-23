@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { Notification, Space } from '@douyinfe/semi-ui';
+import { Image, Notification, Space } from '@douyinfe/semi-ui';
+import { getAvatarUrl } from '../pages/PlayerListPage/PlayerListPage.tsx';
 
 let reconnectInterval = 1000; // 初始重连间隔
 const maxReconnectInterval = 30000; // 最大重连间隔
@@ -20,6 +21,14 @@ function getColorByDiff(diff: number) {
  * @param payload
  */
 function overratingChangeNotification(payload: any) {
+  // {
+  //     "playerID": 276839,
+  //     "playerName": "Sebastiano Desplanches",
+  //     "oldOverallrating": 1,
+  //     "overallrating": 2,
+  //     "oldPotential": 1,
+  //     "potential": 2
+  // }
   const {
     playerID,
     playerName,
@@ -28,45 +37,154 @@ function overratingChangeNotification(payload: any) {
     oldPotential,
     potential,
   } = payload;
-  Notification.success({
-    title: 'Player Update',
-    // content: `Player ${playerName}[${playerID}] updated: overallrating ${oldOverallrating} -> ${overallrating}, potential ${oldPotential} -> ${potential}`,
+  Notification.open({
+    title: 'Player Overall Rating/Potential Update',
     content: (
-      <Space vertical align={'start'}>
-        <div>
-          <span style={{ fontWeight: 'bold' }}> {playerName}</span>
-          <span style={{ color: '#999' }}> [ID: {playerID}]</span>
-        </div>
-        <div>
-          <span style={{ marginRight: '8px' }}>Overall rating: </span>
-          <span style={{ marginRight: '8px', color: '#999' }}>
-            {oldOverallrating}
-          </span>
-          <span style={{ marginRight: '8px' }}>{'->'}</span>
-          <span
-            style={{
-              fontWeight: 'bold',
-              color: getColorByDiff(overallrating - oldOverallrating),
-            }}
-          >
-            {overallrating}
-          </span>
-        </div>
-        <div>
-          <span style={{ marginRight: '8px' }}>Potential: </span>
-          <span style={{ marginRight: '8px', color: '#999' }}>
-            {oldPotential}
-          </span>
-          <span style={{ marginRight: '8px' }}>{'->'}</span>
-          <span
-            style={{
-              fontWeight: 'bold',
-              color: getColorByDiff(potential - oldPotential),
-            }}
-          >
-            {potential}
-          </span>
-        </div>
+      <Space align={'end'}>
+        <Image
+          width={'80px'}
+          height={'80px'}
+          src={getAvatarUrl(playerID)}
+          alt="player_avatar"
+          preview={false}
+        />
+        <Space vertical align={'start'}>
+          <div>
+            <span style={{ fontWeight: 'bold' }}> {playerName}</span>
+            <span style={{ color: '#999' }}> [ID: {playerID}]</span>
+          </div>
+          <div>
+            <span style={{ marginRight: '8px' }}>Overall rating: </span>
+            <span style={{ marginRight: '8px', color: '#999' }}>
+              {oldOverallrating}
+            </span>
+            <span style={{ marginRight: '8px' }}>{'->'}</span>
+            <span
+              style={{
+                fontWeight: 'bold',
+                color: getColorByDiff(overallrating - oldOverallrating),
+              }}
+            >
+              {overallrating}
+            </span>
+          </div>
+          <div>
+            <span style={{ marginRight: '8px' }}>Potential: </span>
+            <span style={{ marginRight: '8px', color: '#999' }}>
+              {oldPotential}
+            </span>
+            <span style={{ marginRight: '8px' }}>{'->'}</span>
+            <span
+              style={{
+                fontWeight: 'bold',
+                color: getColorByDiff(potential - oldPotential),
+              }}
+            >
+              {potential}
+            </span>
+          </div>
+        </Space>
+      </Space>
+    ),
+    duration: 30000,
+    theme: 'light',
+  });
+}
+
+function skillMoveChangeNotification(payload: any) {
+  // {
+  //     "playerID": 276839,
+  //     "playerName": "Sebastiano Desplanches",
+  //     "oldSkillMoves": 1,
+  //     "skillmoves": 2
+  // }
+  const { playerID, playerName, oldSkillMoves, skillMoves } = payload;
+  Notification.open({
+    title: 'Player Skillmoves Update',
+    content: (
+      <Space align={'end'}>
+        <Image
+          width={'80px'}
+          height={'80px'}
+          src={getAvatarUrl(playerID)}
+          alt="player_avatar"
+          preview={false}
+        />
+        <Space vertical align={'start'}>
+          <div>
+            <span style={{ fontWeight: 'bold' }}> {playerName}</span>
+            <span style={{ color: '#999' }}> [ID: {playerID}]</span>
+          </div>
+          <div>
+            <span style={{ marginRight: '8px' }}>Skill Move: </span>
+            <span style={{ marginRight: '8px', color: '#999' }}>
+              {oldSkillMoves}
+            </span>
+            <span style={{ marginRight: '8px' }}>{'->'}</span>
+            <span
+              style={{
+                fontWeight: 'bold',
+                color: getColorByDiff(skillMoves - oldSkillMoves),
+              }}
+            >
+              {skillMoves}
+            </span>
+          </div>
+        </Space>
+      </Space>
+    ),
+    duration: 30000,
+    theme: 'light',
+  });
+}
+
+function weakFootChangeNotification(payload: any) {
+  // {
+  //     "playerID": 276839,
+  //     "playerName": "Sebastiano Desplanches",
+  //     "oldWeakFootAbilityTypeCode": 1,
+  //     "weakfootabilitytypecode": 2
+  // }
+  const {
+    playerID,
+    playerName,
+    oldWeakFootAbilityTypeCode,
+    weakfootabilitytypecode,
+  } = payload;
+  Notification.open({
+    title: 'Player Weak Foot Update',
+    content: (
+      <Space align={'end'}>
+        <Image
+          width={'80px'}
+          height={'80px'}
+          src={getAvatarUrl(playerID)}
+          alt="player_avatar"
+          preview={false}
+        />
+        <Space vertical align={'start'}>
+          <div>
+            <span style={{ fontWeight: 'bold' }}> {playerName}</span>
+            <span style={{ color: '#999' }}> [ID: {playerID}]</span>
+          </div>
+          <div>
+            <span style={{ marginRight: '8px' }}>Weak Foot: </span>
+            <span style={{ marginRight: '8px', color: '#999' }}>
+              {oldWeakFootAbilityTypeCode}
+            </span>
+            <span style={{ marginRight: '8px' }}>{'->'}</span>
+            <span
+              style={{
+                fontWeight: 'bold',
+                color: getColorByDiff(
+                  weakfootabilitytypecode - oldWeakFootAbilityTypeCode,
+                ),
+              }}
+            >
+              {weakfootabilitytypecode}
+            </span>
+          </div>
+        </Space>
       </Space>
     ),
     duration: 30000,
@@ -94,7 +212,7 @@ export const WebsocketNotification = () => {
       // Send ping message every 10 seconds
       setInterval(() => {
         socket.send('ping');
-      }, 10 * 1000);
+      }, 30 * 1000);
     };
 
     // Handle incoming messages
@@ -139,6 +257,14 @@ export const WebsocketNotification = () => {
           overratingChangeNotification(payload);
           break;
         }
+        case 'PlayerUpdate.SkillMove': {
+          skillMoveChangeNotification(payload);
+          break;
+        }
+        case 'PlayerUpdate.WeakFoot': {
+          weakFootChangeNotification(payload);
+          break;
+        }
         default:
           console.log('Unknown message type:', type);
       }
@@ -158,6 +284,32 @@ export const WebsocketNotification = () => {
     createWebSocketConnection().then(
       () => {
         console.log('WebSocket connection established');
+
+        /*
+         * Test code
+         */
+        // overratingChangeNotification({
+        //   playerID: 276839,
+        //   playerName: 'Sebastiano Desplanches',
+        //   oldOverallrating: 1,
+        //   overallrating: 2,
+        //   oldPotential: 1,
+        //   potential: 2,
+        // });
+        //
+        // skillMoveChangeNotification({
+        //   playerID: 276839,
+        //   playerName: 'Sebastiano Desplanches',
+        //   oldSkillMoves: 1,
+        //   skillMoves: 2,
+        // });
+        //
+        // weakFootChangeNotification({
+        //   playerID: 276839,
+        //   playerName: 'Sebastiano Desplanches',
+        //   oldWeakFootAbilityTypeCode: 1,
+        //   weakfootabilitytypecode: 2,
+        // });
       },
       (err) => {
         console.error('Failed to establish WebSocket connection', err);
