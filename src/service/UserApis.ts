@@ -11,24 +11,33 @@ export class UserApis {
     username,
     email,
     password,
+    confirmPassword,
   }: {
     username: string;
     email: string;
     password: string;
+    confirmPassword: string;
   }) {
     try {
       const response = await axios.post(`${BACKEND_URL}/api/v1/user/register`, {
         username,
         email,
         password,
+        confirmPassword,
       });
-      if (response.status === 200) {
-        return response.data;
+      if (response.status !== 200) {
+        return {
+          success: false,
+          message: 'Something went wrong, please try again',
+        };
       }
-      return '';
+      return response.data;
     } catch (e) {
-      console.log(e);
-      return '';
+      console.log(`[registerUser] error: ${e}`);
+      return {
+        success: false,
+        message: 'Something went wrong, please try again',
+      };
     }
   }
 

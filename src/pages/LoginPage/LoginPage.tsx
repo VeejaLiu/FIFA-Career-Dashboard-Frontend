@@ -118,12 +118,14 @@ const LoginPage = () => {
   }
 
   async function doRegister() {
-    // Notification.error({
-    //   position: 'top',
-    //   title: 'Error',
-    //   content: 'Sorry, registration is not available yet.',
-    //   duration: 3,
-    // });
+    if (registerPassword !== registerPasswordConfirm) {
+      Notification.error({
+        position: 'top',
+        title: 'Error',
+        content: 'Passwords do not match.',
+        duration: 3,
+      });
+    }
     console.log(
       `[doRegister] formInfo: ${JSON.stringify({
         username: registerUsername,
@@ -132,7 +134,31 @@ const LoginPage = () => {
         passwordConfirm: registerPasswordConfirm,
       })}`,
     );
-    setShowModal(true);
+    // setShowModal(true);
+    const response = await UserApis.registerUser({
+      username: registerUsername,
+      email: registerEmail,
+      password: registerPassword,
+      confirmPassword: registerPasswordConfirm,
+    });
+    if (response.success) {
+      Notification.success({
+        position: 'top',
+        title: 'Welcome!!!',
+        content: 'Register success! Will redirect to login page in 3 seconds',
+        duration: 3,
+      });
+      // 3 seconds later, redirect to login page
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      setIsLogin(true);
+    } else {
+      Notification.error({
+        position: 'top',
+        title: 'Error',
+        content: response.message,
+        duration: 3,
+      });
+    }
   }
 
   return (
