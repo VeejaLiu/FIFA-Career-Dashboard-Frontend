@@ -121,7 +121,14 @@ function skillMoveChangeNotification(payload: any) {
               {oldSkillMoves}
             </span>
             <span style={{ marginRight: '8px' }}>{'->'}</span>
-            <span style={{ fontWeight: 'bold' }}>{skillMoves}</span>
+            <span
+              style={{
+                fontWeight: 'bold',
+                color: getColorByDiff(skillMoves - oldSkillMoves),
+              }}
+            >
+              {skillMoves}
+            </span>
           </div>
         </Space>
       </Space>
@@ -166,7 +173,14 @@ function weakFootChangeNotification(payload: any) {
               {oldWeakFootAbilityTypeCode}
             </span>
             <span style={{ marginRight: '8px' }}>{'->'}</span>
-            <span style={{ fontWeight: 'bold' }}>
+            <span
+              style={{
+                fontWeight: 'bold',
+                color: getColorByDiff(
+                  weakfootabilitytypecode - oldWeakFootAbilityTypeCode,
+                ),
+              }}
+            >
               {weakfootabilitytypecode}
             </span>
           </div>
@@ -274,15 +288,15 @@ export const WebsocketNotification = () => {
         /*
          * Test code
          */
-        overratingChangeNotification({
-          playerID: 276839,
-          playerName: 'Sebastiano Desplanches',
-          oldOverallrating: 1,
-          overallrating: 2,
-          oldPotential: 1,
-          potential: 2,
-        });
-
+        // overratingChangeNotification({
+        //   playerID: 276839,
+        //   playerName: 'Sebastiano Desplanches',
+        //   oldOverallrating: 1,
+        //   overallrating: 2,
+        //   oldPotential: 1,
+        //   potential: 2,
+        // });
+        //
         // skillMoveChangeNotification({
         //   playerID: 276839,
         //   playerName: 'Sebastiano Desplanches',
