@@ -2,7 +2,7 @@ import {
   Button,
   Form,
   Image,
-  Modal,
+  // Modal,
   Notification,
   Space,
   Typography,
@@ -11,7 +11,7 @@ import styles from './LoginPage.module.scss';
 import { useState } from 'react';
 import { UserApis } from '../../service/UserApis.ts';
 import {
-  IconComment,
+  // IconComment,
   IconGithubLogo,
   IconMailStroked1,
 } from '@douyinfe/semi-icons';
@@ -75,7 +75,7 @@ const LoginPage = () => {
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState('');
 
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   async function doLogin() {
     const response = await UserApis.loginUser({
@@ -161,6 +161,115 @@ const LoginPage = () => {
     }
   }
 
+  const LoginComponent = (
+    <>
+      <Space vertical className={styles.login}>
+        <div className={styles.component66}>
+          <div className={styles.header}>
+            <p className={styles.title}>Welcome to back</p>
+            <p className={styles.text}>
+              <span className={styles.text1}> FC-Career-Dashboard </span>
+            </p>
+          </div>
+        </div>
+        <div className={styles.form}>
+          <Form className={styles.inputs}>
+            <Form.Input
+              label={{ text: 'Username / Email' }}
+              field="email"
+              placeholder="your username or email"
+              fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
+              onChange={(e) => setLoginUsername(e)}
+            />
+            <Form.Input
+              mode={'password'}
+              label={{ text: 'Password' }}
+              field="password"
+              placeholder="your password"
+              fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
+              onChange={(e) => setLoginPassword(e)}
+            />
+          </Form>
+          <Button theme="solid" className={styles.button} onClick={doLogin}>
+            Login
+          </Button>
+          <Button
+            // theme="outline"
+            className={styles.button}
+            onClick={() => {
+              setIsLogin(false);
+            }}
+            size={'large'}
+          >
+            Don't have an account? Register
+          </Button>
+        </div>
+        {getContactUs()}
+      </Space>
+    </>
+  );
+  const RegisterComponent = (
+    <>
+      <Space vertical className={styles.register}>
+        <div className={styles.component66}>
+          <div className={styles.header}>
+            <p className={styles.title}>Start your great journey</p>
+            <p className={styles.text}>
+              <span className={styles.text1}>Free to use, forever</span>
+            </p>
+          </div>
+        </div>
+        <div className={styles.form}>
+          <Form className={styles.inputs}>
+            <Form.Input
+              label={{ text: 'Username' }}
+              field="username"
+              placeholder="your username"
+              fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
+              onChange={(e) => setRegisterUsername(e)}
+            />
+            <Form.Input
+              label={{ text: 'Email' }}
+              field="register.email"
+              placeholder="your email"
+              fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
+              onChange={(e) => setRegisterEmail(e)}
+            />
+            <Form.Input
+              mode={'password'}
+              label={{ text: 'Password' }}
+              field="password"
+              placeholder="your password"
+              fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
+              onChange={(e) => setRegisterPassword(e)}
+            />{' '}
+            <Form.Input
+              mode={'password'}
+              label={{ text: 'Password' }}
+              field="password-confirm"
+              placeholder="confirm your password"
+              fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
+              onChange={(e) => setRegisterPasswordConfirm(e)}
+            />
+          </Form>
+          <Button theme="solid" className={styles.button} onClick={doRegister}>
+            Register
+          </Button>
+          <Button
+            theme={'outline'}
+            className={styles.button}
+            onClick={() => {
+              setIsLogin(true);
+            }}
+          >
+            Already have an account? Login
+          </Button>
+        </div>
+        {getContactUs()}
+      </Space>
+    </>
+  );
+
   return (
     <Space
       style={{
@@ -171,49 +280,7 @@ const LoginPage = () => {
       {/* Left */}
       <Space vertical style={{ width: '50vw' }}>
         {isLogin ? (
-          <Space vertical className={styles.login}>
-            <div className={styles.component66}>
-              <div className={styles.header}>
-                <p className={styles.title}>Welcome to back</p>
-                <p className={styles.text}>
-                  <span className={styles.text1}> FC-Career-Dashboard </span>
-                </p>
-              </div>
-            </div>
-            <div className={styles.form}>
-              <Form className={styles.inputs}>
-                <Form.Input
-                  label={{ text: 'Username / Email' }}
-                  field="email"
-                  placeholder="your username or email"
-                  fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setLoginUsername(e)}
-                />
-                <Form.Input
-                  mode={'password'}
-                  label={{ text: 'Password' }}
-                  field="password"
-                  placeholder="your password"
-                  fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setLoginPassword(e)}
-                />
-              </Form>
-              <Button theme="solid" className={styles.button} onClick={doLogin}>
-                Login
-              </Button>
-              <Button
-                theme="outline"
-                className={styles.button}
-                onClick={() => {
-                  setIsLogin(false);
-                }}
-                size={'large'}
-              >
-                Don't have an account? Register
-              </Button>
-            </div>
-            {getContactUs()}
-          </Space>
+          LoginComponent
         ) : (
           <Image
             preview={false}
@@ -227,67 +294,7 @@ const LoginPage = () => {
       {/* Right */}
       <Space vertical style={{ width: '50vw' }}>
         {!isLogin ? (
-          <Space vertical className={styles.register}>
-            <div className={styles.component66}>
-              <div className={styles.header}>
-                <p className={styles.title}>Start your great journey</p>
-                <p className={styles.text}>
-                  <span className={styles.text1}>Free to use, forever</span>
-                </p>
-              </div>
-            </div>
-            <div className={styles.form}>
-              <Form className={styles.inputs}>
-                <Form.Input
-                  label={{ text: 'Username' }}
-                  field="username"
-                  placeholder="your username"
-                  fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setRegisterUsername(e)}
-                />
-                <Form.Input
-                  label={{ text: 'Email' }}
-                  field="register.email"
-                  placeholder="your email"
-                  fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setRegisterEmail(e)}
-                />
-                <Form.Input
-                  mode={'password'}
-                  label={{ text: 'Password' }}
-                  field="password"
-                  placeholder="your password"
-                  fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setRegisterPassword(e)}
-                />{' '}
-                <Form.Input
-                  mode={'password'}
-                  label={{ text: 'Password' }}
-                  field="password-confirm"
-                  placeholder="confirm your password"
-                  fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-                  onChange={(e) => setRegisterPasswordConfirm(e)}
-                />
-              </Form>
-              <Button
-                theme="solid"
-                className={styles.button}
-                onClick={doRegister}
-              >
-                Register
-              </Button>
-              <Button
-                theme={'outline'}
-                className={styles.button}
-                onClick={() => {
-                  setIsLogin(true);
-                }}
-              >
-                Already have an account? Login
-              </Button>
-            </div>
-            {getContactUs()}
-          </Space>
+          RegisterComponent
         ) : (
           <Image
             preview={false}
@@ -297,52 +304,6 @@ const LoginPage = () => {
           ></Image>
         )}
       </Space>
-
-      <Modal
-        title="Request a account"
-        visible={showModal}
-        closeOnEsc={true}
-        onOk={() => setShowModal(false)}
-        onCancel={() => setShowModal(false)}
-        footer={<Button onClick={() => setShowModal(false)}>OK</Button>}
-      >
-        You can email&nbsp;
-        <Text
-          icon={<IconMailStroked1 />}
-          link={{
-            href: 'mailto:support@fccareer.top',
-            target: '_blank',
-          }}
-        >
-          support@fccareer.com
-        </Text>
-        &nbsp;to request a test account. Once I receive your email, I will
-        manually send you your login information.
-        <br />
-        Feel free to visit our&nbsp;
-        <Text
-          icon={<IconGithubLogo />}
-          link={{
-            href: 'https://github.com/VeejaLiu/FIFA-Career-Dashboard-Frontend',
-            target: '_blank',
-          }}
-          underline
-        >
-          GitHub page
-        </Text>
-        &nbsp;to share your suggestions, or join our&nbsp;
-        <Text
-          icon={<IconComment />}
-          link={{
-            href: 'https://discord.gg/aKfWAtbJ8F',
-            target: '_blank',
-          }}
-          underline
-        >
-          Discord server
-        </Text>
-        &nbsp;to apply or discuss.
-      </Modal>
     </Space>
   );
 };
