@@ -14,11 +14,6 @@ import {
   PlayerDetail,
   PlayerOverall,
 } from '../../service/PlayerApis.ts';
-import {
-  getAvatarUrl,
-  getColorByOverallRating,
-  getColorByPositionType,
-} from '../PlayerListPage/PlayerListPage.tsx';
 import './PlayerDetailPage.css';
 import {
   Area,
@@ -33,22 +28,12 @@ import {
   PLAYER_PRIMARY_POS_TYPE,
 } from '../../constant/player.ts';
 import { useSearchParams } from 'react-router-dom';
-
-function getWorkRateText(value: number | string | undefined) {
-  switch (value) {
-    case 0:
-    case '0':
-      return 'Low';
-    case 1:
-    case '1':
-      return 'Medium';
-    case 2:
-    case '2':
-      return 'High';
-    default:
-      return 'unknown';
-  }
-}
+import {
+  getAvatarUrl,
+  getColorByOverallRating,
+  getColorByPositionType,
+  getWorkRateText,
+} from '../../common/player-helper.ts';
 
 function PlayerDetailPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
