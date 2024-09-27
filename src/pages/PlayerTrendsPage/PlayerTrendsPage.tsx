@@ -11,6 +11,7 @@ import { PlayerApis, PlayerTrendData } from '../../service/PlayerApis.ts';
 import { useEffect } from 'react';
 import {
   getAvatarUrl,
+  getColorByOverallRating,
   getColorByPositionType,
 } from '../PlayerListPage/PlayerListPage.tsx';
 import { Popover, Space, Spin, Typography } from '@douyinfe/semi-ui';
@@ -50,6 +51,51 @@ function formatDate(inputDate: string) {
   //
   // return `${monthName} ${day}${suffix}`;
 }
+
+const CustomTooltip: React.FC<{
+  active?: boolean;
+  payload?: any;
+  label?: string;
+}> = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    const { overallRating, potential } = payload[0].payload; // 获取数据
+    return (
+      <div
+        style={{
+          backgroundColor: 'white',
+          border: '1px solid gray',
+          padding: '10px',
+          fontSize: '0.8rem',
+        }}
+      >
+        <p
+          style={{
+            borderBottom: '1px solid gray',
+            marginBottom: '5px',
+          }}
+        >
+          {payload[0].payload.inGameDate}
+        </p>
+        <p
+          style={{
+            color: getColorByOverallRating(overallRating),
+          }}
+        >
+          <b>Ovr: </b>
+          {overallRating}
+        </p>
+        <p
+          style={{
+            color: getColorByOverallRating(potential),
+          }}
+        >
+          <b>Pot: </b>
+          {potential}
+        </p>
+      </div>
+    );
+  }
+};
 
 function PlayerTrendsPage(): React.ReactElement {
   const [isLoading, setIsLoading] = React.useState(true);
@@ -238,7 +284,7 @@ function PlayerTrendsPage(): React.ReactElement {
                             }}
                           ></YAxis>
                           {/*<CartesianGrid strokeDasharray="3 3" />*/}
-                          <Tooltip />
+                          <Tooltip content={<CustomTooltip />} />
                           <Area
                             type="monotone"
                             dataKey="potential"
