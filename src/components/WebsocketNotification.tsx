@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Image, Notification, Space } from '@douyinfe/semi-ui';
-import { getAvatarUrl } from '../pages/PlayerListPage/PlayerListPage.tsx';
+
+import { getAvatarUrl } from '../common/player-helper.ts';
 
 let reconnectInterval = 1000; // Initial reconnect interval
 const maxReconnectInterval = 30000; // Maximum reconnect interval

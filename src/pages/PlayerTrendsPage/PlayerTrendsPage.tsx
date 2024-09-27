@@ -9,13 +9,13 @@ import {
 } from 'recharts';
 import { PlayerApis, PlayerTrendData } from '../../service/PlayerApis.ts';
 import { useEffect } from 'react';
+import { Popover, Space, Spin, Typography } from '@douyinfe/semi-ui';
+import './PlayerTrendsPage.css';
 import {
   getAvatarUrl,
   getColorByOverallRating,
   getColorByPositionType,
-} from '../PlayerListPage/PlayerListPage.tsx';
-import { Popover, Space, Spin, Typography } from '@douyinfe/semi-ui';
-import './PlayerTrendsPage.css';
+} from '../../common/player-helper.ts';
 
 const { Text } = Typography;
 
