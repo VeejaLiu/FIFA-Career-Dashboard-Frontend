@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { Image, Notification, Space } from '@douyinfe/semi-ui';
 import { getAvatarUrl } from '../pages/PlayerListPage/PlayerListPage.tsx';
 
-let reconnectInterval = 1000; // 初始重连间隔
-const maxReconnectInterval = 30000; // 最大重连间隔
+let reconnectInterval = 1000; // Initial reconnect interval
+const maxReconnectInterval = 30000; // Maximum reconnect interval
 
 function getColorByDiff(diff: number) {
   switch (true) {
