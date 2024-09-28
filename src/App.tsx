@@ -1,5 +1,5 @@
 import { Link, Outlet, Route, Routes } from 'react-router-dom';
-import { Nav, Space } from '@douyinfe/semi-ui';
+import { Dropdown, Nav, Space } from '@douyinfe/semi-ui';
 import './App.css';
 import { useEffect, useState } from 'react';
 import { PlayerApis } from './service/PlayerApis.ts';
@@ -67,18 +67,54 @@ function WebsiteLogoComponent() {
       >
         Career Dashboard
       </p>
-      <Text
-        style={{
-          color: 'gray',
-          fontSize: '0.8rem',
-        }}
-        underline
-        onClick={() => {
-          fetchUserSetting().then();
-        }}
+
+      <Dropdown
+        trigger={'click'}
+        position={'right'}
+        render={
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={async () => {
+                console.log('FC 24');
+                await UserApis.updateUserSetting({
+                  category: 'default_game_version',
+                  value: 24,
+                });
+                // Refresh the page to apply the new version
+                window.location.reload();
+              }}
+            >
+              FC 24
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={async () => {
+                console.log('FC 25');
+                await UserApis.updateUserSetting({
+                  category: 'default_game_version',
+                  value: 25,
+                });
+                // Refresh the page to apply the new version
+                window.location.reload();
+              }}
+            >
+              FC 25
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        }
       >
-        Switch version
-      </Text>
+        <Text
+          style={{
+            color: 'gray',
+            fontSize: '0.8rem',
+          }}
+          underline
+          onClick={() => {
+            fetchUserSetting().then();
+          }}
+        >
+          Switch version
+        </Text>
+      </Dropdown>
     </Space>
   );
 }

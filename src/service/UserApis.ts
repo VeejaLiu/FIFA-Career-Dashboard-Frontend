@@ -259,7 +259,7 @@ export class UserApis {
   }: {
     category: string;
     subItem?: string;
-    value: boolean;
+    value: boolean | number;
   }) {
     try {
       const token = localStorage.getItem('fcd-token');
