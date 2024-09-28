@@ -16,6 +16,72 @@ import {
 import GetStartedPage from './pages/GetStartedPage/GetStartedPage.tsx';
 import { WebsocketNotification } from './components/WebsocketNotification.tsx';
 import PlayerDetailPage from './pages/PlayerDetailPage/PlayerDetailPage.tsx';
+import { UserApis } from './service/UserApis.ts';
+import fc24Logo from '../public/fc24-logo.svg';
+import fc25Logo from '../public/fc25-logo.png';
+import { Typography } from '@douyinfe/semi-ui';
+import * as React from 'react';
+
+const { Text } = Typography;
+
+function getLogoByVersion(defaultVersion: number) {
+  switch (defaultVersion) {
+    case 24:
+      return <img src={fc24Logo} width={'100px'} alt={'FC 24 Logo'} />;
+    case 25:
+    default:
+      return <img src={fc25Logo} width={'100px'} alt={'FC 25 Logo'} />;
+  }
+}
+
+function WebsiteLogoComponent() {
+  const [userSetting, setUserSetting] = React.useState<any>(null);
+
+  const fetchUserSetting = async () => {
+    const userSetting = await UserApis.getUserSetting();
+    console.log(`[getUserSetting] userSetting: ${JSON.stringify(userSetting)}`);
+    setUserSetting(userSetting);
+  };
+
+  useEffect(() => {
+    fetchUserSetting().then();
+  }, []);
+
+  return (
+    <Space
+      vertical
+      style={{
+        width: '100%',
+        padding: '1rem',
+        backgroundColor: 'black',
+        color: '#FFFFFF',
+        borderRadius: '1rem',
+      }}
+    >
+      <p>{getLogoByVersion(userSetting?.defaultGameVersion)}</p>
+      <p
+        style={{
+          fontSize: '1.2rem',
+          fontWeight: 'bold',
+        }}
+      >
+        Career Dashboard
+      </p>
+      <Text
+        style={{
+          color: 'gray',
+          fontSize: '0.8rem',
+        }}
+        underline
+        onClick={() => {
+          fetchUserSetting().then();
+        }}
+      >
+        Switch version
+      </Text>
+    </Space>
+  );
+}
 
 export default function App() {
   const [playerCount, setPlayerCount] = useState(0);
@@ -42,9 +108,7 @@ export default function App() {
 
               <Nav
                 className="nav"
-                header={{
-                  text: 'FC24 Career Mode',
-                }}
+                header={<WebsiteLogoComponent />}
                 renderWrapper={({
                   itemElement,
                   isSubNav,

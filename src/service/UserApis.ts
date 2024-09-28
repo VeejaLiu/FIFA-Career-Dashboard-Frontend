@@ -210,6 +210,7 @@ export class UserApis {
     message: string;
     data?: {
       userId: number | string;
+      defaultGameVersion: number;
       enableNotification: boolean;
       notificationItems: {
         PlayerUpdate_Overall: boolean;
