@@ -108,9 +108,6 @@ function WebsiteLogoComponent() {
             fontSize: '0.8rem',
           }}
           underline
-          onClick={() => {
-            fetchUserSetting().then();
-          }}
         >
           Switch version
         </Text>

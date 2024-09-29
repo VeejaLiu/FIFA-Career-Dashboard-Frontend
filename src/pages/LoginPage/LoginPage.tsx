@@ -245,7 +245,7 @@ const LoginPage = () => {
             />{' '}
             <Form.Input
               mode={'password'}
-              label={{ text: 'Password' }}
+              label={{ text: 'Confirm Password' }}
               field="password-confirm"
               placeholder="confirm your password"
               fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
