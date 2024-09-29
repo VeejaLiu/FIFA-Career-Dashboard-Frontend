@@ -78,7 +78,7 @@ export class UserApis {
    */
   static async verifyToken(): Promise<boolean> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
 
       if (!token) {
         return false;
@@ -118,7 +118,7 @@ export class UserApis {
 
   static async doLogout(): Promise<boolean> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/user/logout`,
@@ -138,7 +138,7 @@ export class UserApis {
         return false;
       }
 
-      localStorage.removeItem('fcd-token');
+      removeToken();
       return true;
     } catch (e) {
       console.log(`[doLogout] error: ${e}`);
@@ -151,7 +151,7 @@ export class UserApis {
    */
   static async getSecretKey(): Promise<string> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
       const response = await axios.get(`${BACKEND_URL}/api/v1/user/secret`, {
         headers: {
@@ -176,7 +176,7 @@ export class UserApis {
 
   static async doRefreshSecretKey(): Promise<string> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/user/secret/refresh`,
@@ -220,7 +220,7 @@ export class UserApis {
     };
   }> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
       const response = await axios.get(`${BACKEND_URL}/api/v1/user/setting`, {
         headers: {
@@ -262,7 +262,7 @@ export class UserApis {
     value: boolean | number;
   }) {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
 
       const response = await axios.post(

@@ -195,7 +195,7 @@ function weakFootChangeNotification(payload: any) {
 
 export const WebsocketNotification = () => {
   async function createWebSocketConnection() {
-    const token = localStorage.getItem('fcd-token');
+    const token = getToken();
     if (!token) {
       console.log(
         'Cannot create WebSocket connection: token not found. And will retry in 5 seconds',

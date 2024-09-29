@@ -96,7 +96,7 @@ const LoginPage = () => {
       // }
       const { username, token } = data;
       console.log(`[doLogin] data: ${JSON.stringify(data)}`);
-      localStorage.setItem('fcd-token', token);
+      setToken(token);
       Notification.success({
         position: 'top',
         title: 'Success',
