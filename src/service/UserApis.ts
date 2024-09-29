@@ -2,6 +2,7 @@ import axios from 'axios';
 import { BACKEND_URL } from '../constant';
 import { logger } from '@douyinfe/semi-ui/lib/es/table/utils';
 import { Notification } from '@douyinfe/semi-ui';
+import { getToken, removeToken } from '../common/common.ts';
 
 export class UserApis {
   /**

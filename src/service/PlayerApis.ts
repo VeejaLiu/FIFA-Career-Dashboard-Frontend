@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { BACKEND_URL } from '../constant';
 import { Toast } from '@douyinfe/semi-ui';
+import { getToken } from '../common/common.ts';
 
 export interface PlayerOverall {
   playerID: number;

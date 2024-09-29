@@ -17,6 +17,7 @@ import {
 } from '@douyinfe/semi-icons';
 import img_starter from '../../assets/image/img_starter.webp';
 import img_existing from '../../assets/image/img_existing.webp';
+import { setToken } from '../../common/common.ts';
 
 const { Text } = Typography;
 

@@ -1,11 +1,11 @@
-function getToken() {
+export function getToken() {
   return localStorage.getItem('fcd-token');
 }
 
-function setToken(token: string) {
+export function setToken(token: string) {
   localStorage.setItem('fcd-token', token);
 }
 
-function removeToken() {
+export function removeToken() {
   localStorage.removeItem('fcd-token');
 }
