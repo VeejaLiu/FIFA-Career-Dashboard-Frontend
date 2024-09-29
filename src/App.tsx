@@ -21,6 +21,10 @@ import fc24Logo from '../public/fc24-logo.svg';
 import fc25Logo from '../public/fc25-logo.png';
 import { Typography } from '@douyinfe/semi-ui';
 import * as React from 'react';
+import {
+  getDefaultGameVersion,
+  removeDefaultGameVersion,
+} from './common/common.ts';
 
 const { Text } = Typography;
 
@@ -29,18 +33,18 @@ function getLogoByVersion(defaultVersion: number) {
     case 24:
       return <img src={fc24Logo} width={'100px'} alt={'FC 24 Logo'} />;
     case 25:
-    default:
       return <img src={fc25Logo} width={'100px'} alt={'FC 25 Logo'} />;
+    default:
+      return <h4>No version chosen</h4>;
   }
 }
 
 function WebsiteLogoComponent() {
-  const [userSetting, setUserSetting] = React.useState<any>(null);
+  const [defaultGameVersion, setDefaultGameVersion] = React.useState<number>(0);
 
   const fetchUserSetting = async () => {
-    const userSetting = await UserApis.getUserSetting();
-    console.log(`[getUserSetting] userSetting: ${JSON.stringify(userSetting)}`);
-    setUserSetting(userSetting);
+    const gameVersion = await getDefaultGameVersion();
+    setDefaultGameVersion(gameVersion);
   };
 
   useEffect(() => {
@@ -58,7 +62,7 @@ function WebsiteLogoComponent() {
         borderRadius: '1rem',
       }}
     >
-      <p>{getLogoByVersion(userSetting?.defaultGameVersion)}</p>
+      <p>{getLogoByVersion(defaultGameVersion)}</p>
       <p
         style={{
           fontSize: '1.2rem',
@@ -75,7 +79,8 @@ function WebsiteLogoComponent() {
           <Dropdown.Menu>
             <Dropdown.Item
               onClick={async () => {
-                console.log('FC 24');
+                console.log('Switch to FC 24');
+                removeDefaultGameVersion();
                 await UserApis.updateUserSetting({
                   category: 'default_game_version',
                   value: 24,
@@ -89,6 +94,7 @@ function WebsiteLogoComponent() {
             <Dropdown.Item
               onClick={async () => {
                 console.log('FC 25');
+                removeDefaultGameVersion();
                 await UserApis.updateUserSetting({
                   category: 'default_game_version',
                   value: 25,

@@ -207,19 +207,15 @@ export class UserApis {
    * Get user setting
    */
   static async getUserSetting(): Promise<{
-    success: boolean;
-    message: string;
-    data?: {
-      userId: number | string;
-      defaultGameVersion: number;
-      enableNotification: boolean;
-      notificationItems: {
-        PlayerUpdate_Overall: boolean;
-        PlayerUpdate_SkillMove: boolean;
-        PlayerUpdate_WeakFoot: boolean;
-      };
+    userId?: number | string;
+    defaultGameVersion?: number;
+    enableNotification?: boolean;
+    notificationItems?: {
+      PlayerUpdate_Overall: boolean;
+      PlayerUpdate_SkillMove: boolean;
+      PlayerUpdate_WeakFoot: boolean;
     };
-  }> {
+  } | null> {
     try {
       const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
@@ -232,24 +228,15 @@ export class UserApis {
       console.log(`[getUserSetting] response: ${JSON.stringify(response)}`);
 
       if (response.status !== 200) {
-        return {
-          success: false,
-          message: 'Failed to fetch user setting',
-        };
+        return null;
       }
       if (!response.data.success) {
-        return {
-          success: false,
-          message: 'Failed to fetch user setting',
-        };
+        return null;
       }
       return response.data.data;
     } catch (e) {
       console.log(e);
-      return {
-        success: false,
-        message: 'Failed to fetch user setting',
-      };
+      return null;
     }
   }
 
