@@ -8,6 +8,7 @@ import {
   Rating,
   Row,
   Space,
+  Typography,
 } from '@douyinfe/semi-ui';
 import {
   PlayerApis,
@@ -35,6 +36,8 @@ import {
   getWorkRateText,
 } from '../../common/player-helper.ts';
 
+const { Text } = Typography;
+
 function PlayerDetailPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
@@ -55,7 +58,7 @@ function PlayerDetailPage(): React.ReactElement {
     getPlayerDetail().then();
   }, [playerID]);
 
-  return (
+  return playerDetail ? (
     <Space
       vertical
       style={{
@@ -617,6 +620,20 @@ function PlayerDetailPage(): React.ReactElement {
             ></Area>
           </AreaChart>
         </ResponsiveContainer>
+      </Space>
+    </Space>
+  ) : (
+    <Space
+      align="center"
+      style={{
+        width: '100%',
+      }}
+      vertical
+    >
+      <Space align={'center'} style={{ height: '100vh' }}>
+        No data here. Please go to
+        <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
+        your journey!
       </Space>
     </Space>
   );
