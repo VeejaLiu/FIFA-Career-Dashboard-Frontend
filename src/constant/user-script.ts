@@ -186,7 +186,7 @@ function postPlayers(jsonStr, dateStr)
     file:close()
     command = command .. ' -d "@' .. fileName .. '"'
 
-    command = command .. ' ' .. "{{post-player-url}}/api/v1/player/bulk"
+    command = command .. ' ' .. "{{post-player-url}}/api/v1/player/bulk?gameVersion=24"
 
     Log('[postPlayers] Command: ' .. command)
 
