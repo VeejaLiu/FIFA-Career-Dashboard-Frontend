@@ -63,7 +63,6 @@ function PlayerDetailPage(): React.ReactElement {
       vertical
       style={{
         width: '95%',
-        height: '100vh',
         marginTop: '8px',
         marginBottom: '200px',
       }}
@@ -595,35 +594,35 @@ function PlayerDetailPage(): React.ReactElement {
                 />
                 {/*Diving*/}
                 <div className="stat">
-                  <span className="stat-label">Diving:</span>
+                  <span className="stat-label">GK Diving:</span>
                   <span className="stat-value">
                     {playerDetail?.thisPlayer?.gkdiving}
                   </span>
                 </div>
                 {/*Handling*/}
                 <div className="stat">
-                  <span className="stat-label">Handling:</span>
+                  <span className="stat-label">GK Handling:</span>
                   <span className="stat-value">
                     {playerDetail?.thisPlayer?.gkhandling}
                   </span>
                 </div>
                 {/*Kicking*/}
                 <div className="stat">
-                  <span className="stat-label">Kicking:</span>
+                  <span className="stat-label">GK Kicking:</span>
                   <span className="stat-value">
                     {playerDetail?.thisPlayer?.gkkicking}
                   </span>
                 </div>
                 {/*Reflexes*/}
                 <div className="stat">
-                  <span className="stat-label">Reflexes:</span>
+                  <span className="stat-label">GK Reflexes:</span>
                   <span className="stat-value">
                     {playerDetail?.thisPlayer?.gkreflexes}
                   </span>
                 </div>
                 {/*Positioning*/}
                 <div className="stat">
-                  <span className="stat-label">Positioning:</span>
+                  <span className="stat-label">GK Positioning:</span>
                   <span className="stat-value">
                     {playerDetail?.thisPlayer?.gkpositioning}
                   </span>
@@ -637,7 +636,7 @@ function PlayerDetailPage(): React.ReactElement {
       <Space
         style={{
           width: '100%',
-          height: '600px',
+          height: '300px',
           padding: '5px',
           backgroundColor: '#f4f5f5',
           borderRadius: '2px',
@@ -645,7 +644,7 @@ function PlayerDetailPage(): React.ReactElement {
       >
         <ResponsiveContainer>
           <AreaChart
-            height={600}
+            height={300}
             data={playerDetail?.trends}
             margin={{ top: 10, right: 30, left: 0 }}
           >
