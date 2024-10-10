@@ -570,6 +570,67 @@ function PlayerDetailPage(): React.ReactElement {
               </div>
             </Col>
           </Row>
+          <Row>
+            {/*
+                Diving
+                Handling
+                Kicking
+                Reflexes
+                Positioning
+            */}
+            <Col span={8}>
+              <div className="col-content">
+                <h2>Goalkeeping</h2>
+                <Progress
+                  percent={
+                    ((playerDetail?.thisPlayer?.gkdiving || 0) +
+                      (playerDetail?.thisPlayer?.gkhandling || 0) +
+                      (playerDetail?.thisPlayer?.gkkicking || 0) +
+                      (playerDetail?.thisPlayer?.gkreflexes || 0) +
+                      (playerDetail?.thisPlayer?.gkpositioning || 0)) /
+                    5
+                  }
+                  style={{ height: '8px' }}
+                  aria-label="Goalkeeping ability"
+                />
+                {/*Diving*/}
+                <div className="stat">
+                  <span className="stat-label">Diving:</span>
+                  <span className="stat-value">
+                    {playerDetail?.thisPlayer?.gkdiving}
+                  </span>
+                </div>
+                {/*Handling*/}
+                <div className="stat">
+                  <span className="stat-label">Handling:</span>
+                  <span className="stat-value">
+                    {playerDetail?.thisPlayer?.gkhandling}
+                  </span>
+                </div>
+                {/*Kicking*/}
+                <div className="stat">
+                  <span className="stat-label">Kicking:</span>
+                  <span className="stat-value">
+                    {playerDetail?.thisPlayer?.gkkicking}
+                  </span>
+                </div>
+                {/*Reflexes*/}
+                <div className="stat">
+                  <span className="stat-label">Reflexes:</span>
+                  <span className="stat-value">
+                    {playerDetail?.thisPlayer?.gkreflexes}
+                  </span>
+                </div>
+                {/*Positioning*/}
+                <div className="stat">
+                  <span className="stat-label">Positioning:</span>
+                  <span className="stat-value">
+                    {playerDetail?.thisPlayer?.gkpositioning}
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </div>
       </Space>
 
