@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { BACKEND_URL } from '../constant';
 import { Toast } from '@douyinfe/semi-ui';
+import { getDefaultGameVersion, getToken } from '../common/common.ts';
 
 export interface PlayerOverall {
   playerID: number;
@@ -104,14 +105,18 @@ export class PlayerApis {
    */
   static async getPlayerList(): Promise<PlayerOverall[]> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
+      const gameVersion = await getDefaultGameVersion();
       // console.log(`[getPlayerList] token: ${token}`);
-      const response = await axios.get(`${BACKEND_URL}/api/v1/player/`, {
-        headers: {
-          Accept: '*/*',
-          token: token,
+      const response = await axios.get(
+        `${BACKEND_URL}/api/v1/player/?gameVersion=${gameVersion}`,
+        {
+          headers: {
+            Accept: '*/*',
+            token: token,
+          },
         },
-      });
+      );
       if (response.status === 200) {
         return response.data;
       }
@@ -135,9 +140,10 @@ export class PlayerApis {
     playerID?: number;
   }): Promise<PlayerDetail | null> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
+      const gameVersion = await getDefaultGameVersion();
       const response = await axios.get(
-        `${BACKEND_URL}/api/v1/player/detail/${playerID || 0}`,
+        `${BACKEND_URL}/api/v1/player/detail/${playerID || 0}?gameVersion=${gameVersion}`,
         {
           headers: {
             Accept: '*/*',
@@ -164,10 +170,14 @@ export class PlayerApis {
    */
   static async getPlayerCount(): Promise<number> {
     try {
-      const token = localStorage.getItem('fcd-token');
-      const response = await axios.get(`${BACKEND_URL}/api/v1/player/count`, {
-        headers: { Accept: '*/*', token: token },
-      });
+      const token = getToken();
+      const gameVersion = await getDefaultGameVersion();
+      const response = await axios.get(
+        `${BACKEND_URL}/api/v1/player/count?gameVersion=${gameVersion}`,
+        {
+          headers: { Accept: '*/*', token: token },
+        },
+      );
       if (response.status === 200) {
         return response.data;
       }
@@ -187,10 +197,12 @@ export class PlayerApis {
    */
   static async getPlayerTrends(): Promise<PlayerTrendData[]> {
     try {
-      const token = localStorage.getItem('fcd-token');
-      const response = await axios.get(`${BACKEND_URL}/api/v1/player/trends`, {
-        headers: { Accept: '*/*', token: token },
-      });
+      const token = getToken();
+      const gameVersion = await getDefaultGameVersion();
+      const response = await axios.get(
+        `${BACKEND_URL}/api/v1/player/trends?gameVersion=${gameVersion}`,
+        { headers: { Accept: '*/*', token: token } },
+      );
       if (response.status === 200) {
         return response.data;
       }

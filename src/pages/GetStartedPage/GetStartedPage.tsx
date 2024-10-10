@@ -3,8 +3,10 @@ import { useEffect, useState } from 'react';
 import { Button, CodeHighlight, Notification, Space } from '@douyinfe/semi-ui';
 import { UserApis } from '../../service/UserApis.ts';
 import { Typography } from '@douyinfe/semi-ui';
-import { luaScript } from '../../constant/user-script.ts';
+import { luaScript_FC24 } from '../../constant/user-script.ts';
+import { luaScript_FC25 } from '../../constant/user-script.ts';
 import { IconLink } from '@douyinfe/semi-icons';
+import { getDefaultGameVersion } from '../../common/common.ts';
 
 const { Title, Text, Paragraph } = Typography;
 const PostPlayerURL =
@@ -12,17 +14,29 @@ const PostPlayerURL =
 
 function SettingsPage(): React.ReactElement {
   const [isCodeExpanded, setIsCodeExpanded] = useState(false);
-  const [codeStr, setCodeStr] = React.useState(luaScript);
+  const [codeStr, setCodeStr] = React.useState(luaScript_FC24);
   const [isSecretLoading, setIsSecretLoading] = React.useState(true);
 
   async function getLuaCode() {
     const key = await UserApis.getSecretKey();
+    const gameVersion = await getDefaultGameVersion();
     console.log(`[fetchSecretKey] key: ${key}`);
-    setCodeStr(
-      luaScript
-        .replace('{{user-secret-key}}', key)
-        .replace('{{post-player-url}}', PostPlayerURL),
-    );
+    console.log(`[fetchSecretKey] gameVersion: ${gameVersion}`);
+
+    switch (gameVersion) {
+      case 24:
+        setCodeStr(
+          luaScript_FC24
+            .replace('{{user-secret-key}}', key)
+            .replace('{{post-player-url}}', PostPlayerURL),
+        );
+        break;
+      case 25:
+        setCodeStr(luaScript_FC25);
+        break;
+      default:
+        break;
+    }
   }
 
   useEffect(() => {

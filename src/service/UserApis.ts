@@ -2,6 +2,7 @@ import axios from 'axios';
 import { BACKEND_URL } from '../constant';
 import { logger } from '@douyinfe/semi-ui/lib/es/table/utils';
 import { Notification } from '@douyinfe/semi-ui';
+import { getToken, removeToken } from '../common/common.ts';
 
 export class UserApis {
   /**
@@ -78,7 +79,7 @@ export class UserApis {
    */
   static async verifyToken(): Promise<boolean> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
 
       if (!token) {
         return false;
@@ -118,7 +119,7 @@ export class UserApis {
 
   static async doLogout(): Promise<boolean> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/user/logout`,
@@ -138,7 +139,7 @@ export class UserApis {
         return false;
       }
 
-      localStorage.removeItem('fcd-token');
+      removeToken();
       return true;
     } catch (e) {
       console.log(`[doLogout] error: ${e}`);
@@ -151,7 +152,7 @@ export class UserApis {
    */
   static async getSecretKey(): Promise<string> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
       const response = await axios.get(`${BACKEND_URL}/api/v1/user/secret`, {
         headers: {
@@ -176,7 +177,7 @@ export class UserApis {
 
   static async doRefreshSecretKey(): Promise<string> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/user/secret/refresh`,
@@ -206,20 +207,17 @@ export class UserApis {
    * Get user setting
    */
   static async getUserSetting(): Promise<{
-    success: boolean;
-    message: string;
-    data?: {
-      userId: number | string;
-      enableNotification: boolean;
-      notificationItems: {
-        PlayerUpdate_Overall: boolean;
-        PlayerUpdate_SkillMove: boolean;
-        PlayerUpdate_WeakFoot: boolean;
-      };
+    userId?: number | string;
+    defaultGameVersion?: number;
+    enableNotification?: boolean;
+    notificationItems?: {
+      PlayerUpdate_Overall: boolean;
+      PlayerUpdate_SkillMove: boolean;
+      PlayerUpdate_WeakFoot: boolean;
     };
-  }> {
+  } | null> {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
       const response = await axios.get(`${BACKEND_URL}/api/v1/user/setting`, {
         headers: {
@@ -230,24 +228,15 @@ export class UserApis {
       console.log(`[getUserSetting] response: ${JSON.stringify(response)}`);
 
       if (response.status !== 200) {
-        return {
-          success: false,
-          message: 'Failed to fetch user setting',
-        };
+        return null;
       }
       if (!response.data.success) {
-        return {
-          success: false,
-          message: 'Failed to fetch user setting',
-        };
+        return null;
       }
       return response.data.data;
     } catch (e) {
       console.log(e);
-      return {
-        success: false,
-        message: 'Failed to fetch user setting',
-      };
+      return null;
     }
   }
 
@@ -258,10 +247,10 @@ export class UserApis {
   }: {
     category: string;
     subItem?: string;
-    value: boolean;
+    value: boolean | number;
   }) {
     try {
-      const token = localStorage.getItem('fcd-token');
+      const token = getToken();
       // console.log(`[getPlayerList] token: ${token}`);
 
       const response = await axios.post(

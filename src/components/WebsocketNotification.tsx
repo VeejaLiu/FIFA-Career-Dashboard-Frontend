@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Image, Notification, Space } from '@douyinfe/semi-ui';
 
 import { getAvatarUrl } from '../common/player-helper.ts';
+import { getToken } from '../common/common.ts';
 
 let reconnectInterval = 1000; // Initial reconnect interval
 const maxReconnectInterval = 30000; // Maximum reconnect interval
@@ -195,7 +196,7 @@ function weakFootChangeNotification(payload: any) {
 
 export const WebsocketNotification = () => {
   async function createWebSocketConnection() {
-    const token = localStorage.getItem('fcd-token');
+    const token = getToken();
     if (!token) {
       console.log(
         'Cannot create WebSocket connection: token not found. And will retry in 5 seconds',

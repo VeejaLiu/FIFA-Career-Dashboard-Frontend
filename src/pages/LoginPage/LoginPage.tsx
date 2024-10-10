@@ -17,6 +17,7 @@ import {
 } from '@douyinfe/semi-icons';
 import img_starter from '../../assets/image/img_starter.webp';
 import img_existing from '../../assets/image/img_existing.webp';
+import { setToken } from '../../common/common.ts';
 
 const { Text } = Typography;
 
@@ -96,7 +97,7 @@ const LoginPage = () => {
       // }
       const { username, token } = data;
       console.log(`[doLogin] data: ${JSON.stringify(data)}`);
-      localStorage.setItem('fcd-token', token);
+      setToken(token);
       Notification.success({
         position: 'top',
         title: 'Success',
@@ -245,7 +246,7 @@ const LoginPage = () => {
             />{' '}
             <Form.Input
               mode={'password'}
-              label={{ text: 'Password' }}
+              label={{ text: 'Confirm Password' }}
               field="password-confirm"
               placeholder="confirm your password"
               fieldStyle={{ alignSelf: 'stretch', padding: 0 }}

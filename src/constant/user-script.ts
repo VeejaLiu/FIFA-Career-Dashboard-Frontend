@@ -1,4 +1,4 @@
-export const luaScript = `
+export const luaScript_FC24 = `
 require 'imports/career_mode/helpers'
 require 'imports/other/helpers'
 local json = require("imports/external/json")
@@ -186,7 +186,7 @@ function postPlayers(jsonStr, dateStr)
     file:close()
     command = command .. ' -d "@' .. fileName .. '"'
 
-    command = command .. ' ' .. "{{post-player-url}}/api/v1/player/bulk"
+    command = command .. ' ' .. "{{post-player-url}}/api/v1/player/bulk?gameVersion=24"
 
     Log('[postPlayers] Command: ' .. command)
 
@@ -247,4 +247,8 @@ end
 
 sendTeamPlayerAttr()
 AddEventHandler("post__CareerModeEvent", OnEvent)
+`;
+
+export const luaScript_FC25 = `
+Not supported yet
 `;

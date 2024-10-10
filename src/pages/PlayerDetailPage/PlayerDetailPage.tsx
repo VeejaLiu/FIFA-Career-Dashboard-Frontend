@@ -8,6 +8,7 @@ import {
   Rating,
   Row,
   Space,
+  Typography,
 } from '@douyinfe/semi-ui';
 import {
   PlayerApis,
@@ -35,6 +36,8 @@ import {
   getWorkRateText,
 } from '../../common/player-helper.ts';
 
+const { Text } = Typography;
+
 function PlayerDetailPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
   const id = searchParams.get('id');
@@ -55,12 +58,11 @@ function PlayerDetailPage(): React.ReactElement {
     getPlayerDetail().then();
   }, [playerID]);
 
-  return (
+  return playerDetail ? (
     <Space
       vertical
       style={{
         width: '95%',
-        height: '100vh',
         marginTop: '8px',
         marginBottom: '200px',
       }}
@@ -567,13 +569,74 @@ function PlayerDetailPage(): React.ReactElement {
               </div>
             </Col>
           </Row>
+          <Row>
+            {/*
+                Diving
+                Handling
+                Kicking
+                Reflexes
+                Positioning
+            */}
+            <Col span={8}>
+              <div className="col-content">
+                <h2>Goalkeeping</h2>
+                <Progress
+                  percent={
+                    ((playerDetail?.thisPlayer?.gkdiving || 0) +
+                      (playerDetail?.thisPlayer?.gkhandling || 0) +
+                      (playerDetail?.thisPlayer?.gkkicking || 0) +
+                      (playerDetail?.thisPlayer?.gkreflexes || 0) +
+                      (playerDetail?.thisPlayer?.gkpositioning || 0)) /
+                    5
+                  }
+                  style={{ height: '8px' }}
+                  aria-label="Goalkeeping ability"
+                />
+                {/*Diving*/}
+                <div className="stat">
+                  <span className="stat-label">GK Diving:</span>
+                  <span className="stat-value">
+                    {playerDetail?.thisPlayer?.gkdiving}
+                  </span>
+                </div>
+                {/*Handling*/}
+                <div className="stat">
+                  <span className="stat-label">GK Handling:</span>
+                  <span className="stat-value">
+                    {playerDetail?.thisPlayer?.gkhandling}
+                  </span>
+                </div>
+                {/*Kicking*/}
+                <div className="stat">
+                  <span className="stat-label">GK Kicking:</span>
+                  <span className="stat-value">
+                    {playerDetail?.thisPlayer?.gkkicking}
+                  </span>
+                </div>
+                {/*Reflexes*/}
+                <div className="stat">
+                  <span className="stat-label">GK Reflexes:</span>
+                  <span className="stat-value">
+                    {playerDetail?.thisPlayer?.gkreflexes}
+                  </span>
+                </div>
+                {/*Positioning*/}
+                <div className="stat">
+                  <span className="stat-label">GK Positioning:</span>
+                  <span className="stat-value">
+                    {playerDetail?.thisPlayer?.gkpositioning}
+                  </span>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </div>
       </Space>
 
       <Space
         style={{
           width: '100%',
-          height: '600px',
+          height: '300px',
           padding: '5px',
           backgroundColor: '#f4f5f5',
           borderRadius: '2px',
@@ -581,7 +644,7 @@ function PlayerDetailPage(): React.ReactElement {
       >
         <ResponsiveContainer>
           <AreaChart
-            height={600}
+            height={300}
             data={playerDetail?.trends}
             margin={{ top: 10, right: 30, left: 0 }}
           >
@@ -617,6 +680,20 @@ function PlayerDetailPage(): React.ReactElement {
             ></Area>
           </AreaChart>
         </ResponsiveContainer>
+      </Space>
+    </Space>
+  ) : (
+    <Space
+      align="center"
+      style={{
+        width: '100%',
+      }}
+      vertical
+    >
+      <Space align={'center'} style={{ height: '100vh' }}>
+        No data here. Please go to
+        <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
+        your journey!
       </Space>
     </Space>
   );

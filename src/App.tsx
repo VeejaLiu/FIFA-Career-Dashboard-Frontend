@@ -1,5 +1,5 @@
 import { Link, Outlet, Route, Routes } from 'react-router-dom';
-import { Nav, Space } from '@douyinfe/semi-ui';
+import { Dropdown, Nav, Space } from '@douyinfe/semi-ui';
 import './App.css';
 import { useEffect, useState } from 'react';
 import { PlayerApis } from './service/PlayerApis.ts';
@@ -16,6 +16,111 @@ import {
 import GetStartedPage from './pages/GetStartedPage/GetStartedPage.tsx';
 import { WebsocketNotification } from './components/WebsocketNotification.tsx';
 import PlayerDetailPage from './pages/PlayerDetailPage/PlayerDetailPage.tsx';
+import { UserApis } from './service/UserApis.ts';
+import fc24Logo from '../public/fc24-logo.svg';
+import fc25Logo from '../public/fc25-logo.png';
+import { Typography } from '@douyinfe/semi-ui';
+import * as React from 'react';
+import {
+  getDefaultGameVersion,
+  removeDefaultGameVersion,
+} from './common/common.ts';
+
+const { Text } = Typography;
+
+function getLogoByVersion(defaultVersion: number) {
+  switch (defaultVersion) {
+    case 24:
+      return <img src={fc24Logo} width={'100px'} alt={'FC 24 Logo'} />;
+    case 25:
+      return <img src={fc25Logo} width={'100px'} alt={'FC 25 Logo'} />;
+    default:
+      return <h4>No version chosen</h4>;
+  }
+}
+
+function WebsiteLogoComponent() {
+  const [defaultGameVersion, setDefaultGameVersion] = React.useState<number>(0);
+
+  const fetchUserSetting = async () => {
+    const gameVersion = await getDefaultGameVersion();
+    setDefaultGameVersion(gameVersion);
+  };
+
+  useEffect(() => {
+    fetchUserSetting().then();
+  }, []);
+
+  return (
+    <Space
+      vertical
+      style={{
+        width: '100%',
+        padding: '1rem',
+        backgroundColor: 'black',
+        color: '#FFFFFF',
+        borderRadius: '1rem',
+      }}
+    >
+      <p>{getLogoByVersion(defaultGameVersion)}</p>
+      <p
+        style={{
+          fontSize: '1.2rem',
+          fontWeight: 'bold',
+        }}
+      >
+        Career Dashboard
+      </p>
+
+      <Dropdown
+        trigger={'click'}
+        position={'right'}
+        render={
+          <Dropdown.Menu>
+            <Dropdown.Item
+              onClick={async () => {
+                console.log('Switch to FC 24');
+                removeDefaultGameVersion();
+                await UserApis.updateUserSetting({
+                  category: 'default_game_version',
+                  value: 24,
+                });
+                // Refresh the page to apply the new version
+                window.location.reload();
+              }}
+            >
+              FC 24
+            </Dropdown.Item>
+            <Dropdown.Item
+              onClick={async () => {
+                console.log('FC 25');
+                removeDefaultGameVersion();
+                await UserApis.updateUserSetting({
+                  category: 'default_game_version',
+                  value: 25,
+                });
+                // Refresh the page to apply the new version
+                window.location.reload();
+              }}
+            >
+              FC 25
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        }
+      >
+        <Text
+          style={{
+            color: 'gray',
+            fontSize: '0.8rem',
+          }}
+          underline
+        >
+          Switch version
+        </Text>
+      </Dropdown>
+    </Space>
+  );
+}
 
 export default function App() {
   const [playerCount, setPlayerCount] = useState(0);
@@ -42,9 +147,7 @@ export default function App() {
 
               <Nav
                 className="nav"
-                header={{
-                  text: 'FC24 Career Mode',
-                }}
+                header={<WebsiteLogoComponent />}
                 renderWrapper={({
                   itemElement,
                   isSubNav,
