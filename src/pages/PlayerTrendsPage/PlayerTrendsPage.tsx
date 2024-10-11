@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
   Area,
   AreaChart,
+  CartesianGrid,
   // CartesianGrid,
   Tooltip,
   XAxis,
@@ -52,7 +53,7 @@ function formatDate(inputDate: string) {
   // return `${monthName} ${day}${suffix}`;
 }
 
-const CustomTooltip: React.FC<{
+export const CustomTooltip: React.FC<{
   active?: boolean;
   payload?: any;
   label?: string;
@@ -64,7 +65,7 @@ const CustomTooltip: React.FC<{
         style={{
           backgroundColor: 'white',
           border: '1px solid gray',
-          padding: '10px',
+          padding: '5px',
           fontSize: '0.8rem',
         }}
       >
@@ -72,23 +73,16 @@ const CustomTooltip: React.FC<{
           style={{
             borderBottom: '1px solid gray',
             marginBottom: '5px',
+            fontWeight: 'bold',
           }}
         >
           {payload[0].payload.inGameDate}
         </p>
-        <p
-          style={{
-            color: getColorByOverallRating(overallRating),
-          }}
-        >
+        <p style={{ color: getColorByOverallRating(overallRating) }}>
           <b>Ovr: </b>
           {overallRating}
         </p>
-        <p
-          style={{
-            color: getColorByOverallRating(potential),
-          }}
-        >
+        <p style={{ color: getColorByOverallRating(potential) }}>
           <b>Pot: </b>
           {potential}
         </p>
@@ -182,31 +176,11 @@ function PlayerTrendsPage(): React.ReactElement {
               <Space wrap align={'start'}>
                 {data
                   .filter((player) => player.positionType === item.position)
-                  .sort((a, b) => {
-                    return (
-                      Math.max(...b.trends.map((item) => item.potential)) -
-                      Math.max(...a.trends.map((item) => item.potential))
-                    );
-                  })
                   .map((player) => {
-                    const minOverallRating =
-                      Math.min(
-                        ...player.trends.map((item) => item.overallRating),
-                      ) - 10;
-                    // const minOverallRating = 40;
-                    const maxPotential =
-                      Math.max(...player.trends.map((item) => item.potential)) +
-                      3;
-                    // const maxPotential = 100;
-                    const positionColor = getColorByPositionType(
-                      player.positionType,
-                    );
-                    const imageUrl = getAvatarUrl(player.playerID);
                     return (
                       <Space
                         key={player.playerID}
                         style={{
-                          // border: '1px solid gray',
                           borderRadius: '3px',
                           backgroundColor: '#f4f5f5',
                           padding: '10px',
@@ -223,13 +197,28 @@ function PlayerTrendsPage(): React.ReactElement {
                             height: '170px',
                           }}
                         >
-                          <span style={{ color: positionColor }}>
+                          <span
+                            style={{
+                              color: getColorByPositionType(
+                                player.positionType,
+                              ),
+                            }}
+                          >
                             <h4>{player.preferredposition1}</h4>
                           </span>
-                          <div style={{ width: 100, height: 100 }}>
+                          <div
+                            style={{
+                              width: 100,
+                              height: 100,
+                              cursor: 'pointer',
+                            }}
+                            onClick={() => {
+                              window.location.href = `/players-detail?id=${player.playerID}`;
+                            }}
+                          >
                             <img
                               style={{ width: 100, height: 100 }}
-                              src={imageUrl}
+                              src={getAvatarUrl(player.playerID)}
                               alt="player"
                               onError={(e) => {
                                 e.currentTarget.style.display = 'none';
@@ -260,44 +249,44 @@ function PlayerTrendsPage(): React.ReactElement {
                             </span>{' '}
                           </Popover>
                         </Space>
+
                         <AreaChart
-                          // style={{ backgroundColor: 'yellow' }}
                           width={300}
                           height={170}
+                          accessibilityLayer
                           data={player.trends}
-                          margin={{ top: 10, right: 30, left: 0 }}
+                          margin={{ right: 30, left: -20, bottom: -0 }}
                         >
+                          <CartesianGrid vertical={false} />
                           <XAxis
                             dataKey="inGameDate"
                             type={'category'}
-                            style={{
-                              fontSize: '10px',
-                            }}
+                            tickLine={false}
+                            axisLine={false}
+                            tickMargin={8}
+                            style={{ fontSize: '0.8rem' }}
                           ></XAxis>
                           <YAxis
-                            domain={[
-                              minOverallRating,
-                              Math.min(maxPotential, 100),
-                            ]}
-                            style={{
-                              fontSize: '10px',
-                            }}
+                            domain={[50, 95]}
+                            tickLine={false}
+                            axisLine={false}
+                            tickMargin={8}
+                            style={{ fontSize: '0.8rem' }}
                           ></YAxis>
-                          {/*<CartesianGrid strokeDasharray="3 3" />*/}
                           <Tooltip content={<CustomTooltip />} />
                           <Area
-                            type="monotone"
+                            type="linear"
                             dataKey="potential"
-                            fill="#ffc658"
-                            stroke="#ffc658"
+                            fill="#125427"
+                            stroke="#125427"
+                            fillOpacity={0.4}
                           ></Area>
                           <Area
-                            type="monotone"
+                            type="linear"
                             dataKey="overallRating"
-                            stroke="#000"
-                            strokeWidth={1}
-                            // fillOpacity={0.6}
-                            fill="#82ca9d"
+                            fill="#1dc355"
+                            stroke="#1dc355"
+                            fillOpacity={0.4}
                           ></Area>
                         </AreaChart>
                       </Space>

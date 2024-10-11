@@ -42,13 +42,13 @@ function getLogoByVersion(defaultVersion: number) {
 function WebsiteLogoComponent() {
   const [defaultGameVersion, setDefaultGameVersion] = React.useState<number>(0);
 
-  const fetchUserSetting = async () => {
+  const fetchDefaultGameVersion = async () => {
     const gameVersion = await getDefaultGameVersion();
     setDefaultGameVersion(gameVersion);
   };
 
   useEffect(() => {
-    fetchUserSetting().then();
+    fetchDefaultGameVersion().then();
   }, []);
 
   return (
