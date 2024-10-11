@@ -19,6 +19,7 @@ import './PlayerDetailPage.css';
 import {
   Area,
   AreaChart,
+  CartesianGrid,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -35,6 +36,7 @@ import {
   getColorByPositionType,
   getWorkRateText,
 } from '../../common/player-helper.ts';
+import { CustomTooltip } from '../PlayerTrendsPage/PlayerTrendsPage.tsx';
 
 const { Text } = Typography;
 
@@ -636,48 +638,57 @@ function PlayerDetailPage(): React.ReactElement {
       <Space
         style={{
           width: '100%',
-          height: '300px',
-          padding: '5px',
+          height: '400px',
+          padding: '10px',
           backgroundColor: '#f4f5f5',
           borderRadius: '2px',
         }}
       >
         <ResponsiveContainer>
           <AreaChart
-            height={300}
+            accessibilityLayer
+            height={400}
             data={playerDetail?.trends}
-            margin={{ top: 10, right: 30, left: 0 }}
+            margin={{
+              left: -20,
+              right: 12,
+            }}
           >
+            {/* 网格 */}
+            <CartesianGrid vertical={false} />
+            {/* X轴 */}
             <XAxis
               dataKey="inGameDate"
               type={'category'}
-              style={{
-                fontSize: '10px',
-              }}
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
             ></XAxis>
+            {/* Y轴 */}
             <YAxis
-              style={{
-                fontSize: '10px',
-              }}
-              domain={[40, 99]}
+              domain={[40, 100]}
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              // tickCount={3}
             ></YAxis>
-            {/*<CartesianGrid strokeDasharray="3 3" />*/}
-            <Tooltip />
+            {/* 提示 */}
+            <Tooltip content={<CustomTooltip />} />
+            {/* 数据 */}
             <Area
-              type="monotone"
               dataKey="potential"
-              fill="#FFF"
-              stroke="red"
-              strokeWidth={2}
-            ></Area>
+              type="linear"
+              fill="#125427"
+              fillOpacity={0.4}
+              stroke="#125427"
+            />
             <Area
-              type="monotone"
               dataKey="overallRating"
-              stroke="#82ca9d"
-              strokeWidth={2}
-              fillOpacity={0.2}
-              fill="#82ca9d"
-            ></Area>
+              type="linear"
+              fill="#1dc355"
+              fillOpacity={0.4}
+              stroke="#1dc355"
+            />
           </AreaChart>
         </ResponsiveContainer>
       </Space>
