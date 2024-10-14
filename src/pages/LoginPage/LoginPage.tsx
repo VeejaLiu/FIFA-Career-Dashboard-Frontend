@@ -2,6 +2,7 @@ import {
   Button,
   Form,
   Image,
+  LocaleConsumer,
   // Modal,
   Notification,
   Space,
@@ -162,53 +163,61 @@ const LoginPage = () => {
     }
   }
 
-  const LoginComponent = (
-    <>
-      <Space vertical className={styles.login}>
-        <div className={styles.component66}>
-          <div className={styles.header}>
-            <p className={styles.title}>Welcome to back</p>
-            <p className={styles.text}>
-              <span className={styles.text1}> FC-Career-Dashboard </span>
-            </p>
-          </div>
-        </div>
-        <div className={styles.form}>
-          <Form className={styles.inputs}>
-            <Form.Input
-              label={{ text: 'Username / Email' }}
-              field="email"
-              placeholder="your username or email"
-              fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-              onChange={(e) => setLoginUsername(e)}
-            />
-            <Form.Input
-              mode={'password'}
-              label={{ text: 'Password' }}
-              field="password"
-              placeholder="your password"
-              fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
-              onChange={(e) => setLoginPassword(e)}
-            />
-          </Form>
-          <Button theme="solid" className={styles.button} onClick={doLogin}>
-            Login
-          </Button>
-          <Button
-            // theme="outline"
-            className={styles.button}
-            onClick={() => {
-              setIsLogin(false);
-            }}
-            size={'large'}
-          >
-            Don't have an account? Register
-          </Button>
-        </div>
-        {getContactUs()}
-      </Space>
-    </>
-  );
+  const LoginComponent = () => {
+    return (
+      <LocaleConsumer componentName={'LoginComponent'}>
+        {(localeData: any, localeCode: string, dateFnsLocale: any) => (
+          <Space vertical className={styles.login}>
+            <div className={styles.component66}>
+              <div className={styles.header}>
+                <p className={styles.title}>
+                  {/*Welcome to back*/}
+                  {localeData.welcome}
+                </p>
+                <p className={styles.text}>
+                  <span className={styles.text1}> FC-Career-Dashboard </span>
+                </p>
+              </div>
+            </div>
+            <div className={styles.form}>
+              <Form className={styles.inputs}>
+                <Form.Input
+                  label={{ text: localeData.usernameEmail }}
+                  field="email"
+                  placeholder={localeData.usernameEmailPlaceholder}
+                  fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
+                  onChange={(e) => setLoginUsername(e)}
+                />
+                <Form.Input
+                  mode={'password'}
+                  label={{ text: localeData.password }}
+                  field="password"
+                  placeholder={localeData.passwordPlaceholder}
+                  fieldStyle={{ alignSelf: 'stretch', padding: 0 }}
+                  onChange={(e) => setLoginPassword(e)}
+                />
+              </Form>
+              <Button theme="solid" className={styles.button} onClick={doLogin}>
+                {localeData.login}
+              </Button>
+              <Button
+                // theme="outline"
+                className={styles.button}
+                onClick={() => {
+                  setIsLogin(false);
+                }}
+                size={'large'}
+              >
+                {localeData.registerPrompt}
+              </Button>
+            </div>
+            {getContactUs()}
+          </Space>
+        )}
+      </LocaleConsumer>
+    );
+  };
+
   const RegisterComponent = (
     <>
       <Space vertical className={styles.register}>
@@ -281,7 +290,7 @@ const LoginPage = () => {
       {/* Left */}
       <Space vertical style={{ width: '50vw' }}>
         {isLogin ? (
-          LoginComponent
+          <LoginComponent />
         ) : (
           <Image
             preview={false}

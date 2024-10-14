@@ -1,13 +1,38 @@
 import { useEffect, useState } from 'react';
 import App from '../App.tsx';
 import { UserApis } from '../service/UserApis.ts';
-import { LocaleProvider, Space, Spin } from '@douyinfe/semi-ui';
+import { LocaleProvider, Spin } from '@douyinfe/semi-ui';
 import LoginPage from '../pages/LoginPage/LoginPage.tsx';
+
+import zh_CN from '@douyinfe/semi-ui/lib/es/locale/source/zh_CN';
 import en_GB from '@douyinfe/semi-ui/lib/es/locale/source/en_GB';
+
+import customzh_CN from '../locales/zh_CN.ts';
+import customen_GB from '../locales/en_GB.ts';
+
+const SUPPORTED_LANGUAGES: any = {
+  en_GB: { ...en_GB, ...customen_GB },
+  zh_CN: { ...zh_CN, ...customzh_CN },
+};
 
 export const Auth = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [locale, setLocale] = useState(SUPPORTED_LANGUAGES.zh_CN);
+
+  const getDefaultLanguage = () => {
+    // Get the browser language
+    const languages = navigator.languages
+      ? navigator.languages
+      : [navigator.language];
+    for (let i = 0; i < languages.length; i++) {
+      const language = languages[i];
+      if (language in SUPPORTED_LANGUAGES) {
+        return language;
+      }
+    }
+    return 'en_GB'; // 默认语言
+  };
 
   const getLoginStatus = async () => {
     const result = await UserApis.verifyToken();
@@ -16,28 +41,30 @@ export const Auth = () => {
   };
 
   useEffect(() => {
+    const browserLanguage = getDefaultLanguage();
+    console.log('browserLanguage', browserLanguage);
+    if (browserLanguage in SUPPORTED_LANGUAGES) {
+      // console.log('setLocale', SUPPORTED_LANGUAGES[browserLanguage]);
+      setLocale(SUPPORTED_LANGUAGES[browserLanguage]);
+    }
+
     getLoginStatus().then();
   }, []);
 
   return (
-    <LocaleProvider locale={en_GB}>
+    <LocaleProvider locale={locale}>
       {isLoading ? (
-        <Space
+        <div
           style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
             width: '100vw',
             height: '100vh',
           }}
-          align={'center'}
         >
-          <div
-            style={{
-              width: '100%',
-              textAlign: 'center',
-            }}
-          >
-            <Spin size="large" />
-          </div>
-        </Space>
+          <Spin size="large" />
+        </div>
       ) : isAuthenticated ? (
         <App />
       ) : (
