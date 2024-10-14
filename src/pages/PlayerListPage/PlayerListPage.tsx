@@ -1,4 +1,4 @@
-import { Space, Spin, Table, Typography } from '@douyinfe/semi-ui';
+import { Space, Table, Typography } from '@douyinfe/semi-ui';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
@@ -7,6 +7,7 @@ import {
   getColorByOverallRating,
   getColorByPositionType,
 } from '../../common/player-helper.ts';
+import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
 
 const { Text } = Typography;
 
@@ -189,33 +190,9 @@ function PlayerListPage(): React.ReactElement {
       }}
     >
       {isLoading ? (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100%',
-            width: '100%',
-          }}
-        >
-          <Spin size="large" />
-        </div>
+        <LoadingComponent />
       ) : data.length === 0 ? (
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '100%',
-            width: '100%',
-          }}
-        >
-          No data here. Please go to the
-          <Text link={{ href: '/get-started' }} style={{ padding: '5px' }}>
-            Get Started Page
-          </Text>
-          to start your journey!
-        </div>
+        <NoDataComponent />
       ) : (
         <Table
           style={{
