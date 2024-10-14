@@ -111,13 +111,7 @@ function PlayerTrendsPage(): React.ReactElement {
   }, []);
 
   return (
-    <Space
-      vertical
-      style={{
-        height: '100%',
-        width: '100%',
-      }}
-    >
+    <Space vertical align={'start'} style={{ padding: '20px' }}>
       {isLoading ? (
         <LoadingComponent />
       ) : data.length === 0 ? (
@@ -146,18 +140,8 @@ function PlayerTrendsPage(): React.ReactElement {
           },
         ].map((item) => {
           return (
-            <div
-              style={{
-                marginBottom: '20px',
-              }}
-            >
-              <h2
-                style={{
-                  color: item.color,
-                }}
-              >
-                {item.text}
-              </h2>
+            <div style={{ marginBottom: '20px' }}>
+              <h2 style={{ color: item.color }}>{item.text}</h2>
               <Space wrap align={'start'}>
                 {data
                   .filter((player) => player.positionType === item.position)
@@ -173,13 +157,11 @@ function PlayerTrendsPage(): React.ReactElement {
                       >
                         <Space
                           vertical
-                          spacing={0}
                           style={{
                             backgroundColor: '#e4ce78',
-                            borderRadius: '3px',
-                            // boxShadow: '0 0 5px #000',
+                            borderRadius: '8px',
                             width: '120px',
-                            height: '170px',
+                            height: '190px',
                           }}
                         >
                           <span
@@ -237,7 +219,7 @@ function PlayerTrendsPage(): React.ReactElement {
 
                         <AreaChart
                           width={300}
-                          height={170}
+                          height={190}
                           accessibilityLayer
                           data={player.trends}
                           margin={{ right: 30, left: -20, bottom: -0 }}
