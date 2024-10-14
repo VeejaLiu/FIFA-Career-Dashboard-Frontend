@@ -184,29 +184,38 @@ function PlayerListPage(): React.ReactElement {
   return (
     <Space
       style={{
+        height: '100%',
         width: '100%',
       }}
-      vertical
     >
       {isLoading ? (
-        <Space
+        <div
           style={{
-            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+            width: '100%',
           }}
         >
           <Spin size="large" />
-        </Space>
+        </div>
       ) : data.length === 0 ? (
-        <Space
-          align="center"
+        <div
           style={{
-            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+            width: '100%',
           }}
         >
-          No data here. Please go to
-          <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
-          your journey!
-        </Space>
+          No data here. Please go to the
+          <Text link={{ href: '/get-started' }} style={{ padding: '5px' }}>
+            Get Started Page
+          </Text>
+          to start your journey!
+        </div>
       ) : (
         <Table
           style={{
