@@ -1,0 +1,25 @@
+export default {
+  LoginComponent: {
+    welcome: 'Welcome to back',
+    usernameEmail: 'Username / Email',
+    usernameEmailPlaceholder: 'your username or email',
+    password: 'Password',
+    passwordPlaceholder: 'your password',
+    login: 'Login',
+    registerPrompt: "Don't have an account? Register",
+  },
+  RegisterComponent: {
+    title: 'Start your great journey',
+    text: 'Free to use, forever',
+    username: 'Username',
+    usernamePlaceholder: 'your username',
+    email: 'Email',
+    emailPlaceholder: 'your email',
+    password: 'Password',
+    passwordPlaceholder: 'your password',
+    confirmPassword: 'Confirm Password',
+    confirmPasswordPlaceholder: 'confirm your password',
+    register: 'Register',
+    loginPrompt: 'Already have an account? Login',
+  },
+};

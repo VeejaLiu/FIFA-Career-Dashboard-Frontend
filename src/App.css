@@ -1,14 +1,23 @@
 .root {
     display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .nav {
-    /* 使导航栏不上下滚动 */
-    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
 }
 
 .content {
     flex: 1; /* 使内容区域占据剩余空间 */
-    height: 100vh;
+    margin-top: 60px;
     overflow: auto; /* 使内容区域上下滚动 */
 }

@@ -8,6 +8,7 @@ import PlayerTrendsPage from './pages/PlayerTrendsPage/PlayerTrendsPage.tsx';
 import SettingsPage from './pages/SettingsPage/SettingsPage.tsx';
 import {
   IconArticle,
+  IconBranch,
   IconHistogram,
   IconIdCard,
   IconSetting,
@@ -19,14 +20,11 @@ import PlayerDetailPage from './pages/PlayerDetailPage/PlayerDetailPage.tsx';
 import { UserApis } from './service/UserApis.ts';
 import fc24Logo from '../public/fc24-logo.svg';
 import fc25Logo from '../public/fc25-logo.png';
-import { Typography } from '@douyinfe/semi-ui';
 import * as React from 'react';
 import {
   getDefaultGameVersion,
   removeDefaultGameVersion,
 } from './common/common.ts';
-
-const { Text } = Typography;
 
 function getLogoByVersion(defaultVersion: number) {
   switch (defaultVersion) {
@@ -53,13 +51,11 @@ function WebsiteLogoComponent() {
 
   return (
     <Space
-      vertical
       style={{
-        width: '100%',
         padding: '1rem',
         backgroundColor: 'black',
         color: '#FFFFFF',
-        borderRadius: '1rem',
+        // borderRadius: '1rem',
       }}
     >
       <p>{getLogoByVersion(defaultGameVersion)}</p>
@@ -74,7 +70,7 @@ function WebsiteLogoComponent() {
 
       <Dropdown
         trigger={'click'}
-        position={'right'}
+        position={'bottom'}
         render={
           <Dropdown.Menu>
             <Dropdown.Item
@@ -108,15 +104,7 @@ function WebsiteLogoComponent() {
           </Dropdown.Menu>
         }
       >
-        <Text
-          style={{
-            color: 'gray',
-            fontSize: '0.8rem',
-          }}
-          underline
-        >
-          Switch version
-        </Text>
+        <IconBranch style={{ cursor: 'pointer' }} />
       </Dropdown>
     </Space>
   );
@@ -141,13 +129,14 @@ export default function App() {
         <Route
           path="/"
           element={
-            <Space className="root">
+            <Space vertical className="root">
               {/* A "layout route" is a good place to put markup you want to
           share across all the pages on your site, like navigation. */}
 
               <Nav
                 className="nav"
                 header={<WebsiteLogoComponent />}
+                mode="horizontal"
                 renderWrapper={({
                   itemElement,
                   isSubNav,

@@ -10,15 +10,14 @@ import {
 } from 'recharts';
 import { PlayerApis, PlayerTrendData } from '../../service/PlayerApis.ts';
 import { useEffect } from 'react';
-import { Popover, Space, Spin, Typography } from '@douyinfe/semi-ui';
+import { Popover, Space } from '@douyinfe/semi-ui';
 import './PlayerTrendsPage.css';
 import {
   getAvatarUrl,
   getColorByOverallRating,
   getColorByPositionType,
 } from '../../common/player-helper.ts';
-
-const { Text } = Typography;
+import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
 
 function formatDate(inputDate: string) {
   const [, month, day] = inputDate.split('-').map(Number);
@@ -112,31 +111,11 @@ function PlayerTrendsPage(): React.ReactElement {
   }, []);
 
   return (
-    <Space
-      vertical
-      style={{
-        width: '100%',
-      }}
-    >
+    <Space vertical align={'start'} style={{ padding: '20px' }}>
       {isLoading ? (
-        <Space
-          align={'center'}
-          style={{
-            height: '100vh',
-          }}
-        >
-          <Spin size="large" />
-        </Space>
+        <LoadingComponent />
       ) : data.length === 0 ? (
-        <Space
-          style={{
-            height: '100vh',
-          }}
-        >
-          No data here. Please go to
-          <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
-          your journey!
-        </Space>
+        <NoDataComponent />
       ) : (
         [
           {
@@ -161,18 +140,8 @@ function PlayerTrendsPage(): React.ReactElement {
           },
         ].map((item) => {
           return (
-            <div
-              style={{
-                marginBottom: '20px',
-              }}
-            >
-              <h2
-                style={{
-                  color: item.color,
-                }}
-              >
-                {item.text}
-              </h2>
+            <div style={{ marginBottom: '20px' }}>
+              <h2 style={{ color: item.color }}>{item.text}</h2>
               <Space wrap align={'start'}>
                 {data
                   .filter((player) => player.positionType === item.position)
@@ -188,13 +157,11 @@ function PlayerTrendsPage(): React.ReactElement {
                       >
                         <Space
                           vertical
-                          spacing={0}
                           style={{
                             backgroundColor: '#e4ce78',
-                            borderRadius: '3px',
-                            // boxShadow: '0 0 5px #000',
+                            borderRadius: '8px',
                             width: '120px',
-                            height: '170px',
+                            height: '190px',
                           }}
                         >
                           <span
@@ -252,7 +219,7 @@ function PlayerTrendsPage(): React.ReactElement {
 
                         <AreaChart
                           width={300}
-                          height={170}
+                          height={190}
                           accessibilityLayer
                           data={player.trends}
                           margin={{ right: 30, left: -20, bottom: -0 }}

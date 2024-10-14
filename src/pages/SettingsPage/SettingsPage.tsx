@@ -64,21 +64,28 @@ function SettingsPage(): React.ReactElement {
   }
 
   return (
-    <Space vertical style={{ padding: '10px' }} align={'start'}>
-      <h1>Settings</h1>
+    <Space
+      vertical
+      style={{
+        width: '50vw',
+        minWidth: '600px',
+      }}
+      align={'start'}
+    >
+      <h3>Settings</h3>
       <Space
         vertical
         align={'start'}
         style={{
-          width: '100%',
+          width: '90%',
           padding: '10px',
           border: '1px solid #e8e8e8',
           borderRadius: '5px',
         }}
       >
-        <h4>API Secret Key</h4>
+        <h5>API Secret Key</h5>
         <Space>
-          <Space style={{ width: '300px' }}>Secret API Key:</Space>
+          <div style={{ width: '300px' }}>Secret API Key:</div>
           <Input
             // mode="password"
             disabled={true}
@@ -149,13 +156,13 @@ function SettingsPage(): React.ReactElement {
         vertical
         align={'start'}
         style={{
-          width: '100%',
+          width: '90%',
           padding: '10px',
           border: '1px solid #e8e8e8',
           borderRadius: '5px',
         }}
       >
-        <h4>Notifications</h4>
+        <h5>Notifications</h5>
         <Space>
           <Space style={{ width: '300px' }}>Enable Notifications</Space>
           <Switch
@@ -232,7 +239,13 @@ function SettingsPage(): React.ReactElement {
         </Space>
       </Space>
 
-      <h1>Logout</h1>
+      <h3
+        style={{
+          marginTop: '20px',
+        }}
+      >
+        Logout
+      </h3>
       <Button
         onClick={() => {
           UserApis.doLogout().then((result) => {

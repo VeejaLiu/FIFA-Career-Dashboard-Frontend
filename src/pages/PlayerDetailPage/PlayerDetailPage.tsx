@@ -8,7 +8,6 @@ import {
   Rating,
   Row,
   Space,
-  Typography,
 } from '@douyinfe/semi-ui';
 import {
   PlayerApis,
@@ -37,8 +36,7 @@ import {
   getWorkRateText,
 } from '../../common/player-helper.ts';
 import { CustomTooltip } from '../PlayerTrendsPage/PlayerTrendsPage.tsx';
-
-const { Text } = Typography;
+import { NoDataComponent } from '../../components/Other.tsx';
 
 function PlayerDetailPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
@@ -63,20 +61,19 @@ function PlayerDetailPage(): React.ReactElement {
   return playerDetail ? (
     <Space
       vertical
+      align={'center'}
       style={{
-        width: '95%',
-        marginTop: '8px',
-        marginBottom: '200px',
+        width: '100%',
+        paddingBottom: '20px',
       }}
-      align={'start'}
     >
       {/* Player picker */}
       <div
         style={{
-          width: '100%',
-          padding: '5px',
-          border: '1px solid rgba(0, 0, 0, 0.1)',
-          borderRadius: '2px',
+          // width: '90%',
+          padding: '10px',
+          backgroundColor: '#f4f5f5',
+          borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
         }}
       >
         {playerDetail?.allPlayer
@@ -122,13 +119,13 @@ function PlayerDetailPage(): React.ReactElement {
           })}
       </div>
 
+      {/* Basic info */}
       <Space
         align="start"
         style={{
-          width: '100%',
-          padding: '5px',
+          width: '95%',
+          padding: '10px',
           backgroundColor: '#f4f5f5',
-          borderRadius: '2px',
         }}
       >
         {/* Basic info*/}
@@ -637,7 +634,7 @@ function PlayerDetailPage(): React.ReactElement {
 
       <Space
         style={{
-          width: '100%',
+          width: '95%',
           height: '400px',
           padding: '10px',
           backgroundColor: '#f4f5f5',
@@ -655,7 +652,7 @@ function PlayerDetailPage(): React.ReactElement {
             }}
           >
             {/* 网格 */}
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical />
             {/* X轴 */}
             <XAxis
               dataKey="inGameDate"
@@ -663,6 +660,10 @@ function PlayerDetailPage(): React.ReactElement {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
+              style={{
+                fontSize: '0.8rem',
+                fontWeight: 'bold',
+              }}
             ></XAxis>
             {/* Y轴 */}
             <YAxis
@@ -670,7 +671,6 @@ function PlayerDetailPage(): React.ReactElement {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              // tickCount={3}
             ></YAxis>
             {/* 提示 */}
             <Tooltip content={<CustomTooltip />} />
@@ -694,19 +694,7 @@ function PlayerDetailPage(): React.ReactElement {
       </Space>
     </Space>
   ) : (
-    <Space
-      align="center"
-      style={{
-        width: '100%',
-      }}
-      vertical
-    >
-      <Space align={'center'} style={{ height: '100vh' }}>
-        No data here. Please go to
-        <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
-        your journey!
-      </Space>
-    </Space>
+    <NoDataComponent />
   );
 }
 
