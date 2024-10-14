@@ -112,6 +112,7 @@ function WebsiteLogoComponent() {
           style={{
             color: 'gray',
             fontSize: '0.8rem',
+            cursor: 'pointer',
           }}
           underline
         >
