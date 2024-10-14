@@ -8,7 +8,6 @@ import {
   Rating,
   Row,
   Space,
-  Typography,
 } from '@douyinfe/semi-ui';
 import {
   PlayerApis,
@@ -37,8 +36,7 @@ import {
   getWorkRateText,
 } from '../../common/player-helper.ts';
 import { CustomTooltip } from '../PlayerTrendsPage/PlayerTrendsPage.tsx';
-
-const { Text } = Typography;
+import { NoDataComponent } from '../../components/Other.tsx';
 
 function PlayerDetailPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
@@ -64,7 +62,7 @@ function PlayerDetailPage(): React.ReactElement {
     <Space
       vertical
       style={{
-        width: '95%',
+        width: '100%',
         marginTop: '8px',
         marginBottom: '200px',
       }}
@@ -694,19 +692,7 @@ function PlayerDetailPage(): React.ReactElement {
       </Space>
     </Space>
   ) : (
-    <Space
-      align="center"
-      style={{
-        width: '100%',
-      }}
-      vertical
-    >
-      <Space align={'center'} style={{ height: '100vh' }}>
-        No data here. Please go to
-        <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
-        your journey!
-      </Space>
-    </Space>
+    <NoDataComponent />
   );
 }
 
