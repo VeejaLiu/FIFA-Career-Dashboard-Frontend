@@ -8,9 +8,9 @@ import PlayerTrendsPage from './pages/PlayerTrendsPage/PlayerTrendsPage.tsx';
 import SettingsPage from './pages/SettingsPage/SettingsPage.tsx';
 import {
   IconArticle,
+  IconBranch,
   IconHistogram,
   IconIdCard,
-  IconRefresh,
   IconSetting,
   IconUser,
 } from '@douyinfe/semi-icons';
@@ -104,7 +104,7 @@ function WebsiteLogoComponent() {
           </Dropdown.Menu>
         }
       >
-        <IconRefresh />
+        <IconBranch style={{ cursor: 'pointer' }} />
       </Dropdown>
     </Space>
   );
