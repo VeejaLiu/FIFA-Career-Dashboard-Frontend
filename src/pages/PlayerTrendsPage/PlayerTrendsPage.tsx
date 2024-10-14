@@ -10,15 +10,14 @@ import {
 } from 'recharts';
 import { PlayerApis, PlayerTrendData } from '../../service/PlayerApis.ts';
 import { useEffect } from 'react';
-import { Popover, Space, Spin, Typography } from '@douyinfe/semi-ui';
+import { Popover, Space } from '@douyinfe/semi-ui';
 import './PlayerTrendsPage.css';
 import {
   getAvatarUrl,
   getColorByOverallRating,
   getColorByPositionType,
 } from '../../common/player-helper.ts';
-
-const { Text } = Typography;
+import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
 
 function formatDate(inputDate: string) {
   const [, month, day] = inputDate.split('-').map(Number);
@@ -115,28 +114,14 @@ function PlayerTrendsPage(): React.ReactElement {
     <Space
       vertical
       style={{
+        height: '100%',
         width: '100%',
       }}
     >
       {isLoading ? (
-        <Space
-          align={'center'}
-          style={{
-            height: '100vh',
-          }}
-        >
-          <Spin size="large" />
-        </Space>
+        <LoadingComponent />
       ) : data.length === 0 ? (
-        <Space
-          style={{
-            height: '100vh',
-          }}
-        >
-          No data here. Please go to
-          <Text link={{ href: '/get-started' }}>Get Started Page</Text> to start
-          your journey!
-        </Space>
+        <NoDataComponent />
       ) : (
         [
           {
