@@ -1,4 +1,4 @@
-import { Spin, Typography } from '@douyinfe/semi-ui';
+import { LocaleConsumer, Spin, Typography } from '@douyinfe/semi-ui';
 
 const { Text } = Typography;
 
@@ -9,27 +9,31 @@ const { Text } = Typography;
  */
 export function NoDataComponent() {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100%',
-        width: '100%',
-      }}
-    >
-      No data here. Please go to the
-      <Text
-        link={{ href: '/get-started' }}
-        style={{
-          padding: '5px',
-        }}
-        underline
-      >
-        Get Started Page
-      </Text>
-      to start your journey!
-    </div>
+    <LocaleConsumer componentName={'NoDataComponent'}>
+      {(localeData: any, localeCode: string, dateFnsLocale: any) => (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+            width: '100%',
+          }}
+        >
+          {localeData.prefix}
+          <Text
+            link={{ href: '/get-started' }}
+            style={{
+              padding: '5px',
+            }}
+            underline
+          >
+            {localeData.getStartedPage}
+          </Text>
+          {localeData.suffix}
+        </div>
+      )}
+    </LocaleConsumer>
   );
 }
 

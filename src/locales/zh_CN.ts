@@ -33,4 +33,9 @@ export default {
     Settings: '设置',
     GetStarted: '快速开始',
   },
+  NoDataComponent: {
+    prefix: '这里没有数据。请转到',
+    getStartedPage: '快速开始页面',
+    suffix: ', 开始您的旅程！',
+  },
 };

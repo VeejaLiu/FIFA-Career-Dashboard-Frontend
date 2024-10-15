@@ -33,4 +33,9 @@ export default {
     Settings: 'Settings',
     GetStarted: 'Get Started',
   },
+  NoDataComponent: {
+    prefix: 'No data here. Please go to the',
+    getStartedPage: 'Get Started Page',
+    suffix: 'to start your journey!',
+  },
 };
