@@ -1,4 +1,4 @@
-import { Space, Table, Typography } from '@douyinfe/semi-ui';
+import { LocaleConsumer, Space, Table, Typography } from '@douyinfe/semi-ui';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
@@ -11,7 +11,7 @@ import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
 
 const { Text } = Typography;
 
-const PlayerListColumn = [
+const PlayerListColumn = (localeData: any) => [
   {
     title: '',
     dataIndex: 'imageUrl',
@@ -42,7 +42,7 @@ const PlayerListColumn = [
     },
   },
   {
-    title: 'Player Name',
+    title: localeData.name,
     dataIndex: 'playerName',
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
@@ -67,7 +67,7 @@ const PlayerListColumn = [
     },
   },
   {
-    title: 'Age',
+    title: localeData.age,
     dataIndex: 'age',
     sorter: (a: PlayerOverall, b: PlayerOverall) => a.age - b.age,
     render: (text: string, record: PlayerOverall, index: number) => {
@@ -79,7 +79,7 @@ const PlayerListColumn = [
     },
   },
   {
-    title: 'Position',
+    title: localeData.position,
     dataIndex: 'position1',
     defaultSortOrder: 'ascend',
     // 按照 positionType 排序, 优先级: GK > DEF > MID > FOR
@@ -124,7 +124,7 @@ const PlayerListColumn = [
     },
   },
   {
-    title: 'Overall',
+    title: localeData.overall,
     dataIndex: 'overallRating',
     sorter: (a: PlayerOverall, b: PlayerOverall) =>
       a.overallRating - b.overallRating,
@@ -143,7 +143,7 @@ const PlayerListColumn = [
     },
   },
   {
-    title: 'Potential',
+    title: localeData.potential,
     dataIndex: 'potential',
     sorter: (a: PlayerOverall, b: PlayerOverall) => a.potential - b.potential,
     render: (text: string, record: PlayerOverall, index: number) => {
@@ -194,16 +194,20 @@ function PlayerListPage(): React.ReactElement {
       ) : data.length === 0 ? (
         <NoDataComponent />
       ) : (
-        <Table
-          style={{
-            marginTop: '20px',
-            marginBottom: '50px',
-          }}
-          columns={PlayerListColumn}
-          dataSource={data}
-          pagination={false}
-          size="small"
-        />
+        <LocaleConsumer componentName={'PlayerListTable'}>
+          {(localeData: any, localeCode: string, dateFnsLocale: any) => (
+            <Table
+              style={{
+                marginTop: '20px',
+                marginBottom: '50px',
+              }}
+              columns={PlayerListColumn(localeData)}
+              dataSource={data}
+              pagination={false}
+              size="small"
+            />
+          )}
+        </LocaleConsumer>
       )}
     </Space>
   );

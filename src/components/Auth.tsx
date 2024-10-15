@@ -25,8 +25,17 @@ export const Auth = () => {
     const languages = navigator.languages
       ? navigator.languages
       : [navigator.language];
+    // [
+    //     "zh-CN",
+    //     "en",
+    //     "en-GB",
+    //     "en-US",
+    //     "zh"
+    // ]
+    console.log('languages', languages);
+    console.log(`SUPPORTED_LANGUAGES`, SUPPORTED_LANGUAGES);
     for (let i = 0; i < languages.length; i++) {
-      const language = languages[i];
+      const language = languages[i].replace('-', '_');
       if (language in SUPPORTED_LANGUAGES) {
         return language;
       }
