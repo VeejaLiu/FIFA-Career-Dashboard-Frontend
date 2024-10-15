@@ -22,4 +22,15 @@ export default {
     register: '注册',
     loginPrompt: '已经有账号？ 登录',
   },
+  WebsiteLogoComponent: {
+    title: '生涯模式仪表盘',
+    switchVersion: '切换游戏版本',
+  },
+  Navbar: {
+    PlayersList: '球员',
+    PlayerDetail: '详情',
+    PlayersTrends: '成长',
+    Settings: '设置',
+    GetStarted: '快速开始',
+  },
 };

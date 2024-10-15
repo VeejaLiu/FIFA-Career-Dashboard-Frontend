@@ -22,4 +22,15 @@ export default {
     register: 'Register',
     loginPrompt: 'Already have an account? Login',
   },
+  WebsiteLogoComponent: {
+    title: 'Career Mode Dashboard',
+    switchVersion: 'Switch Game Version',
+  },
+  Navbar: {
+    PlayersList: 'Players',
+    PlayerDetail: 'Player Detail',
+    PlayersTrends: 'Players Trends',
+    Settings: 'Settings',
+    GetStarted: 'Get Started',
+  },
 };
