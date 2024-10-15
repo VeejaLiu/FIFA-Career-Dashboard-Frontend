@@ -109,4 +109,22 @@ export default {
       GKPositioning: 'Positioning',
     },
   },
+
+  SettingsPage: {
+    Settings: 'Settings',
+    APISecretKey: 'API Secret Key',
+    ClickToCopy: 'Click to copy your API secret key',
+    ClickToRefresh:
+      'Click to refresh your API secret key, this will invalidate your old key',
+    CopySuccessMessage: 'Secret key copied to clipboard',
+    FailedToCopyMessage:
+      'Failed to copy secret key to clipboard, please try again',
+    DoNotShareSecretKey: 'Warning: Do not share your secret key with anyone!',
+    EnableNotifications: 'Enable Notifications',
+    PlayerOverallPotentialUpdate: 'Player Overall/Potential Update',
+    PlayerSkillMoveUpdate: 'Player Skill Move Update',
+    PlayerWeakFootUpdate: 'Player Weak Foot Update',
+    Logout: 'Logout',
+    ClickToLogout: 'Click here to logout',
+  },
 };

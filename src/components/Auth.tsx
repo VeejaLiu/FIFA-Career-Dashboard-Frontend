@@ -10,8 +10,21 @@ import en_GB from '@douyinfe/semi-ui/lib/es/locale/source/en_GB';
 import customzh_CN from '../locales/zh_CN.ts';
 import customen_GB from '../locales/en_GB.ts';
 
+const LANGUAGE_LOCAL_STORAGE_KEY = 'fcd-ui-default-language';
+
+// [
+//     "zh-CN",
+//     "en",
+//     "en-GB",
+//     "en-US",
+//     "zh"
+// ]
 const SUPPORTED_LANGUAGES: any = {
+  en: { ...en_GB, ...customen_GB },
   en_GB: { ...en_GB, ...customen_GB },
+  en_US: { ...en_GB, ...customen_GB },
+
+  zh: { ...zh_CN, ...customzh_CN },
   zh_CN: { ...zh_CN, ...customzh_CN },
 };
 
@@ -21,26 +34,31 @@ export const Auth = () => {
   const [locale, setLocale] = useState(SUPPORTED_LANGUAGES.zh_CN);
 
   const getDefaultLanguage = () => {
+    let defaultLanguage: any = 'en_GB';
+
+    // Get from local storage first
+    defaultLanguage = localStorage.getItem(LANGUAGE_LOCAL_STORAGE_KEY);
+    if (defaultLanguage) {
+      return defaultLanguage;
+    }
+
     // Get the browser language
     const languages = navigator.languages
       ? navigator.languages
       : [navigator.language];
-    // [
-    //     "zh-CN",
-    //     "en",
-    //     "en-GB",
-    //     "en-US",
-    //     "zh"
-    // ]
+
     console.log('languages', languages);
     console.log(`SUPPORTED_LANGUAGES`, SUPPORTED_LANGUAGES);
     for (let i = 0; i < languages.length; i++) {
       const language = languages[i].replace('-', '_');
       if (language in SUPPORTED_LANGUAGES) {
-        return language;
+        // save the language into local storage
+        defaultLanguage = language;
+        localStorage.setItem(LANGUAGE_LOCAL_STORAGE_KEY, defaultLanguage);
       }
     }
-    return 'en_GB'; // 默认语言
+
+    return defaultLanguage;
   };
 
   const getLoginStatus = async () => {
