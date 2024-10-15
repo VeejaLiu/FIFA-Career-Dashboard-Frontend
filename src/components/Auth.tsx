@@ -11,7 +11,11 @@ import customzh_CN from '../locales/zh_CN.ts';
 import customen_GB from '../locales/en_GB.ts';
 
 const SUPPORTED_LANGUAGES: any = {
+  en: { ...en_GB, ...customen_GB },
   en_GB: { ...en_GB, ...customen_GB },
+  en_US: { ...en_GB, ...customen_GB },
+
+  zh: { ...zh_CN, ...customzh_CN },
   zh_CN: { ...zh_CN, ...customzh_CN },
 };
 
