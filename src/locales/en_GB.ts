@@ -38,4 +38,11 @@ export default {
     getStartedPage: 'Get Started Page',
     suffix: 'to start your journey!',
   },
+  PlayerListTable: {
+    name: 'Name',
+    age: 'Age',
+    position: 'Position',
+    overall: 'Overall',
+    potential: 'Potential',
+  },
 };

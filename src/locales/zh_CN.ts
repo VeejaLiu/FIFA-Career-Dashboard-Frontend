@@ -38,4 +38,11 @@ export default {
     getStartedPage: '快速开始页面',
     suffix: ', 开始您的旅程！',
   },
+  PlayerListTable: {
+    name: '名字',
+    age: '年龄',
+    position: '位置',
+    overall: '总评',
+    potential: '潜力',
+  },
 };
