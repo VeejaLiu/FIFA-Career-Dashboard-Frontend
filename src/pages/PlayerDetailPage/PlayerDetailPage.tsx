@@ -4,6 +4,7 @@ import {
   Button,
   Col,
   Image,
+  LocaleConsumer,
   Progress,
   Rating,
   Row,
@@ -58,641 +59,466 @@ function PlayerDetailPage(): React.ReactElement {
     getPlayerDetail().then();
   }, [playerID]);
 
-  return playerDetail ? (
-    <Space
-      vertical
-      align={'center'}
-      style={{
-        width: '100%',
-        paddingBottom: '20px',
-      }}
-    >
-      {/* Player picker */}
-      <div
-        style={{
-          // width: '90%',
-          padding: '10px',
-          backgroundColor: '#f4f5f5',
-          borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
-        }}
-      >
-        {playerDetail?.allPlayer
-          ?.sort((a: PlayerOverall, b: PlayerOverall) => {
-            const positionTypeMap = {
-              GK: 1,
-              DEF: 2,
-              MID: 3,
-              FOR: 4,
-            };
-            return (
-              positionTypeMap[a.positionType] -
-                positionTypeMap[b.positionType] ||
-              a.position1.localeCompare(b.position1)
-            );
-          })
-          .map((player) => {
-            return (
-              <Button
-                style={{
-                  margin: '2px',
-                  backgroundColor:
-                    player.playerID === playerID ? '#0064fa' : '',
-                  color: player.playerID === playerID ? 'white' : 'black',
-                }}
-                key={player.playerID}
-                onClick={() => {
-                  setPlayerID(player.playerID);
-                }}
-              >
-                <span
-                  style={{
-                    color: getColorByPositionType(player.positionType),
-                    fontWeight: 'bolder',
-                    marginRight: '5px',
-                  }}
-                >
-                  {player.position1}
-                </span>
-                {player.playerName}
-              </Button>
-            );
-          })}
-      </div>
+  const AttributeSectionCol = ({
+    title,
+    attributes,
+    values,
+  }: {
+    title: string;
+    attributes: { label: string }[];
+    values: number[];
+  }) => {
+    const average =
+      values.reduce((sum, value) => sum + (value || 0), 0) / values.length;
 
-      {/* Basic info */}
-      <Space
-        align="start"
-        style={{
-          width: '95%',
-          padding: '10px',
-          backgroundColor: '#f4f5f5',
-        }}
-      >
-        {/* Basic info*/}
-        <Space style={{ width: '30%' }}>
-          <div>
-            <Space style={{ padding: '10px' }}>
-              <Image
-                width={'116px'}
-                height={'116px'}
-                src={getAvatarUrl(playerDetail?.thisPlayer?.player_id)}
-                alt="player_avatar"
-                preview={false}
-              />
-              <Space vertical style={{ width: '200px' }}>
-                <span style={{ fontWeight: 'bold' }}>
-                  {playerDetail?.thisPlayer?.player_name}
-                </span>
-                <h1
-                  style={{
-                    color: getColorByPositionType(
-                      PLAYER_PRIMARY_POS_TYPE[
-                        playerDetail?.thisPlayer?.preferredposition1 || 0
-                      ],
-                    ),
-                  }}
-                >
-                  {
-                    PLAYER_PRIMARY_POS_NAME[
-                      playerDetail?.thisPlayer?.preferredposition1 || 0
-                    ]
-                  }
-                </h1>
-                <Space style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-                  <span
+    return (
+      <Col span={8}>
+        <div className="col-content">
+          <h2>{title}</h2>
+          <Progress
+            percent={average}
+            style={{ height: '8px' }}
+            aria-label="disk usage"
+          />
+          {attributes.map((attr, index) => (
+            <div className="stat" key={index}>
+              <span className="stat-label">{attr.label}</span>
+              <span className="stat-value">{values[index]}</span>
+            </div>
+          ))}
+        </div>
+      </Col>
+    );
+  };
+
+  return playerDetail ? (
+    <LocaleConsumer componentName={'PlayerDetailPage'}>
+      {(localeData: any, localeCode: string, dateFnsLocale: any) => (
+        <Space
+          vertical
+          align={'center'}
+          style={{
+            width: '100%',
+            paddingBottom: '20px',
+          }}
+        >
+          {/* Player picker */}
+          <div
+            style={{
+              padding: '10px',
+              backgroundColor: '#f4f5f5',
+              borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+            }}
+          >
+            {playerDetail?.allPlayer
+              ?.sort((a: PlayerOverall, b: PlayerOverall) => {
+                const positionTypeMap = {
+                  GK: 1,
+                  DEF: 2,
+                  MID: 3,
+                  FOR: 4,
+                };
+                return (
+                  positionTypeMap[a.positionType] -
+                    positionTypeMap[b.positionType] ||
+                  a.position1.localeCompare(b.position1)
+                );
+              })
+              .map((player) => {
+                return (
+                  <Button
                     style={{
-                      color: getColorByOverallRating(
-                        playerDetail?.thisPlayer?.overallrating || 0,
-                      ),
+                      margin: '2px',
+                      backgroundColor:
+                        player.playerID === playerID ? '#0064fa' : '',
+                      color: player.playerID === playerID ? 'white' : 'black',
+                    }}
+                    key={player.playerID}
+                    onClick={() => {
+                      setPlayerID(player.playerID);
                     }}
                   >
-                    {playerDetail?.thisPlayer?.overallrating}
-                  </span>
-                  {'→'}
-                  <span
-                    style={{
-                      color: getColorByOverallRating(
-                        playerDetail?.thisPlayer?.potential || 0,
-                      ),
-                    }}
-                  >
-                    {playerDetail?.thisPlayer?.potential}
-                  </span>
+                    <span
+                      style={{
+                        color: getColorByPositionType(player.positionType),
+                        fontWeight: 'bolder',
+                        marginRight: '5px',
+                      }}
+                    >
+                      {player.position1}
+                    </span>
+                    {player.playerName}
+                  </Button>
+                );
+              })}
+          </div>
+
+          {/* Basic info */}
+          <Space
+            align="start"
+            style={{
+              width: '95%',
+              padding: '10px',
+              backgroundColor: '#f4f5f5',
+            }}
+          >
+            {/* Basic info*/}
+            <Space style={{ width: '30%' }}>
+              <div>
+                <Space style={{ padding: '10px' }}>
+                  <Image
+                    width={'116px'}
+                    height={'116px'}
+                    src={getAvatarUrl(playerDetail?.thisPlayer?.player_id)}
+                    alt="player_avatar"
+                    preview={false}
+                  />
+                  <Space vertical style={{ width: '200px' }}>
+                    <span style={{ fontWeight: 'bold' }}>
+                      {playerDetail?.thisPlayer?.player_name}
+                    </span>
+                    <h1
+                      style={{
+                        color: getColorByPositionType(
+                          PLAYER_PRIMARY_POS_TYPE[
+                            playerDetail?.thisPlayer?.preferredposition1 || 0
+                          ],
+                        ),
+                      }}
+                    >
+                      {
+                        PLAYER_PRIMARY_POS_NAME[
+                          playerDetail?.thisPlayer?.preferredposition1 || 0
+                        ]
+                      }
+                    </h1>
+                    <Space style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
+                      <span
+                        style={{
+                          color: getColorByOverallRating(
+                            playerDetail?.thisPlayer?.overallrating || 0,
+                          ),
+                        }}
+                      >
+                        {playerDetail?.thisPlayer?.overallrating}
+                      </span>
+                      {'→'}
+                      <span
+                        style={{
+                          color: getColorByOverallRating(
+                            playerDetail?.thisPlayer?.potential || 0,
+                          ),
+                        }}
+                      >
+                        {playerDetail?.thisPlayer?.potential}
+                      </span>
+                    </Space>
+                  </Space>
                 </Space>
-              </Space>
+
+                {/*Player ID*/}
+                <div className="stat">
+                  <span className="stat-label">
+                    {localeData.BasicInfo.PlayerID}:
+                  </span>
+                  <span className="stat-info-value">
+                    {playerDetail?.thisPlayer?.player_id}
+                  </span>
+                </div>
+                {/*Age*/}
+                <div className="stat">
+                  <span className="stat-label">
+                    {localeData.BasicInfo.Age}:
+                  </span>
+                  <span className="stat-info-value">
+                    {playerDetail?.thisPlayer?.age}
+                  </span>
+                </div>
+                {/*AcceleRATE	Controlled Explosive*/}
+
+                {/*Skills*/}
+                <div className="stat">
+                  <span className="stat-label">
+                    {localeData.BasicInfo.Skills}:
+                  </span>
+                  <span className="stat-info-value">
+                    {/*{playerDetail?.thisPlayer?.skillmoves}*/}
+                    <Rating
+                      disabled
+                      size={'small'}
+                      count={(playerDetail?.thisPlayer?.skillmoves || 0) + 1}
+                      value={(playerDetail?.thisPlayer?.skillmoves || 0) + 1}
+                    />
+                  </span>
+                </div>
+                {/*Weak Foot*/}
+                <div className="stat">
+                  <span className="stat-label">
+                    {localeData.BasicInfo.WeakFoot}:
+                  </span>
+                  <span className="stat-info-value">
+                    <Rating
+                      disabled
+                      size={'small'}
+                      count={playerDetail?.thisPlayer?.weakfootabilitytypecode}
+                      value={playerDetail?.thisPlayer?.weakfootabilitytypecode}
+                    />
+                  </span>
+                </div>
+                {/*Foot	Right*/}
+                <div className="stat">
+                  <span className="stat-label">
+                    {localeData.BasicInfo.Foot}:
+                  </span>
+                  <span className="stat-info-value">
+                    {(playerDetail?.thisPlayer?.preferredfoot || 1) === 1
+                      ? 'Right'
+                      : 'Left'}
+                  </span>
+                </div>
+                {/*Height	177cm | 5'10"*/}
+                <div className="stat">
+                  <span className="stat-label">
+                    {localeData.BasicInfo.Height}:
+                  </span>
+                  <span className="stat-info-value">
+                    {playerDetail?.thisPlayer?.height} cm
+                  </span>
+                </div>
+                {/*Weight	67*/}
+                <div className="stat">
+                  <span className="stat-label">
+                    {localeData.BasicInfo.Weight}:
+                  </span>
+                  <span className="stat-info-value">
+                    {playerDetail?.thisPlayer?.weight} kg
+                  </span>
+                </div>
+                {/*Att. WR	High*/}
+                <div className="stat">
+                  <span className="stat-label">
+                    {localeData.BasicInfo.AttackingWorkRate}:
+                  </span>
+                  <span className="stat-info-value">
+                    {getWorkRateText(
+                      playerDetail?.thisPlayer?.attackingworkrate,
+                    )}
+                  </span>
+                </div>
+                {/*Def. WR	High*/}
+                <div className="stat">
+                  <span className="stat-label">
+                    {localeData.BasicInfo.DefensiveWorkRate}:
+                  </span>
+                  <span className="stat-info-value">
+                    {getWorkRateText(
+                      playerDetail?.thisPlayer?.defensiveworkrate,
+                    )}
+                  </span>
+                </div>
+              </div>
             </Space>
 
-            {/*Player ID*/}
-            <div className="stat">
-              <span className="stat-label">Player ID:</span>
-              <span className="stat-info-value">
-                {playerDetail?.thisPlayer?.player_id}
-              </span>
-            </div>
-            {/*Age*/}
-            <div className="stat">
-              <span className="stat-label">Age:</span>
-              <span className="stat-info-value">
-                {playerDetail?.thisPlayer?.age}
-              </span>
-            </div>
-            {/*AcceleRATE	Controlled Explosive*/}
+            {/* Details */}
+            <div className="grid" style={{ width: '100%' }}>
+              <Row>
+                <AttributeSectionCol
+                  title={localeData.Attributes.Pace}
+                  attributes={[
+                    { label: localeData.Attributes.Acceleration },
+                    { label: localeData.Attributes.SprintSpeed },
+                  ]}
+                  values={[
+                    playerDetail?.thisPlayer?.acceleration,
+                    playerDetail?.thisPlayer?.sprintspeed,
+                  ]}
+                />
 
-            {/*Skills*/}
-            <div className="stat">
-              <span className="stat-label">Skills:</span>
-              <span className="stat-info-value">
-                {/*{playerDetail?.thisPlayer?.skillmoves}*/}
-                <Rating
-                  disabled
-                  size={'small'}
-                  count={(playerDetail?.thisPlayer?.skillmoves || 0) + 1}
-                  value={(playerDetail?.thisPlayer?.skillmoves || 0) + 1}
+                <AttributeSectionCol
+                  title={localeData.Attributes.Shooting}
+                  attributes={[
+                    { label: localeData.Attributes.AttackingPosition },
+                    { label: localeData.Attributes.Finishing },
+                    { label: localeData.Attributes.ShotPower },
+                    { label: localeData.Attributes.LongShots },
+                    { label: localeData.Attributes.Volleys },
+                    { label: localeData.Attributes.Penalties },
+                  ]}
+                  values={[
+                    playerDetail?.thisPlayer?.positioning,
+                    playerDetail?.thisPlayer?.finishing,
+                    playerDetail?.thisPlayer?.shotpower,
+                    playerDetail?.thisPlayer?.longshots,
+                    playerDetail?.thisPlayer?.volleys,
+                    playerDetail?.thisPlayer?.penalties,
+                  ]}
                 />
-              </span>
-            </div>
-            {/*Weak Foot*/}
-            <div className="stat">
-              <span className="stat-label">Weak Foot:</span>
-              <span className="stat-info-value">
-                <Rating
-                  disabled
-                  size={'small'}
-                  count={playerDetail?.thisPlayer?.weakfootabilitytypecode}
-                  value={playerDetail?.thisPlayer?.weakfootabilitytypecode}
-                />
-              </span>
-            </div>
-            {/*Foot	Right*/}
-            <div className="stat">
-              <span className="stat-label">Foot:</span>
-              <span className="stat-info-value">
-                {(playerDetail?.thisPlayer?.preferredfoot || 1) === 1
-                  ? 'Right'
-                  : 'Left'}
-              </span>
-            </div>
-            {/*Height	177cm | 5'10"*/}
-            <div className="stat">
-              <span className="stat-label">Height:</span>
-              <span className="stat-info-value">
-                {playerDetail?.thisPlayer?.height} cm
-              </span>
-            </div>
-            {/*Weight	67*/}
-            <div className="stat">
-              <span className="stat-label">Weight:</span>
-              <span className="stat-info-value">
-                {playerDetail?.thisPlayer?.weight} kg
-              </span>
-            </div>
-            {/*Att. WR	High*/}
-            <div className="stat">
-              <span className="stat-label">Att. WR:</span>
-              <span className="stat-info-value">
-                {getWorkRateText(playerDetail?.thisPlayer?.attackingworkrate)}
-              </span>
-            </div>
-            {/*Def. WR	High*/}
-            <div className="stat">
-              <span className="stat-label">Def. WR:</span>
-              <span className="stat-info-value">
-                {getWorkRateText(playerDetail?.thisPlayer?.defensiveworkrate)}
-              </span>
-            </div>
-          </div>
-        </Space>
 
-        {/* Details */}
-        <div className="grid" style={{ width: '100%' }}>
-          <Row>
-            <Col span={8}>
-              <div className="col-content">
-                <h2>Pace</h2>
-                <Progress
-                  percent={
-                    ((playerDetail?.thisPlayer?.acceleration || 0) +
-                      (playerDetail?.thisPlayer?.sprintspeed || 0)) /
-                    2
-                  }
-                  style={{ height: '8px' }}
-                  aria-label="disk usage"
+                <AttributeSectionCol
+                  title={localeData.Attributes.Passing}
+                  attributes={[
+                    { label: localeData.Attributes.Vision },
+                    { label: localeData.Attributes.Crossing },
+                    { label: localeData.Attributes.FKAccuracy },
+                    { label: localeData.Attributes.ShortPass },
+                    { label: localeData.Attributes.LongPass },
+                    { label: localeData.Attributes.Curve },
+                  ]}
+                  values={[
+                    playerDetail?.thisPlayer?.vision,
+                    playerDetail?.thisPlayer?.crossing,
+                    playerDetail?.thisPlayer?.freekickaccuracy,
+                    playerDetail?.thisPlayer?.shortpassing,
+                    playerDetail?.thisPlayer?.longpassing,
+                    playerDetail?.thisPlayer?.curve,
+                  ]}
                 />
-                <div className="stat">
-                  <span className="stat-label">Acceleration:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.acceleration}
-                  </span>
-                </div>
-                <div className="stat">
-                  <span className="stat-label">Sprint Speed:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.sprintspeed}
-                  </span>
-                </div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="col-content">
-                <h2>Shooting</h2>
-                <Progress
-                  percent={
-                    ((playerDetail?.thisPlayer?.positioning || 0) +
-                      (playerDetail?.thisPlayer?.finishing || 0) +
-                      (playerDetail?.thisPlayer?.shotpower || 0) +
-                      (playerDetail?.thisPlayer?.longshots || 0) +
-                      (playerDetail?.thisPlayer?.volleys || 0) +
-                      (playerDetail?.thisPlayer?.penalties || 0)) /
-                    6
-                  }
-                  style={{ height: '8px' }}
-                  aria-label="disk usage"
+              </Row>
+              <Row>
+                <AttributeSectionCol
+                  title={localeData.Attributes.Dribbling}
+                  attributes={[
+                    { label: localeData.Attributes.Agility },
+                    { label: localeData.Attributes.Balance },
+                    { label: localeData.Attributes.Reactions },
+                    { label: localeData.Attributes.BallControl },
+                    { label: localeData.Attributes.Dribbling },
+                    { label: localeData.Attributes.Composure },
+                  ]}
+                  values={[
+                    playerDetail?.thisPlayer?.agility,
+                    playerDetail?.thisPlayer?.balance,
+                    playerDetail?.thisPlayer?.reactions,
+                    playerDetail?.thisPlayer?.ballcontrol,
+                    playerDetail?.thisPlayer?.dribbling,
+                    playerDetail?.thisPlayer?.composure,
+                  ]}
                 />
-                <div className="stat">
-                  <span className="stat-label">Att. Position:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.positioning}
-                  </span>
-                </div>
-                <div className="stat">
-                  <span className="stat-label">Finishing:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.finishing}
-                  </span>
-                </div>
-                <div className="stat">
-                  <span className="stat-label">Shot Power:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.shotpower}
-                  </span>
-                </div>
-                {/*Long Shots*/}
-                <div className="stat">
-                  <span className="stat-label">Long Shots:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.longshots}
-                  </span>
-                </div>
-                {/*Volleys*/}
-                <div className="stat">
-                  <span className="stat-label">Volleys:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.volleys}
-                  </span>
-                </div>
-                {/*Penalties*/}
-                <div className="stat">
-                  <span className="stat-label">Penalties:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.penalties}
-                  </span>
-                </div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="col-content">
-                <h2>Passing</h2>
-                <Progress
-                  percent={
-                    ((playerDetail?.thisPlayer?.vision || 0) +
-                      (playerDetail?.thisPlayer?.crossing || 0) +
-                      (playerDetail?.thisPlayer?.freekickaccuracy || 0) +
-                      (playerDetail?.thisPlayer?.shortpassing || 0) +
-                      (playerDetail?.thisPlayer?.longpassing || 0) +
-                      (playerDetail?.thisPlayer?.curve || 0)) /
-                    6
-                  }
-                  style={{ height: '8px' }}
-                  aria-label="disk usage"
+                <AttributeSectionCol
+                  title={localeData.Attributes.Defending}
+                  attributes={[
+                    { label: localeData.Attributes.Interceptions },
+                    { label: localeData.Attributes.HeadingAccuracy },
+                    { label: localeData.Attributes.DefensiveAwareness },
+                    { label: localeData.Attributes.StandingTackle },
+                    { label: localeData.Attributes.SlidingTackle },
+                  ]}
+                  values={[
+                    playerDetail?.thisPlayer?.interceptions,
+                    playerDetail?.thisPlayer?.headingaccuracy,
+                    playerDetail?.thisPlayer?.defensiveawareness,
+                    playerDetail?.thisPlayer?.standingtackle,
+                    playerDetail?.thisPlayer?.slidingtackle,
+                  ]}
                 />
-                {/*Vision*/}
-                <div className="stat">
-                  <span className="stat-label">Vision:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.vision}
-                  </span>
-                </div>
-                {/*Crossing*/}
-                <div className="stat">
-                  <span className="stat-label">Crossing:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.crossing}
-                  </span>
-                </div>
-                {/*FK Acc.*/}
-                <div className="stat">
-                  <span className="stat-label">FK Acc.:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.freekickaccuracy}
-                  </span>
-                </div>
-                {/*Short Pass*/}
-                <div className="stat">
-                  <span className="stat-label">Short Pass:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.shortpassing}
-                  </span>
-                </div>
-                {/*Long Pass*/}
-                <div className="stat">
-                  <span className="stat-label">Long Pass:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.longpassing}
-                  </span>
-                </div>
-                {/*Curve*/}
-                <div className="stat">
-                  <span className="stat-label">Curve:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.curve}
-                  </span>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={8}>
-              <div className="col-content">
-                <h2>Dribbling</h2>
-                <Progress
-                  percent={
-                    ((playerDetail?.thisPlayer?.agility || 0) +
-                      (playerDetail?.thisPlayer?.balance || 0) +
-                      (playerDetail?.thisPlayer?.reactions || 0) +
-                      (playerDetail?.thisPlayer?.ballcontrol || 0) +
-                      (playerDetail?.thisPlayer?.dribbling || 0) +
-                      (playerDetail?.thisPlayer?.composure || 0)) /
-                    6
-                  }
-                  style={{ height: '8px' }}
-                  aria-label="disk usage"
+                <AttributeSectionCol
+                  title={localeData.Attributes.Physical}
+                  attributes={[
+                    { label: localeData.Attributes.Jumping },
+                    { label: localeData.Attributes.Stamina },
+                    { label: localeData.Attributes.Strength },
+                    { label: localeData.Attributes.Aggression },
+                  ]}
+                  values={[
+                    playerDetail?.thisPlayer?.jumping,
+                    playerDetail?.thisPlayer?.stamina,
+                    playerDetail?.thisPlayer?.strength,
+                    playerDetail?.thisPlayer?.aggression,
+                  ]}
                 />
-                {/*Agility*/}
-                <div className="stat">
-                  <span className="stat-label">Agility:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.agility}
-                  </span>
-                </div>
-                {/*Balance*/}
-                <div className="stat">
-                  <span className="stat-label">Balance:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.balance}
-                  </span>
-                </div>
-                {/*Reactions*/}
-                <div className="stat">
-                  <span className="stat-label">Reactions:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.reactions}
-                  </span>
-                </div>
-                {/*Ball Control*/}
-                <div className="stat">
-                  <span className="stat-label">Ball Control:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.ballcontrol}
-                  </span>
-                </div>
-                {/*Dribbling*/}
-                <div className="stat">
-                  <span className="stat-label">Dribbling:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.dribbling}
-                  </span>
-                </div>
-                {/*Composure*/}
-                <div className="stat">
-                  <span className="stat-label">Composure:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.composure}
-                  </span>
-                </div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="col-content">
-                <h2>Defending</h2>
-                <Progress
-                  percent={
-                    ((playerDetail?.thisPlayer?.interceptions || 0) +
-                      (playerDetail?.thisPlayer?.headingaccuracy || 0) +
-                      (playerDetail?.thisPlayer?.defensiveawareness || 0) +
-                      (playerDetail?.thisPlayer?.standingtackle || 0) +
-                      (playerDetail?.thisPlayer?.slidingtackle || 0)) /
-                    5
-                  }
-                  style={{ height: '8px' }}
-                  aria-label="disk usage"
-                />
-                {/*Interceptions*/}
-                <div className="stat">
-                  <span className="stat-label">Interceptions:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.interceptions}
-                  </span>
-                </div>
-                {/*Heading Acc.*/}
-                <div className="stat">
-                  <span className="stat-label">Heading Acc.:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.headingaccuracy}
-                  </span>
-                </div>
-                {/*Def. Aware*/}
-                <div className="stat">
-                  <span className="stat-label">Def. Aware:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.defensiveawareness}
-                  </span>
-                </div>
-                {/*Stand Tackle*/}
-                <div className="stat">
-                  <span className="stat-label">Stand Tackle:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.standingtackle}
-                  </span>
-                </div>
-                {/*Slide Tackle*/}
-                <div className="stat">
-                  <span className="stat-label">Slide Tackle:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.slidingtackle}
-                  </span>
-                </div>
-              </div>
-            </Col>
-            <Col span={8}>
-              <div className="col-content">
-                <h2>Physical</h2>
-                <Progress
-                  percent={
-                    ((playerDetail?.thisPlayer?.jumping || 0) +
-                      (playerDetail?.thisPlayer?.stamina || 0) +
-                      (playerDetail?.thisPlayer?.strength || 0) +
-                      (playerDetail?.thisPlayer?.aggression || 0)) /
-                    4
-                  }
-                  style={{ height: '8px' }}
-                  aria-label="disk usage"
-                />
-                {/*Jumping*/}
-                <div className="stat">
-                  <span className="stat-label">Jumping:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.jumping}
-                  </span>
-                </div>
-                {/*Stamina*/}
-                <div className="stat">
-                  <span className="stat-label">Stamina:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.stamina}
-                  </span>
-                </div>
-                {/*Strength*/}
-                <div className="stat">
-                  <span className="stat-label">Strength:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.strength}
-                  </span>
-                </div>
-                {/*Aggression*/}
-                <div className="stat">
-                  <span className="stat-label">Aggression:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.aggression}
-                  </span>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            {/*
+              </Row>
+              <Row>
+                {/*
                 Diving
                 Handling
                 Kicking
                 Reflexes
                 Positioning
             */}
-            <Col span={8}>
-              <div className="col-content">
-                <h2>Goalkeeping</h2>
-                <Progress
-                  percent={
-                    ((playerDetail?.thisPlayer?.gkdiving || 0) +
-                      (playerDetail?.thisPlayer?.gkhandling || 0) +
-                      (playerDetail?.thisPlayer?.gkkicking || 0) +
-                      (playerDetail?.thisPlayer?.gkreflexes || 0) +
-                      (playerDetail?.thisPlayer?.gkpositioning || 0)) /
-                    5
-                  }
-                  style={{ height: '8px' }}
-                  aria-label="Goalkeeping ability"
+                <AttributeSectionCol
+                  title={localeData.Attributes.Goalkeeping}
+                  attributes={[
+                    { label: localeData.Attributes.GKDiving },
+                    { label: localeData.Attributes.GKHandling },
+                    { label: localeData.Attributes.GKKicking },
+                    { label: localeData.Attributes.GKReflexes },
+                    { label: localeData.Attributes.GKPositioning },
+                  ]}
+                  values={[
+                    playerDetail?.thisPlayer?.gkdiving,
+                    playerDetail?.thisPlayer?.gkhandling,
+                    playerDetail?.thisPlayer?.gkkicking,
+                    playerDetail?.thisPlayer?.gkreflexes,
+                    playerDetail?.thisPlayer?.gkpositioning,
+                  ]}
                 />
-                {/*Diving*/}
-                <div className="stat">
-                  <span className="stat-label">GK Diving:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.gkdiving}
-                  </span>
-                </div>
-                {/*Handling*/}
-                <div className="stat">
-                  <span className="stat-label">GK Handling:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.gkhandling}
-                  </span>
-                </div>
-                {/*Kicking*/}
-                <div className="stat">
-                  <span className="stat-label">GK Kicking:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.gkkicking}
-                  </span>
-                </div>
-                {/*Reflexes*/}
-                <div className="stat">
-                  <span className="stat-label">GK Reflexes:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.gkreflexes}
-                  </span>
-                </div>
-                {/*Positioning*/}
-                <div className="stat">
-                  <span className="stat-label">GK Positioning:</span>
-                  <span className="stat-value">
-                    {playerDetail?.thisPlayer?.gkpositioning}
-                  </span>
-                </div>
-              </div>
-            </Col>
-          </Row>
-        </div>
-      </Space>
+              </Row>
+            </div>
+          </Space>
 
-      <Space
-        style={{
-          width: '95%',
-          height: '400px',
-          padding: '10px',
-          backgroundColor: '#f4f5f5',
-          borderRadius: '2px',
-        }}
-      >
-        <ResponsiveContainer>
-          <AreaChart
-            accessibilityLayer
-            height={400}
-            data={playerDetail?.trends}
-            margin={{
-              left: -20,
-              right: 12,
+          <Space
+            style={{
+              width: '95%',
+              height: '400px',
+              padding: '10px',
+              backgroundColor: '#f4f5f5',
+              borderRadius: '2px',
             }}
           >
-            {/* 网格 */}
-            <CartesianGrid vertical />
-            {/* X轴 */}
-            <XAxis
-              dataKey="inGameDate"
-              type={'category'}
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              style={{
-                fontSize: '0.8rem',
-                fontWeight: 'bold',
-              }}
-            ></XAxis>
-            {/* Y轴 */}
-            <YAxis
-              domain={[40, 100]}
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-            ></YAxis>
-            {/* 提示 */}
-            <Tooltip content={<CustomTooltip />} />
-            {/* 数据 */}
-            <Area
-              dataKey="potential"
-              type="linear"
-              fill="#125427"
-              fillOpacity={0.4}
-              stroke="#125427"
-            />
-            <Area
-              dataKey="overallRating"
-              type="linear"
-              fill="#1dc355"
-              fillOpacity={0.4}
-              stroke="#1dc355"
-            />
-          </AreaChart>
-        </ResponsiveContainer>
-      </Space>
-    </Space>
+            <ResponsiveContainer>
+              <AreaChart
+                accessibilityLayer
+                height={400}
+                data={playerDetail?.trends}
+                margin={{
+                  left: -20,
+                  right: 12,
+                }}
+              >
+                {/* 网格 */}
+                <CartesianGrid vertical />
+                {/* X轴 */}
+                <XAxis
+                  dataKey="inGameDate"
+                  type={'category'}
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                  style={{
+                    fontSize: '0.8rem',
+                    fontWeight: 'bold',
+                  }}
+                ></XAxis>
+                {/* Y轴 */}
+                <YAxis
+                  domain={[40, 100]}
+                  tickLine={false}
+                  axisLine={false}
+                  tickMargin={8}
+                ></YAxis>
+                {/* 提示 */}
+                <Tooltip content={<CustomTooltip />} />
+                {/* 数据 */}
+                <Area
+                  dataKey="potential"
+                  type="linear"
+                  fill="#125427"
+                  fillOpacity={0.4}
+                  stroke="#125427"
+                />
+                <Area
+                  dataKey="overallRating"
+                  type="linear"
+                  fill="#1dc355"
+                  fillOpacity={0.4}
+                  stroke="#1dc355"
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          </Space>
+        </Space>
+      )}
+    </LocaleConsumer>
   ) : (
     <NoDataComponent />
   );
