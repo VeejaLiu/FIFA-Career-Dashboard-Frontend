@@ -39,6 +39,7 @@ export const Auth = () => {
     // Get from local storage first
     defaultLanguage = localStorage.getItem(LANGUAGE_LOCAL_STORAGE_KEY);
     if (defaultLanguage) {
+      console.log(`Get from local storage`, defaultLanguage);
       return defaultLanguage;
     }
 
@@ -55,6 +56,7 @@ export const Auth = () => {
         // save the language into local storage
         defaultLanguage = language;
         localStorage.setItem(LANGUAGE_LOCAL_STORAGE_KEY, defaultLanguage);
+        break;
       }
     }
 
