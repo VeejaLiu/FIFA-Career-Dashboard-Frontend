@@ -10,7 +10,7 @@ import en_GB from '@douyinfe/semi-ui/lib/es/locale/source/en_GB';
 import customzh_CN from '../locales/zh_CN.ts';
 import customen_GB from '../locales/en_GB.ts';
 
-const LANGUAGE_LOCAL_STORAGE_KEY = 'fcd-ui-default-language';
+export const LANGUAGE_LOCAL_STORAGE_KEY = 'fcd-ui-default-language';
 
 // [
 //     "zh-CN",

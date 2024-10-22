@@ -32,6 +32,8 @@ export default {
     PlayersTrends: 'Players Trends',
     Settings: 'Settings',
     GetStarted: 'Get Started',
+    VisitGithub: 'Visit Github',
+    SwitchLanguage: '切换为中文',
     Hello: 'Hi, ',
     Logout: 'Sign out',
   },
