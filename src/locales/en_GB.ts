@@ -32,6 +32,8 @@ export default {
     PlayersTrends: 'Players Trends',
     Settings: 'Settings',
     GetStarted: 'Get Started',
+    Hello: 'Hi, ',
+    Logout: 'Sign out',
   },
   NoDataComponent: {
     prefix: 'No data here. Please go to the',

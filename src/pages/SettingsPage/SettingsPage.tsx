@@ -76,6 +76,7 @@ function SettingsPage(): React.ReactElement {
         <Space
           vertical
           style={{
+            marginTop: '20px',
             width: '50vw',
             minWidth: '600px',
           }}

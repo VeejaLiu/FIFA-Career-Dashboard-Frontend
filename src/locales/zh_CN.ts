@@ -32,6 +32,8 @@ export default {
     PlayersTrends: '成长',
     Settings: '设置',
     GetStarted: '快速开始',
+    Hello: '你好， ',
+    Logout: '退出登录',
   },
   NoDataComponent: {
     prefix: '这里没有数据。请转到',
