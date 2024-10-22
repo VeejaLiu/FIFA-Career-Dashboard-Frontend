@@ -1,13 +1,16 @@
 import { Link, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import {
   Avatar,
+  Button,
   Dropdown,
   LocaleConsumer,
   Nav,
   Notification,
   Space,
+  Tooltip,
 } from '@douyinfe/semi-ui';
 import './App.css';
+import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { PlayerApis } from './service/PlayerApis.ts';
 import PlayerListPage from './pages/PlayerListPage/PlayerListPage.tsx';
@@ -17,8 +20,10 @@ import {
   IconArticle,
   IconBranch,
   IconExit,
+  IconGithubLogo,
   IconHistogram,
   IconIdCard,
+  IconLanguage,
   IconSetting,
   IconUser,
 } from '@douyinfe/semi-icons';
@@ -28,11 +33,11 @@ import PlayerDetailPage from './pages/PlayerDetailPage/PlayerDetailPage.tsx';
 import { UserApis } from './service/UserApis.ts';
 import fc24Logo from '../public/fc24-logo.svg';
 import fc25Logo from '../public/fc25-logo.png';
-import * as React from 'react';
 import {
   getDefaultGameVersion,
   removeDefaultGameVersion,
 } from './common/common.ts';
+import { LANGUAGE_LOCAL_STORAGE_KEY } from './components/Auth.tsx';
 
 function getLogoByVersion(defaultVersion: number) {
   switch (defaultVersion) {
@@ -223,44 +228,119 @@ export default function App() {
                       },
                     ]}
                     footer={
-                      <Dropdown
-                        position="bottomRight"
-                        trigger={'click'}
-                        render={
-                          <Dropdown.Menu>
-                            <Dropdown.Item disabled={true}>
-                              {localeData.Hello}
-                              {userInfo?.username || 'Guest'}
-                            </Dropdown.Item>
-
-                            <Dropdown.Divider />
-
-                            <Dropdown.Item
-                              icon={<IconSetting />}
-                              onClick={() => {
-                                navigate('/settings');
-                              }}
-                            >
-                              {localeData.Settings}
-                            </Dropdown.Item>
-
-                            <Dropdown.Item
-                              icon={<IconExit />}
-                              onClick={doLogout}
-                            >
-                              {localeData.Logout}
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        }
+                      <div
+                        style={{
+                          // height: '50px
+                          // backgroundColor: 'greenyellow',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          display: 'flex',
+                        }}
                       >
-                        <Avatar
-                          size="small"
-                          color="light-blue"
-                          style={{ margin: 4 }}
+                        <Tooltip
+                          content={localeData.VisitGithub}
+                          position={'bottom'}
                         >
-                          {userInfo?.username?.charAt(0)?.toUpperCase()}
-                        </Avatar>
-                      </Dropdown>
+                          <Button
+                            theme="borderless"
+                            icon={<IconGithubLogo size="large" />}
+                            style={{
+                              color: 'var(--semi-color-text-2)',
+                              marginRight: '12px',
+                            }}
+                            onClick={() => {
+                              window.open(
+                                'https://github.com/VeejaLiu/FIFA-Career-Dashboard-Frontend',
+                              );
+                            }}
+                          />
+                        </Tooltip>
+                        <Tooltip
+                          content={localeData.SwitchLanguage}
+                          position={'bottom'}
+                        >
+                          <Button
+                            theme="borderless"
+                            icon={<IconLanguage size="large" />}
+                            style={{
+                              color: 'var(--semi-color-text-2)',
+                              marginRight: '12px',
+                            }}
+                            onClick={() => {
+                              // localStorage.setItem('locale', 'zh_CN');
+                              // const SUPPORTED_LANGUAGES: any = {
+                              //   en: { ...en_GB, ...customen_GB },
+                              //   en_GB: { ...en_GB, ...customen_GB },
+                              //   en_US: { ...en_GB, ...customen_GB },
+                              //
+                              //   zh: { ...zh_CN, ...customzh_CN },
+                              //   zh_CN: { ...zh_CN, ...customzh_CN },
+                              // };
+                              const currentLuaguage = localStorage.getItem(
+                                LANGUAGE_LOCAL_STORAGE_KEY,
+                              );
+                              switch (currentLuaguage) {
+                                case 'en':
+                                case 'en_GB':
+                                case 'en_US':
+                                  localStorage.setItem(
+                                    LANGUAGE_LOCAL_STORAGE_KEY,
+                                    'zh',
+                                  );
+                                  break;
+                                case 'zh':
+                                case 'zh_CN':
+                                  localStorage.setItem(
+                                    LANGUAGE_LOCAL_STORAGE_KEY,
+                                    'en',
+                                  );
+                                  break;
+                                default:
+                                  break;
+                              }
+                              window.location.reload();
+                            }}
+                          />
+                        </Tooltip>
+                        <Dropdown
+                          position="bottomRight"
+                          trigger={'click'}
+                          render={
+                            <Dropdown.Menu>
+                              <Dropdown.Item disabled={true}>
+                                {localeData.Hello}
+                                {userInfo?.username || 'Guest'}
+                              </Dropdown.Item>
+
+                              <Dropdown.Divider />
+
+                              <Dropdown.Item
+                                icon={<IconSetting />}
+                                onClick={() => {
+                                  navigate('/settings');
+                                }}
+                              >
+                                {localeData.Settings}
+                              </Dropdown.Item>
+
+                              <Dropdown.Item
+                                icon={<IconExit />}
+                                onClick={doLogout}
+                              >
+                                {localeData.Logout}
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          }
+                        >
+                          <Avatar
+                            size="small"
+                            color="light-blue"
+                            style={{ marginRight: '12px' }}
+                          >
+                            {userInfo?.username?.charAt(0)?.toUpperCase()}
+                          </Avatar>
+                        </Dropdown>
+                      </div>
                     }
                   ></Nav>
                   <div className={'content'}>
