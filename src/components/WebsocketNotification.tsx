@@ -293,24 +293,24 @@ export const WebsocketNotification = () => {
         // overratingChangeNotification({
         //   playerID: 276839,
         //   playerName: 'Sebastiano Desplanches',
-        //   oldOverallrating: 1,
-        //   overallrating: 2,
-        //   oldPotential: 1,
-        //   potential: 2,
+        //   oldOverallrating: 89,
+        //   overallrating: 90,
+        //   oldPotential: 91,
+        //   potential: 91,
         // });
         //
         // skillMoveChangeNotification({
         //   playerID: 276839,
         //   playerName: 'Sebastiano Desplanches',
-        //   oldSkillMoves: 1,
-        //   skillMoves: 2,
+        //   oldSkillMoves: 3,
+        //   skillMoves: 4,
         // });
         //
         // weakFootChangeNotification({
         //   playerID: 276839,
         //   playerName: 'Sebastiano Desplanches',
-        //   oldWeakFootAbilityTypeCode: 1,
-        //   weakfootabilitytypecode: 2,
+        //   oldWeakFootAbilityTypeCode: 4,
+        //   weakfootabilitytypecode: 5,
         // });
       },
       (err) => {
