@@ -277,4 +277,33 @@ export class UserApis {
       };
     }
   }
+
+  static async getUserInfo(): Promise<{
+    userID: string;
+    username: string;
+    email: string;
+  } | null> {
+    try {
+      const token = getToken();
+      // console.log(`[getUserInfo] token: ${token}`);
+      const response = await axios.get(`${BACKEND_URL}/api/v1/user/info`, {
+        headers: {
+          Accept: '*/*',
+          token: token,
+        },
+      });
+      console.log(`[getUserInfo] response: ${JSON.stringify(response)}`);
+
+      if (response.status !== 200) {
+        return null;
+      }
+      if (!response.data.success) {
+        return null;
+      }
+      return response.data.data;
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  }
 }

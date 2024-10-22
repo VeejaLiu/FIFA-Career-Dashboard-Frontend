@@ -1,5 +1,12 @@
-import { Link, Outlet, Route, Routes } from 'react-router-dom';
-import { Dropdown, LocaleConsumer, Nav, Space } from '@douyinfe/semi-ui';
+import { Link, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
+import {
+  Avatar,
+  Dropdown,
+  LocaleConsumer,
+  Nav,
+  Notification,
+  Space,
+} from '@douyinfe/semi-ui';
 import './App.css';
 import { useEffect, useState } from 'react';
 import { PlayerApis } from './service/PlayerApis.ts';
@@ -9,6 +16,7 @@ import SettingsPage from './pages/SettingsPage/SettingsPage.tsx';
 import {
   IconArticle,
   IconBranch,
+  IconExit,
   IconHistogram,
   IconIdCard,
   IconSetting,
@@ -114,15 +122,43 @@ function WebsiteLogoComponent() {
 }
 
 export default function App() {
+  const navigate = useNavigate();
   const [playerCount, setPlayerCount] = useState(0);
+  const [userInfo, setUserInfo] = useState<any>(null);
 
   const fetchPlayerCount = async () => {
     const count = await PlayerApis.getPlayerCount();
     setPlayerCount(count);
   };
 
+  const fetchUsername = async () => {
+    const userInfo = await UserApis.getUserInfo();
+    setUserInfo(userInfo);
+  };
+
+  const doLogout = async () => {
+    UserApis.doLogout().then((result) => {
+      if (result) {
+        Notification.success({
+          title: 'Success',
+          content: 'Logged out successfully',
+          duration: 3,
+        });
+        window.location.href = '/';
+      } else {
+        Notification.error({
+          title: 'Error',
+          content: 'Failed to logout, please try again',
+          duration: 3,
+        });
+        return;
+      }
+    });
+  };
+
   useEffect(() => {
     fetchPlayerCount().then();
+    fetchUsername().then();
   }, []);
 
   return (
@@ -181,19 +217,51 @@ export default function App() {
                         icon: <IconHistogram />,
                       },
                       {
-                        text: localeData.Settings,
-                        itemKey: 'Settings',
-                        icon: <IconSetting />,
-                      },
-                      {
                         text: localeData.GetStarted,
                         itemKey: 'GetStarted',
                         icon: <IconArticle />,
                       },
                     ]}
-                    footer={{
-                      collapseButton: true,
-                    }}
+                    footer={
+                      <Dropdown
+                        position="bottomRight"
+                        trigger={'click'}
+                        render={
+                          <Dropdown.Menu>
+                            <Dropdown.Item disabled={true}>
+                              {localeData.Hello}
+                              {userInfo?.username || 'Guest'}
+                            </Dropdown.Item>
+
+                            <Dropdown.Divider />
+
+                            <Dropdown.Item
+                              icon={<IconSetting />}
+                              onClick={() => {
+                                navigate('/settings');
+                              }}
+                            >
+                              {localeData.Settings}
+                            </Dropdown.Item>
+
+                            <Dropdown.Item
+                              icon={<IconExit />}
+                              onClick={doLogout}
+                            >
+                              {localeData.Logout}
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        }
+                      >
+                        <Avatar
+                          size="small"
+                          color="light-blue"
+                          style={{ margin: 4 }}
+                        >
+                          {userInfo?.username?.charAt(0)?.toUpperCase()}
+                        </Avatar>
+                      </Dropdown>
+                    }
                   ></Nav>
                   <div className={'content'}>
                     <Outlet />
