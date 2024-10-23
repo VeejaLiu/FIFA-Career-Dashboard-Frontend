@@ -87,6 +87,10 @@ function WebsiteLogoComponent() {
             position={'bottom'}
             render={
               <Dropdown.Menu>
+                <Dropdown.Item disabled={true}>
+                  {localeData.switchVersion}
+                </Dropdown.Item>
+                <Dropdown.Divider />
                 <Dropdown.Item
                   onClick={async () => {
                     // console.log('Switch to FC 24');
@@ -100,6 +104,9 @@ function WebsiteLogoComponent() {
                   }}
                 >
                   FC 24
+                  <span>
+                    <b>{defaultGameVersion === 24 ? ' (Current)' : ''}</b>
+                  </span>
                 </Dropdown.Item>
                 <Dropdown.Item
                   onClick={async () => {
@@ -114,6 +121,9 @@ function WebsiteLogoComponent() {
                   }}
                 >
                   FC 25
+                  <span>
+                    <b>{defaultGameVersion === 24 ? ' (Current)' : ''}</b>
+                  </span>
                 </Dropdown.Item>
               </Dropdown.Menu>
             }
