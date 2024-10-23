@@ -23,8 +23,9 @@ export default {
     loginPrompt: 'Already have an account? Login',
   },
   WebsiteLogoComponent: {
-    title: 'Career Mode Dashboard',
+    title: 'Career Dashboard',
     switchVersion: 'Switch Game Version',
+    current: 'Current',
   },
   Navbar: {
     PlayersList: 'Players',

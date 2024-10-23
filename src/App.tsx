@@ -105,7 +105,11 @@ function WebsiteLogoComponent() {
                 >
                   FC 24
                   <span>
-                    <b>{defaultGameVersion === 24 ? ' (Current)' : ''}</b>
+                    <b>
+                      {defaultGameVersion === 24
+                        ? ` (${localeData.current})`
+                        : ''}
+                    </b>
                   </span>
                 </Dropdown.Item>
                 <Dropdown.Item
@@ -122,13 +126,20 @@ function WebsiteLogoComponent() {
                 >
                   FC 25
                   <span>
-                    <b>{defaultGameVersion === 24 ? ' (Current)' : ''}</b>
+                    <b>
+                      {defaultGameVersion === 25
+                        ? ` (${localeData.current})`
+                        : ''}
+                    </b>
                   </span>
                 </Dropdown.Item>
               </Dropdown.Menu>
             }
           >
-            <IconBranch style={{ cursor: 'pointer', color: '#94f17a' }} />
+            <IconBranch
+              size={'extra-large'}
+              style={{ cursor: 'pointer', color: '#94f17a' }}
+            />
           </Dropdown>
         </Space>
       )}
@@ -253,7 +264,7 @@ export default function App() {
                         >
                           <Button
                             theme="borderless"
-                            icon={<IconGithubLogo size="large" />}
+                            icon={<IconGithubLogo size="extra-large" />}
                             style={{
                               color: 'var(--semi-color-text-2)',
                               marginRight: '12px',
@@ -271,7 +282,7 @@ export default function App() {
                         >
                           <Button
                             theme="borderless"
-                            icon={<IconLanguage size="large" />}
+                            icon={<IconLanguage size="extra-large" />}
                             style={{
                               color: 'var(--semi-color-text-2)',
                               marginRight: '12px',
