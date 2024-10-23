@@ -23,8 +23,9 @@ export default {
     loginPrompt: '已经有账号？ 登录',
   },
   WebsiteLogoComponent: {
-    title: '生涯模式仪表盘',
+    title: '生涯仪表盘',
     switchVersion: '切换游戏版本',
+    current: '当前版本',
   },
   Navbar: {
     PlayersList: '球员',
