@@ -23,7 +23,7 @@ export default {
     loginPrompt: '已经有账号？ 登录',
   },
   WebsiteLogoComponent: {
-    title: '生涯仪表盘',
+    title: 'Career.Top',
     switchVersion: '切换游戏版本',
     current: '当前版本',
   },
