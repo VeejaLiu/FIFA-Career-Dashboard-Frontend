@@ -23,7 +23,7 @@ export default {
     loginPrompt: 'Already have an account? Login',
   },
   WebsiteLogoComponent: {
-    title: 'Career Dashboard',
+    title: 'Career.Top',
     switchVersion: 'Switch Game Version',
     current: 'Current',
   },
