@@ -32,7 +32,11 @@ function SettingsPage(): React.ReactElement {
         );
         break;
       case 25:
-        setCodeStr(luaScript_FC25);
+        setCodeStr(
+          luaScript_FC25
+            .replace('{{user-secret-key}}', key)
+            .replace('{{post-player-url}}', PostPlayerURL),
+        );
         break;
       default:
         break;
