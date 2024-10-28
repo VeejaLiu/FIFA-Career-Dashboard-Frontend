@@ -1,6 +1,12 @@
-import { LocaleConsumer, Space, Table, Typography } from '@douyinfe/semi-ui';
+import {
+  Input,
+  LocaleConsumer,
+  Space,
+  Table,
+  Typography,
+} from '@douyinfe/semi-ui';
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
 import {
   getAvatarUrl,
@@ -43,7 +49,11 @@ const PlayerListColumn = (localeData: any) => [
     },
   },
   {
-    title: localeData.name,
+    title: (
+      <Space>
+        <span>{localeData.name}</span>
+      </Space>
+    ),
     dataIndex: 'playerName',
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
@@ -199,10 +209,12 @@ function PlayerListPage(): React.ReactElement {
 
   return (
     <Space
-      style={{
-        height: '100%',
-        width: '100%',
-      }}
+      style={
+        {
+          // width: '100vw',
+        }
+      }
+      align={'center'}
     >
       {isLoading ? (
         <LoadingComponent />
@@ -212,8 +224,12 @@ function PlayerListPage(): React.ReactElement {
         <LocaleConsumer componentName={'PlayerListTable'}>
           {(localeData: any, localeCode: string, dateFnsLocale: any) => (
             <Table
+              sticky={{ top: 0 }}
               style={{
-                width: '95vw',
+                minWidth: '800px',
+                marginTop: '10px',
+                marginBottom: '100px',
+                scroll: null,
               }}
               columns={PlayerListColumn(localeData)}
               dataSource={data}
