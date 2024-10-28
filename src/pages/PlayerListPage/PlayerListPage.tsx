@@ -8,6 +8,7 @@ import {
   getColorByPositionType,
 } from '../../common/player-helper.ts';
 import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
+import { IconActivity } from '@douyinfe/semi-icons';
 
 const { Text } = Typography;
 
@@ -28,13 +29,13 @@ const PlayerListColumn = (localeData: any) => [
             src={record.imageUrl}
             alt="player"
             onError={(e) => {
-              // 图片加载失败时，隐藏图片
+              // Hide the image when the image fails to load
               e.currentTarget.style.display = 'none';
-              // 清空 src 属性，防止加载失败时，显示上一次加载的图片
+              // Clear the src attribute to prevent the last loaded image from being displayed when loading fails
               e.currentTarget.src = '';
             }}
             onLoad={(e) => {
-              e.currentTarget.style.display = 'block'; // 或者使用其他显示方式
+              e.currentTarget.style.display = 'block';
             }}
           />
         </Space>
@@ -42,24 +43,30 @@ const PlayerListColumn = (localeData: any) => [
     },
   },
   {
-    title: localeData.name,
+    title: (
+      <Space>
+        <span>{localeData.name}</span>
+      </Space>
+    ),
     dataIndex: 'playerName',
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
         <Space vertical align={'baseline'}>
           <Text
             style={{
-              fontSize: '1.2rem',
+              fontSize: '1.1rem',
               fontWeight: 'bold',
               cursor: 'pointer',
             }}
+            underline
             onClick={() => {
               window.location.href = `/players-detail?id=${record.playerID}`;
             }}
           >
             {record.playerName}
           </Text>
-          <span style={{ color: 'grey', fontSize: '1rem' }}>
+
+          <span style={{ color: 'grey', fontSize: '0.8rem' }}>
             ID: {record.playerID}
           </span>
         </Space>
@@ -148,18 +155,30 @@ const PlayerListColumn = (localeData: any) => [
     sorter: (a: PlayerOverall, b: PlayerOverall) => a.potential - b.potential,
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
-        <span
-          style={{
-            color:
-              record.potential > record.overallRating
-                ? getColorByOverallRating(record.potential)
-                : 'darkgray',
-            fontSize: '2rem',
-            fontWeight: 'bold',
-          }}
-        >
-          {record.potential}
-        </span>
+        <>
+          <span
+            style={{
+              color:
+                record.potential > record.overallRating
+                  ? getColorByOverallRating(record.potential)
+                  : 'darkgray',
+              fontSize: '2rem',
+              fontWeight: 'bold',
+            }}
+          >
+            {record.potential}
+          </span>
+          {record.potential === record.overallRating ? (
+            <span
+              style={{
+                marginLeft: '15px',
+                color: '#f6ca47',
+              }}
+            >
+              <IconActivity size={'extra-large'} />
+            </span>
+          ) : null}
+        </>
       );
     },
   },
@@ -184,10 +203,12 @@ function PlayerListPage(): React.ReactElement {
 
   return (
     <Space
-      style={{
-        height: '100%',
-        width: '100%',
-      }}
+      style={
+        {
+          // width: '100vw',
+        }
+      }
+      align={'center'}
     >
       {isLoading ? (
         <LoadingComponent />
@@ -197,9 +218,12 @@ function PlayerListPage(): React.ReactElement {
         <LocaleConsumer componentName={'PlayerListTable'}>
           {(localeData: any, localeCode: string, dateFnsLocale: any) => (
             <Table
+              sticky={{ top: 0 }}
               style={{
-                marginTop: '20px',
-                marginBottom: '50px',
+                minWidth: '800px',
+                marginTop: '10px',
+                marginBottom: '100px',
+                scroll: null,
               }}
               columns={PlayerListColumn(localeData)}
               dataSource={data}
