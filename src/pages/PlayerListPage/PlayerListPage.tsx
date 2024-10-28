@@ -1,12 +1,6 @@
-import {
-  Input,
-  LocaleConsumer,
-  Space,
-  Table,
-  Typography,
-} from '@douyinfe/semi-ui';
+import { LocaleConsumer, Space, Table, Typography } from '@douyinfe/semi-ui';
 import * as React from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
 import {
   getAvatarUrl,
