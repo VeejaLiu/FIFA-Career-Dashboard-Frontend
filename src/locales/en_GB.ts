@@ -46,13 +46,13 @@ export default {
   PlayerListTable: {
     name: 'Name',
     age: 'Age',
-    position: 'Position',
-    overall: 'Overall',
-    potential: 'Potential',
+    position: 'Pos',
+    overall: 'Ovr',
+    potential: 'Pot',
   },
   PlayerDetailPage: {
     BasicInfo: {
-      PlayerID: 'Player ID',
+      PlayerID: 'ID',
       Age: 'Age',
       Skills: 'Skills',
       WeakFoot: 'Weak Foot',
@@ -61,9 +61,9 @@ export default {
       Weight: 'Weight',
       AttackingWorkRate: 'Att. WR',
       DefensiveWorkRate: 'Def. WR',
-      PlayerName: 'Player Name',
-      OverallRating: 'Overall Rating',
-      Potential: 'Potential',
+      PlayerName: 'Name',
+      OverallRating: 'Ovr',
+      Potential: 'Pot',
     },
     Attributes: {
       Pace: 'Pace',
