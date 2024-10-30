@@ -12,6 +12,15 @@ export function removeToken() {
   localStorage.removeItem('fcd-token');
 }
 
+export function getDefaultGameVersionFromLocalStorage() {
+  const localGameVersion = localStorage.getItem('fcd-game-version');
+  if (localGameVersion) {
+    return parseInt(localGameVersion);
+  } else {
+    getDefaultGameVersion().then();
+  }
+}
+
 export async function getDefaultGameVersion(): Promise<number> {
   const localGameVersion = localStorage.getItem('fcd-game-version');
   if (localGameVersion) {

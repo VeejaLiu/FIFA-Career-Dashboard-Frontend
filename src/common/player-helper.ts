@@ -1,4 +1,4 @@
-import { getDefaultGameVersion } from './common.ts';
+import { getDefaultGameVersionFromLocalStorage } from './common.ts';
 
 export function getColorByPositionType(positionType: string) {
   switch (positionType) {
@@ -35,9 +35,9 @@ export function getColorByOverallRating(overallRating: number) {
 }
 
 export function getAvatarUrl(playerID: number | null | undefined): string {
-  const gameVersion = getDefaultGameVersion();
+  const gameVersion = getDefaultGameVersionFromLocalStorage();
 
-  if (!playerID) {
+  if (!playerID || !gameVersion) {
     return '';
   }
   // playerID example: 158023
