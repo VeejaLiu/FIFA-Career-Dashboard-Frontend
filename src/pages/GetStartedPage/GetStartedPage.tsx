@@ -135,7 +135,7 @@ function SettingsPage(): React.ReactElement {
             ></CodeHighlight>
           </div>
 
-          <MarkdownRender raw={localeData.IMPORTANT_TIPS} />
+          {/*<MarkdownRender raw={localeData.IMPORTANT_TIPS} />*/}
         </Space>
       )}
     </LocaleConsumer>
