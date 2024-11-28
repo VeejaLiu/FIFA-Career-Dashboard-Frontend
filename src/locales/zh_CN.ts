@@ -133,11 +133,11 @@ export default {
     GET_STARTED_TEXT: `
 # 开始
 ## 1. 依赖
-- 最新的 **[xAranaktu/FC-24-Live-Editor](https://www.patreon.com/collection/96422?view=expanded)**。
+- 最新的 **[xAranaktu/FC-24-Live-Editor](https://www.patreon.com/collection/96422?view=expanded)** 或 **[xAranaktu/FC-25-Live-Editor](https://www.patreon.com/collection/779838?view=expanded)**。
 - **API 密钥**。（您可以在 [设置页面](/settings) 管理它，但您实际上不需要它，因为我已经在下面的代码片段中为您放入了它）
 
 ## 2. 安装
-1. 打开带有Live Editor的 FC24。
+1. 打开带有Live Editor的 FC24/FC25。
 2. 进入职业模式。
 3. 在实时编辑器中转到 \`Lua Engine\` 选项卡。
 4. 粘贴下面的代码片段。`,

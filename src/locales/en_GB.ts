@@ -137,11 +137,11 @@ export default {
     GET_STARTED_TEXT: `
 # Get Started
 ## 1. Dependencies
-- Latest **[xAranaktu/FC-24-Live-Editor](https://www.patreon.com/collection/96422?view=expanded)**.
+- Latest **[xAranaktu/FC-24-Live-Editor](https://www.patreon.com/collection/96422?view=expanded)** or **[xArnatu/FC-25-Live-Editor](https://www.patreon.com/collection/779838?view=expanded)**.
 - **Secret API key**. (You can manage it from [Setting Page](/settings), BUT you don't really need it because I have put it in the code snippet below for you)
       
 ## 2. Installation
-1. Open the FC24 with Live Editor.
+1. Open the FC24/FC25 with Live Editor.
 2. Enter career mode.
 3. Go to the \`Lua script\` tab in the live editor.
 4. Paste the code snippet below.
