@@ -34,6 +34,25 @@ export function getColorByOverallRating(overallRating: number) {
   }
 }
 
+export function getRankingColor(ranking: number): string {
+  switch (ranking) {
+    case 1:
+      return 'linear-gradient(135deg, rgba(255, 215, 0, 1) 30%, rgba(255, 185, 0, 1) 70%)';
+    case 2:
+      return 'linear-gradient(135deg, rgba(192, 192, 192, 1) 30%, rgba(169, 169, 169, 1) 70%)';
+    case 3:
+      return 'linear-gradient(135deg, rgba(205, 127, 50, 1) 30%, rgba(184, 115, 51, 1) 70%)';
+    case 4:
+      return 'linear-gradient(135deg, rgba(0, 255, 0, 1) 30%, rgba(0, 200, 0, 1) 70%)';
+    case 5:
+      return 'linear-gradient(135deg, rgba(0, 0, 255, 1) 30%, rgba(0, 0, 200, 1) 70%)';
+    case 6:
+      return 'linear-gradient(135deg, rgba(255, 0, 0, 1) 30%, rgba(200, 0, 0, 1) 70%)';
+    default:
+      return 'linear-gradient(135deg, rgba(0, 0, 0, 0.5) 30%, rgba(100, 100, 100, 1) 70%)';
+  }
+}
+
 export function getAvatarUrl(playerID: number | null | undefined): string {
   const gameVersion = getDefaultGameVersionFromLocalStorage();
 
