@@ -15,6 +15,8 @@ export interface PlayerOverall {
   position3: string;
   position4: string;
   imageUrl?: string;
+  overallRanking?: number;
+  potentialRanking?: number;
 }
 
 export interface PlayerTrend {
