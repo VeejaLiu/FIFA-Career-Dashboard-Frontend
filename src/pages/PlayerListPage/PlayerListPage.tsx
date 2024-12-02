@@ -6,6 +6,7 @@ import {
   getAvatarUrl,
   getColorByOverallRating,
   getColorByPositionType,
+  getRankingColor,
 } from '../../common/player-helper.ts';
 import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
 import { IconActivity } from '@douyinfe/semi-icons';
@@ -137,15 +138,36 @@ const PlayerListColumn = (localeData: any) => [
       a.overallRating - b.overallRating,
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
-        <span
-          style={{
-            color: getColorByOverallRating(record.overallRating),
-            fontSize: '2rem',
-            fontWeight: 'bold',
-          }}
-        >
-          {record.overallRating}
-        </span>
+        <Space vertical={false}>
+          <span
+            style={{
+              width: '50px',
+              color: getColorByOverallRating(record.overallRating),
+              fontSize: '2rem',
+              fontWeight: 'bold',
+            }}
+          >
+            {record.overallRating}
+          </span>
+          <span
+            style={{
+              width: '50px',
+            }}
+          >
+            {(record.overallRanking || 999) <= 3 && (
+              <div
+                style={{
+                  height: '1.5rem',
+                  width: '1.5rem',
+                  borderRadius: '50%',
+                  backgroundImage: getRankingColor(
+                    record.overallRanking || 999,
+                  ),
+                }}
+              ></div>
+            )}
+          </span>
+        </Space>
       );
     },
   },
@@ -155,9 +177,16 @@ const PlayerListColumn = (localeData: any) => [
     sorter: (a: PlayerOverall, b: PlayerOverall) => a.potential - b.potential,
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
-        <>
+        <div
+          style={{
+            width: '200px',
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           <span
             style={{
+              width: '50px',
               color:
                 record.potential > record.overallRating
                   ? getColorByOverallRating(record.potential)
@@ -167,6 +196,25 @@ const PlayerListColumn = (localeData: any) => [
             }}
           >
             {record.potential}
+          </span>
+          <span
+            style={{
+              width: '50px',
+            }}
+          >
+            {(record.potentialRanking || 999) <= 3 && (
+              <div
+                style={{
+                  marginLeft: '15px',
+                  height: '1.5rem',
+                  width: '1.5rem',
+                  borderRadius: '50%',
+                  backgroundImage: getRankingColor(
+                    record.potentialRanking || 999,
+                  ),
+                }}
+              ></div>
+            )}
           </span>
           {record.potential === record.overallRating ? (
             <span
@@ -178,7 +226,7 @@ const PlayerListColumn = (localeData: any) => [
               <IconActivity size={'extra-large'} />
             </span>
           ) : null}
-        </>
+        </div>
       );
     },
   },
