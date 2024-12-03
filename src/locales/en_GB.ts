@@ -49,6 +49,10 @@ export default {
     position: 'Pos',
     overall: 'Ovr',
     potential: 'Pot',
+    overallRankingTips:
+      'The player ranks {ranking} in overall for his position({position}).',
+    potentialRankingTips:
+      'The player ranks {ranking} in potential for his position({position}).',
   },
   PlayerDetailPage: {
     BasicInfo: {

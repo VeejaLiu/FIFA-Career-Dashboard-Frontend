@@ -1,4 +1,10 @@
-import { LocaleConsumer, Space, Table, Typography } from '@douyinfe/semi-ui';
+import {
+  LocaleConsumer,
+  Popover,
+  Space,
+  Table,
+  Typography,
+} from '@douyinfe/semi-ui';
 import * as React from 'react';
 import { useEffect } from 'react';
 import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
@@ -155,16 +161,28 @@ const PlayerListColumn = (localeData: any) => [
             }}
           >
             {(record.overallRanking || 999) <= 3 && (
-              <div
-                style={{
-                  height: '1.5rem',
-                  width: '1.5rem',
-                  borderRadius: '50%',
-                  backgroundImage: getRankingColor(
-                    record.overallRanking || 999,
-                  ),
-                }}
-              ></div>
+              <Popover
+                showArrow
+                content={
+                  <div>
+                    {/*'The player ranks {ranking} in overall for his position.',*/}
+                    {localeData.overallRankingTips
+                      .replace('{ranking}', record.overallRanking || 999)
+                      .replace('{position}', record.position1)}
+                  </div>
+                }
+              >
+                <div
+                  style={{
+                    height: '1.5rem',
+                    width: '1.5rem',
+                    borderRadius: '50%',
+                    backgroundImage: getRankingColor(
+                      record.overallRanking || 999,
+                    ),
+                  }}
+                ></div>
+              </Popover>
             )}
           </span>
         </Space>
@@ -203,17 +221,29 @@ const PlayerListColumn = (localeData: any) => [
             }}
           >
             {(record.potentialRanking || 999) <= 3 && (
-              <div
-                style={{
-                  marginLeft: '15px',
-                  height: '1.5rem',
-                  width: '1.5rem',
-                  borderRadius: '50%',
-                  backgroundImage: getRankingColor(
-                    record.potentialRanking || 999,
-                  ),
-                }}
-              ></div>
+              <Popover
+                showArrow
+                content={
+                  <div>
+                    {/* 'The player ranks {ranking} in potential for his position.' */}
+                    {localeData.potentialRankingTips
+                      .replace('{ranking}', record.potentialRanking || 999)
+                      .replace('{position}', record.position1)}
+                  </div>
+                }
+              >
+                <div
+                  style={{
+                    marginLeft: '15px',
+                    height: '1.5rem',
+                    width: '1.5rem',
+                    borderRadius: '50%',
+                    backgroundImage: getRankingColor(
+                      record.potentialRanking || 999,
+                    ),
+                  }}
+                ></div>
+              </Popover>
             )}
           </span>
           {record.potential === record.overallRating ? (
