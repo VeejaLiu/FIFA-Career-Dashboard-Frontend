@@ -49,6 +49,9 @@ export default {
     position: '位置',
     overall: '总评',
     potential: '潜力',
+    overallRankingTips: '该球员在同位置({position})的总评排名为第 {ranking}。',
+    potentialRankingTips:
+      '该球员在同位置({position})的潜力排名为第 {ranking}。',
   },
   PlayerDetailPage: {
     BasicInfo: {
