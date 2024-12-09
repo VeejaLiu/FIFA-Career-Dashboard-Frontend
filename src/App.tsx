@@ -1,11 +1,13 @@
 import { Link, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import {
   Avatar,
+  Badge,
   Button,
   Dropdown,
   LocaleConsumer,
   Nav,
   Notification,
+  Popover,
   Space,
   Tooltip,
 } from '@douyinfe/semi-ui';
@@ -18,6 +20,7 @@ import PlayerTrendsPage from './pages/PlayerTrendsPage/PlayerTrendsPage.tsx';
 import SettingsPage from './pages/SettingsPage/SettingsPage.tsx';
 import {
   IconArticle,
+  IconBell,
   IconBranch,
   IconExit,
   IconGithubLogo,
@@ -38,6 +41,7 @@ import {
   removeDefaultGameVersion,
 } from './common/common.ts';
 import { LANGUAGE_LOCAL_STORAGE_KEY } from './components/Auth.tsx';
+import { NotificationPopover } from './components/NotificationPopover.tsx';
 
 function getLogoByVersion(defaultVersion: number) {
   switch (defaultVersion) {
@@ -323,6 +327,34 @@ export default function App() {
                             }}
                           />
                         </Tooltip>
+                        <Popover
+                          style={{
+                            width: '540px',
+                            height: '90vh',
+                          }}
+                          position={'bottomRight'}
+                          content={<NotificationPopover />}
+                          trigger="click"
+                        >
+                          <Badge
+                            count={'99+'}
+                            theme="solid"
+                            style={{
+                              backgroundColor: 'red',
+                              marginRight: '12px', // 调整这个值来控制左移的距离
+                            }}
+                          >
+                            <Button
+                              theme="borderless"
+                              icon={<IconBell size="extra-large" />}
+                              style={{
+                                color: 'var(--semi-color-text-2)',
+                                marginRight: '12px',
+                              }}
+                              onClick={() => {}}
+                            />
+                          </Badge>
+                        </Popover>
                         <Dropdown
                           position="bottomRight"
                           trigger={'click'}
