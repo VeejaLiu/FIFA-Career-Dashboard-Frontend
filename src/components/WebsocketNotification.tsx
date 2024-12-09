@@ -40,7 +40,7 @@ function overratingChangeNotification(payload: any) {
     potential,
   } = payload;
   Notification.open({
-    title: 'Player Overall Rating/Potential Update',
+    title: 'Overall rating / Potential Update',
     content: (
       <Space align={'end'}>
         <Image
@@ -88,7 +88,7 @@ function overratingChangeNotification(payload: any) {
         </Space>
       </Space>
     ),
-    duration: 30000,
+    duration: 10,
     theme: 'light',
   });
 }
@@ -102,7 +102,7 @@ function skillMoveChangeNotification(payload: any) {
   // }
   const { playerID, playerName, oldSkillMoves, skillMoves } = payload;
   Notification.open({
-    title: 'Player Skillmoves Update',
+    title: 'Skillmoves Update',
     content: (
       <Space align={'end'}>
         <Image
@@ -135,7 +135,7 @@ function skillMoveChangeNotification(payload: any) {
         </Space>
       </Space>
     ),
-    duration: 30000,
+    duration: 10,
     theme: 'light',
   });
 }
@@ -145,16 +145,16 @@ function weakFootChangeNotification(payload: any) {
   //     "playerID": 276839,
   //     "playerName": "Sebastiano Desplanches",
   //     "oldWeakFootAbilityTypeCode": 1,
-  //     "weakfootabilitytypecode": 2
+  //     "weakFootAbilityTypeCode": 2
   // }
   const {
     playerID,
     playerName,
     oldWeakFootAbilityTypeCode,
-    weakfootabilitytypecode,
+    weakFootAbilityTypeCode,
   } = payload;
   Notification.open({
-    title: 'Player Weak Foot Update',
+    title: 'Weak Foot',
     content: (
       <Space align={'end'}>
         <Image
@@ -179,17 +179,17 @@ function weakFootChangeNotification(payload: any) {
               style={{
                 fontWeight: 'bold',
                 color: getColorByDiff(
-                  weakfootabilitytypecode - oldWeakFootAbilityTypeCode,
+                  weakFootAbilityTypeCode - oldWeakFootAbilityTypeCode,
                 ),
               }}
             >
-              {weakfootabilitytypecode}
+              {weakFootAbilityTypeCode}
             </span>
           </div>
         </Space>
       </Space>
     ),
-    duration: 30000,
+    duration: 10,
     theme: 'light',
   });
 }
@@ -310,7 +310,7 @@ export const WebsocketNotification = () => {
         //   playerID: 276839,
         //   playerName: 'Sebastiano Desplanches',
         //   oldWeakFootAbilityTypeCode: 4,
-        //   weakfootabilitytypecode: 5,
+        //   weakFootAbilityTypeCode: 5,
         // });
       },
       (err) => {
