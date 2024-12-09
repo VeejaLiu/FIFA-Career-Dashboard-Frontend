@@ -1,43 +1,59 @@
-import { LocaleConsumer } from '@douyinfe/semi-ui';
+import { LocaleConsumer, Switch, Tooltip } from '@douyinfe/semi-ui';
+import { IconTickCircle } from '@douyinfe/semi-icons';
 
 export const NotificationPopover = () => {
   return (
-    <LocaleConsumer componentName={'LoginComponent'}>
+    <LocaleConsumer componentName={'NotificationPopover'}>
       {(localeData: any, localeCode: string, dateFnsLocale: any) => (
         <div
           style={{
             width: '100%',
             height: '100%',
-            fontStyle: 'inherit',
           }}
         >
           <div
             style={{
               padding: '20px',
-              backgroundColor: 'indianred',
               display: 'flex',
+              // backgroundColor: '#06a457',
+              borderBottom: '2px solid #f0f0f0',
             }}
           >
-            <span style={{ fontWeight: 'bold', fontSize: '1.7rem' }}>
-              Notifications
-            </span>
             <span
+              style={{
+                fontWeight: 'bold',
+                fontSize: '1.7rem',
+              }}
+            >
+              {localeData.Title}
+            </span>
+            <div
               style={{
                 marginLeft: 'auto',
-                // fontSize: '12px',
-                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
               }}
             >
-              only show unread
-            </span>
-            <span
-              style={{
-                // fontSize: '12px',
-                cursor: 'pointer',
-              }}
-            >
-              Mark all as read
-            </span>
+              <span>{localeData.OnlyShowUnread}</span>
+              <Switch
+                // size={'large'}
+                style={{ marginLeft: '5px' }}
+                checkedText={localeData.SwitchOn}
+                uncheckedText={localeData.SwitchOff}
+              />
+              <Tooltip content={localeData.MarkAllAsRead} position={'top'}>
+                <IconTickCircle
+                  onClick={() => {
+                    console.log('click');
+                  }}
+                  style={{
+                    marginLeft: '20px',
+                    cursor: 'pointer',
+                  }}
+                  size={'large'}
+                />
+              </Tooltip>
+            </div>
           </div>
         </div>
       )}

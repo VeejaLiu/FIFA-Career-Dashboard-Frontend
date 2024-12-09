@@ -191,4 +191,11 @@ Let me explain why this script requires file system permissions. As we mentioned
 
 Therefore, what I do is write this data to a file first and then concatenate the file's path in the command. Based on this, please ensure you have administrative privileges and write permissions for the folder. Generally, we will write to the root directory of the EA FC game, and if writing fails, an error will be displayed: "Permission denied."`,
   },
+  NotificationPopover: {
+    Title: 'Notifications',
+    OnlyShowUnread: 'only show unread',
+    SwitchOn: 'On',
+    SwitchOff: 'Off',
+    MarkAllAsRead: 'Mark all as read',
+  },
 };

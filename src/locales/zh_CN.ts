@@ -185,4 +185,11 @@ export default {
 
 因此，我的做法是先将这些数据写入文件，然后在命令中连接文件的路径。基于此，请确保您拥有管理员权限和文件夹的写入权限。通常，我们将写入 EA FC 游戏的根目录，如果写入失败，将显示错误：“权限被拒绝。”`,
   },
+  NotificationPopover: {
+    Title: '通知',
+    OnlyShowUnread: '只显示未读',
+    SwitchOn: '开',
+    SwitchOff: '关',
+    MarkAllAsRead: '全部标记为已读',
+  },
 };
