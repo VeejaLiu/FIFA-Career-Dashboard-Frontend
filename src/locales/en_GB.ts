@@ -29,8 +29,8 @@ export default {
   },
   Navbar: {
     PlayersList: 'Players',
-    PlayerDetail: 'Player Detail',
-    PlayersTrends: 'Players Trends',
+    PlayerDetail: 'Detail',
+    PlayersTrends: 'Trends',
     Settings: 'Settings',
     GetStarted: 'Get Started',
     VisitGithub: 'Visit Github',
