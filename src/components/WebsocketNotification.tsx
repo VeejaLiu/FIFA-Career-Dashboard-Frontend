@@ -7,7 +7,7 @@ import { getToken } from '../common/common.ts';
 let reconnectInterval = 1000; // Initial reconnect interval
 const maxReconnectInterval = 30000; // Maximum reconnect interval
 
-function getColorByDiff(diff: number) {
+export function getColorByDiff(diff: number) {
   switch (true) {
     case diff > 0:
       return '#2ef72e';
