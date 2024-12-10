@@ -30,34 +30,6 @@ export interface NotificationBody {
  */
 export class NotificationApis {
   /**
-   * Mark notification as read
-   * @param id
-   */
-  static async markAsRead(id: number) {
-    try {
-      const token = getToken();
-      const response = await axios.put(
-        `${BACKEND_URL}/api/v1/notification/mark-read/`,
-        {
-          id: id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      if (response.status === 200) {
-        return response.data;
-      }
-      return [];
-    } catch (e: any) {
-      console.log(`[markAsRead] error code: ${e.response.status}`);
-      console.log(`[markAsRead] error message: ${e.message}`);
-    }
-  }
-
-  /**
    * Get player list
    * @returns NotificationBody[]
    */
@@ -86,6 +58,51 @@ export class NotificationApis {
         Toast.error('Please login first');
       }
       return [];
+    }
+  }
+
+  /**
+   * Mark notification as read
+   * @param id
+   */
+  static async markAsRead(id: number) {
+    try {
+      const token = getToken();
+
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/notification/mark-read`,
+        { id },
+        { headers: { token } },
+      );
+      if (response.status === 200) {
+        return response.data;
+      }
+      return [];
+    } catch (e: any) {
+      console.log(`[markAsRead] error code: ${e.response.status}`);
+      console.log(`[markAsRead] error message: ${e.message}`);
+    }
+  }
+
+  /**
+   * Mark all notifications as read
+   */
+  static async markAllAsRead() {
+    try {
+      const token = getToken();
+
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/notification/mark-all-read`,
+        {},
+        { headers: { token } },
+      );
+      if (response.status === 200) {
+        return response.data;
+      }
+      return [];
+    } catch (e: any) {
+      console.log(`[markAllAsRead] error code: ${e.response.status}`);
+      console.log(`[markAllAsRead] error message: ${e.message}`);
     }
   }
 }

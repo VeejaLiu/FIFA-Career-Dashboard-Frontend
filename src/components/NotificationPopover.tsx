@@ -161,7 +161,6 @@ export const NotificationPopover = () => {
             >
               <span>{localeData.OnlyShowUnread}</span>
               <Switch
-                // size={'large'}
                 style={{ marginLeft: '5px' }}
                 checkedText={localeData.SwitchOn}
                 uncheckedText={localeData.SwitchOff}
@@ -170,6 +169,7 @@ export const NotificationPopover = () => {
                 <IconCheckChoiceStroked
                   onClick={() => {
                     console.log('click');
+                    NotificationApis.markAllAsRead();
                   }}
                   style={{
                     marginLeft: '20px',
@@ -186,8 +186,8 @@ export const NotificationPopover = () => {
           {/* Content ---- Start */}
           <div
             style={{
-              flexGrow: 1, // 占据剩余所有的空间
-              overflowY: 'auto', // 内容上下滚动
+              flexGrow: 1,
+              overflowY: 'auto',
             }}
           >
             {notificationList.map((notification: any, index: number) => (
