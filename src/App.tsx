@@ -1,11 +1,13 @@
 import { Link, Outlet, Route, Routes, useNavigate } from 'react-router-dom';
 import {
   Avatar,
+  Badge,
   Button,
   Dropdown,
   LocaleConsumer,
   Nav,
   Notification,
+  Popover,
   Space,
   Tooltip,
 } from '@douyinfe/semi-ui';
@@ -18,6 +20,7 @@ import PlayerTrendsPage from './pages/PlayerTrendsPage/PlayerTrendsPage.tsx';
 import SettingsPage from './pages/SettingsPage/SettingsPage.tsx';
 import {
   IconArticle,
+  IconBell,
   IconBranch,
   IconExit,
   IconGithubLogo,
@@ -38,6 +41,8 @@ import {
   removeDefaultGameVersion,
 } from './common/common.ts';
 import { LANGUAGE_LOCAL_STORAGE_KEY } from './components/Auth.tsx';
+import { NotificationPopover } from './components/NotificationPopover.tsx';
+import { NotificationApis } from './service/NotificationApis.ts';
 
 function getLogoByVersion(defaultVersion: number) {
   switch (defaultVersion) {
@@ -151,10 +156,16 @@ export default function App() {
   const navigate = useNavigate();
   const [playerCount, setPlayerCount] = useState(0);
   const [userInfo, setUserInfo] = useState<any>(null);
+  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
 
   const fetchPlayerCount = async () => {
     const count = await PlayerApis.getPlayerCount();
     setPlayerCount(count);
+  };
+
+  const fetchUnreadNotificationCount = async () => {
+    const count = await NotificationApis.getUnreadNotificationsCount();
+    setUnreadNotificationCount(count);
   };
 
   const fetchUsername = async () => {
@@ -185,6 +196,7 @@ export default function App() {
   useEffect(() => {
     fetchPlayerCount().then();
     fetchUsername().then();
+    fetchUnreadNotificationCount().then();
   }, []);
 
   return (
@@ -323,6 +335,37 @@ export default function App() {
                             }}
                           />
                         </Tooltip>
+                        <Popover
+                          style={{
+                            width: '440px',
+                            maxHeight: '90vh',
+                          }}
+                          position={'bottomRight'}
+                          content={
+                            <NotificationPopover
+                              updateUnreadCount={fetchUnreadNotificationCount}
+                            />
+                          }
+                          trigger="click"
+                        >
+                          <Button
+                            theme="borderless"
+                            icon={<IconBell size="extra-large" />}
+                          >
+                            {unreadNotificationCount > 0 && (
+                              <Badge
+                                count={unreadNotificationCount}
+                                theme="solid"
+                                style={{
+                                  position: 'absolute',
+                                  backgroundColor: 'red',
+                                  top: '-25px',
+                                  right: '-10px',
+                                }}
+                              ></Badge>
+                            )}
+                          </Button>
+                        </Popover>
                         <Dropdown
                           position="bottomRight"
                           trigger={'click'}

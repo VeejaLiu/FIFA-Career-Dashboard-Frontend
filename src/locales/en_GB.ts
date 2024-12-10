@@ -29,8 +29,8 @@ export default {
   },
   Navbar: {
     PlayersList: 'Players',
-    PlayerDetail: 'Player Detail',
-    PlayersTrends: 'Players Trends',
+    PlayerDetail: 'Detail',
+    PlayersTrends: 'Trends',
     Settings: 'Settings',
     GetStarted: 'Get Started',
     VisitGithub: 'Visit Github',
@@ -190,5 +190,19 @@ During the closed beta, we’re only supporting one save slot. This is because o
 Let me explain why this script requires file system permissions. As we mentioned earlier, we use the command line to directly execute a curl command to send your player data. However, due to the numerous player attributes, the JSON data string can get very long, making it impossible to concatenate all this data in a single line of curl, as it exceeds the command line's allowed length. 
 
 Therefore, what I do is write this data to a file first and then concatenate the file's path in the command. Based on this, please ensure you have administrative privileges and write permissions for the folder. Generally, we will write to the root directory of the EA FC game, and if writing fails, an error will be displayed: "Permission denied."`,
+  },
+  NotificationPopover: {
+    Title: 'Notifications',
+    OnlyShowUnread: 'only show unread',
+    SwitchOn: 'On',
+    SwitchOff: 'Off',
+    MarkAllAsRead: 'Mark all as read',
+    SkillMove: 'Skill Move',
+    WeakFoot: 'Weak Foot',
+    Overall: 'Ovr',
+    Potential: 'Pot',
+    UnknownMessageType: 'Unknown message type',
+    GameDate: 'Game Date',
+    MarkAsRead: 'Mark as read',
   },
 };

@@ -1,22 +1,11 @@
 import { useEffect } from 'react';
 import { Image, Notification, Space } from '@douyinfe/semi-ui';
 
-import { getAvatarUrl } from '../common/player-helper.ts';
+import { getAvatarUrl, getColorByDiff } from '../common/player-helper.ts';
 import { getToken } from '../common/common.ts';
 
 let reconnectInterval = 1000; // Initial reconnect interval
 const maxReconnectInterval = 30000; // Maximum reconnect interval
-
-function getColorByDiff(diff: number) {
-  switch (true) {
-    case diff > 0:
-      return '#2ef72e';
-    case diff < 0:
-      return '#dc3545';
-    default:
-      return '#999';
-  }
-}
 
 /**
  * Send notification when player overall rating updated
@@ -40,7 +29,7 @@ function overratingChangeNotification(payload: any) {
     potential,
   } = payload;
   Notification.open({
-    title: 'Player Overall Rating/Potential Update',
+    title: 'Overall rating / Potential Update',
     content: (
       <Space align={'end'}>
         <Image
@@ -88,7 +77,7 @@ function overratingChangeNotification(payload: any) {
         </Space>
       </Space>
     ),
-    duration: 30000,
+    duration: 10,
     theme: 'light',
   });
 }
@@ -102,7 +91,7 @@ function skillMoveChangeNotification(payload: any) {
   // }
   const { playerID, playerName, oldSkillMoves, skillMoves } = payload;
   Notification.open({
-    title: 'Player Skillmoves Update',
+    title: 'Skillmoves Update',
     content: (
       <Space align={'end'}>
         <Image
@@ -135,7 +124,7 @@ function skillMoveChangeNotification(payload: any) {
         </Space>
       </Space>
     ),
-    duration: 30000,
+    duration: 10,
     theme: 'light',
   });
 }
@@ -145,16 +134,16 @@ function weakFootChangeNotification(payload: any) {
   //     "playerID": 276839,
   //     "playerName": "Sebastiano Desplanches",
   //     "oldWeakFootAbilityTypeCode": 1,
-  //     "weakfootabilitytypecode": 2
+  //     "weakFootAbilityTypeCode": 2
   // }
   const {
     playerID,
     playerName,
     oldWeakFootAbilityTypeCode,
-    weakfootabilitytypecode,
+    weakFootAbilityTypeCode,
   } = payload;
   Notification.open({
-    title: 'Player Weak Foot Update',
+    title: 'Weak Foot',
     content: (
       <Space align={'end'}>
         <Image
@@ -179,17 +168,17 @@ function weakFootChangeNotification(payload: any) {
               style={{
                 fontWeight: 'bold',
                 color: getColorByDiff(
-                  weakfootabilitytypecode - oldWeakFootAbilityTypeCode,
+                  weakFootAbilityTypeCode - oldWeakFootAbilityTypeCode,
                 ),
               }}
             >
-              {weakfootabilitytypecode}
+              {weakFootAbilityTypeCode}
             </span>
           </div>
         </Space>
       </Space>
     ),
-    duration: 30000,
+    duration: 10,
     theme: 'light',
   });
 }
@@ -310,7 +299,7 @@ export const WebsocketNotification = () => {
         //   playerID: 276839,
         //   playerName: 'Sebastiano Desplanches',
         //   oldWeakFootAbilityTypeCode: 4,
-        //   weakfootabilitytypecode: 5,
+        //   weakFootAbilityTypeCode: 5,
         // });
       },
       (err) => {
