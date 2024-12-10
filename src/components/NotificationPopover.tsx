@@ -5,6 +5,7 @@ import {
   NotificationApis,
   NotificationBody,
 } from '../service/NotificationApis.ts';
+import { getAvatarUrl, getColorByDiff } from '../common/player-helper.ts';
 
 function getNotificationContent(notification: NotificationBody) {
   switch (notification.message_type) {
@@ -13,29 +14,73 @@ function getNotificationContent(notification: NotificationBody) {
         case 'PlayerUpdate.SkillMove':
           return (
             <div>
-              <p>Old skill moves: {notification.old_skillmoves}</p>
-              <p>New skill moves: {notification.skillmoves}</p>
+              <span>Skill move</span>
+              <span>{notification.old_skillmoves}</span>
+              <span>{'->'}</span>
+              <span
+                style={{
+                  color: getColorByDiff(
+                    (notification?.skillmoves || 0) -
+                      (notification?.old_skillmoves || 0),
+                  ),
+                }}
+              >
+                {notification.skillmoves}
+              </span>
             </div>
           );
         case 'PlayerUpdate.WeakFoot':
           return (
             <div>
-              <p>Old weak foot: {notification.old_weakfoot}</p>
-              <p>New weak foot: {notification.weakfoot}</p>
+              <span>Weak foot</span>
+              <span>{notification.old_weakfoot}</span>
+              <span>{'->'}</span>
+              <span
+                style={{
+                  color: getColorByDiff(
+                    (notification?.weakfoot || 0) -
+                      (notification?.old_weakfoot || 0),
+                  ),
+                }}
+              >
+                {notification.weakfoot}
+              </span>
             </div>
           );
-        case 'PlayerUpdate.OverallRating':
+        case 'PlayerUpdate.Overall':
           return (
             <div>
-              <p>Old overall rating: {notification.old_overall_rating}</p>
-              <p>New overall rating: {notification.overall_rating}</p>
-            </div>
-          );
-        case 'PlayerUpdate.Potential':
-          return (
-            <div>
-              <p>Old potential: {notification.old_potential}</p>
-              <p>New potential: {notification.potential}</p>
+              <p>
+                <span>Overall:</span>
+                <span>{notification.old_overall_rating}</span>
+                <span> {'->'} </span>
+                <span
+                  style={{
+                    color: getColorByDiff(
+                      (notification?.overall_rating || 0) -
+                        (notification?.old_overall_rating || 0),
+                    ),
+                  }}
+                >
+                  {notification.overall_rating}
+                </span>
+              </p>
+
+              <p>
+                <span>Potential:</span>
+                <span>{notification.old_potential}</span>
+                <span> {'->'} </span>
+                <span
+                  style={{
+                    color: getColorByDiff(
+                      (notification?.potential || 0) -
+                        (notification?.old_potential || 0),
+                    ),
+                  }}
+                >
+                  {notification.potential}
+                </span>
+              </p>
             </div>
           );
         default:
@@ -47,6 +92,22 @@ function getNotificationContent(notification: NotificationBody) {
     default:
       return <div>Unknown message type: {notification.message_type}</div>;
   }
+}
+
+function getNotificationItem(notification: NotificationBody) {
+  return (
+    <>
+      <p>In game date: {notification.in_game_date}</p>
+      <p>
+        <img
+          width={50}
+          src={getAvatarUrl(notification.player_id)}
+          alt={''}
+        ></img>
+      </p>
+      {getNotificationContent(notification)}
+    </>
+  );
 }
 
 export const NotificationPopover = () => {
@@ -137,11 +198,14 @@ export const NotificationPopover = () => {
                   borderBottom: '1px solid #f0f0f0',
                   fontWeight: notification.is_read ? 'normal' : 'bold',
                 }}
+                onClick={() => {
+                  // If click on notification, mark it as read
+                  if (!notification.is_read) {
+                    NotificationApis.markAsRead(notification.id);
+                  }
+                }}
               >
-                <p>Game version: {notification.game_version}</p>
-                <p>In game date: {notification.in_game_date}</p>
-                <p>Player ID: {notification.player_id}</p>
-                {getNotificationContent(notification)}
+                {getNotificationItem(notification)}
               </div>
             ))}
           </div>
