@@ -90,7 +90,7 @@ export function getWorkRateText(value: number | string | undefined) {
 export function getColorByDiff(diff: number) {
   switch (true) {
     case diff > 0:
-      return '#2ef72e';
+      return '#13ad13';
     case diff < 0:
       return '#dc3545';
     default:

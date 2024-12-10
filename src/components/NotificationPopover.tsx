@@ -6,81 +6,105 @@ import {
   NotificationBody,
 } from '../service/NotificationApis.ts';
 import { getAvatarUrl, getColorByDiff } from '../common/player-helper.ts';
+import './NotificationPopover.css';
 
-function getNotificationContent(notification: NotificationBody) {
+function getNotificationContent(
+  notification: NotificationBody,
+  localeData: any,
+) {
   switch (notification.message_type) {
     case 'PlayerUpdate': {
       switch (notification.message_subtype) {
         case 'PlayerUpdate.SkillMove':
           return (
-            <div>
-              <span>Skill move</span>
-              <span>{notification.old_skillmoves}</span>
-              <span>{'->'}</span>
-              <span
-                style={{
-                  color: getColorByDiff(
-                    (notification?.skillmoves || 0) -
-                      (notification?.old_skillmoves || 0),
-                  ),
-                }}
-              >
-                {notification.skillmoves}
-              </span>
+            <div className="notification-content">
+              <div className="notification-label">Skill move</div>
+              <div className="notification-values">
+                <div className="notification-value">
+                  {notification.old_skillmoves}
+                </div>
+                <div className="notification-arrow">{'->'}</div>
+                <div
+                  className="notification-value"
+                  style={{
+                    color: getColorByDiff(
+                      (notification?.skillmoves || 0) -
+                        (notification?.old_skillmoves || 0),
+                    ),
+                  }}
+                >
+                  {notification.skillmoves}
+                </div>
+              </div>
             </div>
           );
         case 'PlayerUpdate.WeakFoot':
           return (
-            <div>
-              <span>Weak foot</span>
-              <span>{notification.old_weakfoot}</span>
-              <span>{'->'}</span>
-              <span
-                style={{
-                  color: getColorByDiff(
-                    (notification?.weakfoot || 0) -
-                      (notification?.old_weakfoot || 0),
-                  ),
-                }}
-              >
-                {notification.weakfoot}
-              </span>
+            <div className="notification-content">
+              <div className="notification-label">Weak foot</div>
+              <div className="notification-values">
+                <div className="notification-value">
+                  {notification.old_weakfoot}
+                </div>
+                <div className="notification-arrow">{'->'}</div>
+                <div
+                  className="notification-value"
+                  style={{
+                    color: getColorByDiff(
+                      (notification?.weakfoot || 0) -
+                        (notification?.old_weakfoot || 0),
+                    ),
+                  }}
+                >
+                  {notification.weakfoot}
+                </div>
+              </div>
             </div>
           );
         case 'PlayerUpdate.Overall':
           return (
             <div>
-              <p>
-                <span>Overall:</span>
-                <span>{notification.old_overall_rating}</span>
-                <span> {'->'} </span>
-                <span
-                  style={{
-                    color: getColorByDiff(
-                      (notification?.overall_rating || 0) -
-                        (notification?.old_overall_rating || 0),
-                    ),
-                  }}
-                >
-                  {notification.overall_rating}
-                </span>
-              </p>
+              <div className="notification-content">
+                <div className="notification-label">Overall</div>
+                <div className="notification-values">
+                  <div className="notification-value">
+                    {notification.old_overall_rating}
+                  </div>
+                  <div className="notification-arrow"> {'->'} </div>
+                  <div
+                    className="notification-value"
+                    style={{
+                      color: getColorByDiff(
+                        (notification?.overall_rating || 0) -
+                          (notification?.old_overall_rating || 0),
+                      ),
+                    }}
+                  >
+                    {notification.overall_rating}
+                  </div>
+                </div>
+              </div>
 
-              <p>
-                <span>Potential:</span>
-                <span>{notification.old_potential}</span>
-                <span> {'->'} </span>
-                <span
-                  style={{
-                    color: getColorByDiff(
-                      (notification?.potential || 0) -
-                        (notification?.old_potential || 0),
-                    ),
-                  }}
-                >
-                  {notification.potential}
-                </span>
-              </p>
+              <div className="notification-content">
+                <div className="notification-label">Potential</div>
+                <div className="notification-values">
+                  <div className="notification-value">
+                    {notification.old_potential}
+                  </div>
+                  <div className="notification-arrow"> {'->'} </div>
+                  <div
+                    className="notification-value"
+                    style={{
+                      color: getColorByDiff(
+                        (notification?.potential || 0) -
+                          (notification?.old_potential || 0),
+                      ),
+                    }}
+                  >
+                    {notification.potential}
+                  </div>
+                </div>
+              </div>
             </div>
           );
         default:
@@ -94,19 +118,69 @@ function getNotificationContent(notification: NotificationBody) {
   }
 }
 
-function getNotificationItem(notification: NotificationBody) {
+function getNotificationItem(notification: NotificationBody, localeData: any) {
   return (
-    <>
-      <p>In game date: {notification.in_game_date}</p>
-      <p>
-        <img
-          width={50}
-          src={getAvatarUrl(notification.player_id)}
-          alt={''}
-        ></img>
-      </p>
-      {getNotificationContent(notification)}
-    </>
+    <div style={{ display: 'flex' }}>
+      <img
+        width={50}
+        height={50}
+        style={{
+          borderRadius: '50%',
+          border: '2px solid #FFF',
+          marginRight: '10px',
+        }}
+        src={getAvatarUrl(notification.player_id)}
+        alt={`Player avatar for player ${notification.player_name}`}
+      ></img>
+      <div>
+        <div
+          style={{
+            marginBottom: '5px',
+          }}
+        >
+          In game date
+          <span
+            style={{
+              color: '#626f86',
+              marginLeft: '10px',
+              fontWeight: 'normal',
+            }}
+          >
+            {notification.in_game_date}
+          </span>
+        </div>
+        {getNotificationContent(notification, localeData)}
+      </div>
+
+      <div
+        style={{
+          marginLeft: 'auto',
+          fontWeight: 'normal',
+        }}
+      >
+        <a
+          style={{
+            cursor: 'pointer',
+            textDecoration: 'underline',
+          }}
+        >
+          {notification.is_read ? '' : 'Mark as read'}
+        </a>
+
+        {!notification.is_read && (
+          <div
+            style={{
+              width: '8px',
+              height: '8px',
+              borderRadius: '50%',
+              backgroundColor: 'red',
+              marginTop: '30px',
+              marginLeft: 'auto',
+            }}
+          ></div>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -169,7 +243,9 @@ export const NotificationPopover = () => {
                 <IconCheckChoiceStroked
                   onClick={() => {
                     console.log('click');
-                    NotificationApis.markAllAsRead();
+                    NotificationApis.markAllAsRead().then(() => {
+                      fetchNotificationList();
+                    });
                   }}
                   style={{
                     marginLeft: '20px',
@@ -192,20 +268,26 @@ export const NotificationPopover = () => {
           >
             {notificationList.map((notification: any, index: number) => (
               <div
+                className={'notification-item'}
                 key={index}
                 style={{
-                  padding: '20px',
-                  borderBottom: '1px solid #f0f0f0',
+                  padding: '10px',
+                  margin: '15px',
                   fontWeight: notification.is_read ? 'normal' : 'bold',
+                  backgroundColor: notification.is_read
+                    ? 'transparent'
+                    : '#f0f0f0',
                 }}
                 onClick={() => {
                   // If click on notification, mark it as read
                   if (!notification.is_read) {
-                    NotificationApis.markAsRead(notification.id);
+                    NotificationApis.markAsRead(notification.id).then(() => {
+                      fetchNotificationList();
+                    });
                   }
                 }}
               >
-                {getNotificationItem(notification)}
+                {getNotificationItem(notification, localeData)}
               </div>
             ))}
           </div>

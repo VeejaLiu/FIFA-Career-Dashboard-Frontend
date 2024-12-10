@@ -1,0 +1,24 @@
+.notification-item:hover {
+    background-color: #f1f2f4;
+}
+
+.notification-content {
+    display: flex;
+}
+
+.notification-label {
+    width: 100px;
+    font-size: 0.8rem;
+}
+
+.notification-values {
+    display: flex;
+}
+
+.notification-value {
+    width: 30px;
+}
+
+.notification-arrow {
+    width: 30px;
+}

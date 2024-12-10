@@ -11,6 +11,7 @@ export interface NotificationBody {
   message_type: string;
   message_subtype: string;
   player_id: number;
+  player_name: string;
   old_overall_rating: number | null;
   overall_rating: number | null;
   old_potential: number | null;
