@@ -31,7 +31,41 @@ export interface NotificationBody {
  */
 export class NotificationApis {
   /**
-   * Get player list
+   * Get all unread notifications count
+   * @returns number
+   */
+  static async getUnreadNotificationsCount(): Promise<number> {
+    try {
+      const token = getToken();
+      const gameVersion = await getDefaultGameVersion();
+
+      const response = await axios.get(
+        `${BACKEND_URL}/api/v1/notification/unread-count?gameVersion=${gameVersion}`,
+        {
+          headers: {
+            Accept: '*/*',
+            token: token,
+          },
+        },
+      );
+      if (response.status === 200) {
+        return response.data.count;
+      }
+      return 0;
+    } catch (e: any) {
+      console.log(
+        `[getUnreadNotificationsCount] error code: ${e.response.status}`,
+      );
+      console.log(`[getUnreadNotificationsCount] error message: ${e.message}`);
+      if (e.response.status === 401) {
+        Toast.error('Please login first');
+      }
+      return 0;
+    }
+  }
+
+  /**
+   * Get all notifications
    * @returns NotificationBody[]
    */
   static async getAllNotifications(): Promise<NotificationBody[]> {
@@ -69,10 +103,11 @@ export class NotificationApis {
   static async markAsRead(id: number) {
     try {
       const token = getToken();
+      const gameVersion = await getDefaultGameVersion();
 
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/notification/mark-read`,
-        { id },
+        { id, gameVersion },
         { headers: { token } },
       );
       if (response.status === 200) {
@@ -91,10 +126,11 @@ export class NotificationApis {
   static async markAllAsRead() {
     try {
       const token = getToken();
+      const gameVersion = await getDefaultGameVersion();
 
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/notification/mark-all-read`,
-        {},
+        { gameVersion },
         { headers: { token } },
       );
       if (response.status === 200) {

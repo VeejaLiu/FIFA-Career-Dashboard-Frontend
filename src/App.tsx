@@ -42,6 +42,7 @@ import {
 } from './common/common.ts';
 import { LANGUAGE_LOCAL_STORAGE_KEY } from './components/Auth.tsx';
 import { NotificationPopover } from './components/NotificationPopover.tsx';
+import { NotificationApis } from './service/NotificationApis.ts';
 
 function getLogoByVersion(defaultVersion: number) {
   switch (defaultVersion) {
@@ -155,10 +156,16 @@ export default function App() {
   const navigate = useNavigate();
   const [playerCount, setPlayerCount] = useState(0);
   const [userInfo, setUserInfo] = useState<any>(null);
+  const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
 
   const fetchPlayerCount = async () => {
     const count = await PlayerApis.getPlayerCount();
     setPlayerCount(count);
+  };
+
+  const fetchUnreadNotificationCount = async () => {
+    const count = await NotificationApis.getUnreadNotificationsCount();
+    setUnreadNotificationCount(count);
   };
 
   const fetchUsername = async () => {
@@ -189,6 +196,7 @@ export default function App() {
   useEffect(() => {
     fetchPlayerCount().then();
     fetchUsername().then();
+    fetchUnreadNotificationCount().then();
   }, []);
 
   return (
@@ -336,24 +344,23 @@ export default function App() {
                           content={<NotificationPopover />}
                           trigger="click"
                         >
-                          <Badge
-                            count={'99+'}
-                            theme="solid"
-                            style={{
-                              backgroundColor: 'red',
-                              marginRight: '12px', // 调整这个值来控制左移的距离
-                            }}
+                          <Button
+                            theme="borderless"
+                            icon={<IconBell size="extra-large" />}
                           >
-                            <Button
-                              theme="borderless"
-                              icon={<IconBell size="extra-large" />}
-                              style={{
-                                color: 'var(--semi-color-text-2)',
-                                marginRight: '12px',
-                              }}
-                              onClick={() => {}}
-                            />
-                          </Badge>
+                            {unreadNotificationCount > 0 && (
+                              <Badge
+                                count={unreadNotificationCount}
+                                theme="solid"
+                                style={{
+                                  position: 'absolute',
+                                  backgroundColor: 'red',
+                                  top: '-25px',
+                                  right: '-10px',
+                                }}
+                              ></Badge>
+                            )}
+                          </Button>
                         </Popover>
                         <Dropdown
                           position="bottomRight"
