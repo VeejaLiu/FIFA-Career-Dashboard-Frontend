@@ -5,7 +5,11 @@ import {
   NotificationApis,
   NotificationBody,
 } from '../service/NotificationApis.ts';
-import { getAvatarUrl, getColorByDiff } from '../common/player-helper.ts';
+import {
+  getAvatarUrl,
+  getColorByDiff,
+  getColorByPositionType,
+} from '../common/player-helper.ts';
 import './NotificationPopover.css';
 
 function getNotificationContent(
@@ -121,24 +125,38 @@ function getNotificationContent(
 function getNotificationItem(notification: NotificationBody, localeData: any) {
   return (
     <div style={{ display: 'flex' }}>
-      <img
-        width={50}
-        height={50}
-        style={{
-          borderRadius: '50%',
-          border: '2px solid #FFF',
-          marginRight: '10px',
-        }}
-        src={getAvatarUrl(notification.player_id)}
-        alt={`Player avatar for player ${notification.player_name}`}
-      ></img>
-      <div>
-        <div
+      <a href={`/players-detail/?id=${notification.player_id}`}>
+        <img
+          width={50}
+          height={50}
           style={{
-            marginBottom: '5px',
+            borderRadius: '50%',
+            border: '2px solid #FFF',
+            marginRight: '10px',
           }}
-        >
-          In game date
+          src={getAvatarUrl(notification.player_id)}
+          alt={`Player avatar for player ${notification.player_name}`}
+        />
+      </a>
+      <div>
+        <div style={{ fontWeight: 'bold' }}>
+          <span
+            style={{
+              color: getColorByPositionType(notification.player_position),
+              marginRight: '5px',
+            }}
+          >
+            {notification.player_position}
+          </span>
+          <a
+            href={`/players-detail/?id=${notification.player_id}`}
+            style={{ color: '#333' }}
+          >
+            {notification.player_name}
+          </a>
+        </div>
+        <div style={{ marginBottom: '5px' }}>
+          Game date
           <span
             style={{
               color: '#626f86',
