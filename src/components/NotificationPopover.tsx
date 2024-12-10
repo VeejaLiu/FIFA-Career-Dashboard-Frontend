@@ -274,6 +274,7 @@ export const NotificationPopover = ({
             style={{
               flexGrow: 1,
               overflowY: 'auto',
+              paddingBottom: '20px',
             }}
           >
             {notificationList
@@ -285,6 +286,7 @@ export const NotificationPopover = ({
                   className={'notification-item'}
                   key={index}
                   style={{
+                    borderRadius: '4px',
                     padding: '10px',
                     margin: '15px',
                     fontWeight: notification.is_read ? 'normal' : 'bold',

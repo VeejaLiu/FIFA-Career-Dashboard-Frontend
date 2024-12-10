@@ -338,7 +338,7 @@ export default function App() {
                         <Popover
                           style={{
                             width: '440px',
-                            height: '90vh',
+                            maxHeight: '90vh',
                           }}
                           position={'bottomRight'}
                           content={
