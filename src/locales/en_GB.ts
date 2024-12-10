@@ -197,5 +197,12 @@ Therefore, what I do is write this data to a file first and then concatenate the
     SwitchOn: 'On',
     SwitchOff: 'Off',
     MarkAllAsRead: 'Mark all as read',
+    SkillMove: 'Skill Move',
+    WeakFoot: 'Weak Foot',
+    Overall: 'Ovr',
+    Potential: 'Pot',
+    UnknownMessageType: 'Unknown message type',
+    GameDate: 'Game Date',
+    MarkAsRead: 'Mark as read',
   },
 };

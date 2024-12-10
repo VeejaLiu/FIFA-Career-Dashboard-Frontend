@@ -191,5 +191,12 @@ export default {
     SwitchOn: '开',
     SwitchOff: '关',
     MarkAllAsRead: '全部标记为已读',
+    SkillMove: '花式',
+    WeakFoot: '弱脚',
+    Overall: '总评',
+    Potential: '潜力',
+    UnknownMessageType: '未知消息类型',
+    GameDate: '游戏日期',
+    MarkAsRead: '标记为已读',
   },
 };

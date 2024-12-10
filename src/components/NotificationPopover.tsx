@@ -22,7 +22,7 @@ function getNotificationContent(
         case 'PlayerUpdate.SkillMove':
           return (
             <div className="notification-content">
-              <div className="notification-label">Skill move</div>
+              <div className="notification-label">{localeData.SkillMove}</div>
               <div className="notification-values">
                 <div className="notification-value">
                   {notification.old_skillmoves}
@@ -45,7 +45,7 @@ function getNotificationContent(
         case 'PlayerUpdate.WeakFoot':
           return (
             <div className="notification-content">
-              <div className="notification-label">Weak foot</div>
+              <div className="notification-label">{localeData.WeakFoot}</div>
               <div className="notification-values">
                 <div className="notification-value">
                   {notification.old_weakfoot}
@@ -69,7 +69,7 @@ function getNotificationContent(
           return (
             <div>
               <div className="notification-content">
-                <div className="notification-label">Overall</div>
+                <div className="notification-label">{localeData.Overall}</div>
                 <div className="notification-values">
                   <div className="notification-value">
                     {notification.old_overall_rating}
@@ -90,7 +90,7 @@ function getNotificationContent(
               </div>
 
               <div className="notification-content">
-                <div className="notification-label">Potential</div>
+                <div className="notification-label">{localeData.Potential}</div>
                 <div className="notification-values">
                   <div className="notification-value">
                     {notification.old_potential}
@@ -113,12 +113,18 @@ function getNotificationContent(
           );
         default:
           return (
-            <div>Unknown message type: {notification.message_subtype}</div>
+            <div>
+              {localeData.UnknownMessageType}: {notification.message_subtype}
+            </div>
           );
       }
     }
     default:
-      return <div>Unknown message type: {notification.message_type}</div>;
+      return (
+        <div>
+          {localeData.UnknownMessageType}: {notification.message_type}
+        </div>
+      );
   }
 }
 
@@ -155,15 +161,11 @@ function getNotificationItem(notification: NotificationBody, localeData: any) {
             {notification.player_name}
           </a>
         </div>
-        <div style={{ marginBottom: '5px' }}>
-          Game date
-          <span
-            style={{
-              color: '#626f86',
-              marginLeft: '10px',
-              fontWeight: 'normal',
-            }}
-          >
+
+        {/* Game date */}
+        <div style={{ marginBottom: '5px', display: 'flex' }}>
+          <div style={{ width: '100px' }}>{localeData.GameDate}</div>
+          <span style={{ color: '#626f86', fontWeight: 'normal' }}>
             {notification.in_game_date}
           </span>
         </div>
@@ -182,7 +184,7 @@ function getNotificationItem(notification: NotificationBody, localeData: any) {
             textDecoration: 'underline',
           }}
         >
-          {notification.is_read ? '' : 'Mark as read'}
+          {notification.is_read ? '' : localeData.MarkAsRead}
         </a>
 
         {!notification.is_read && (
