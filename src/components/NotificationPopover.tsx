@@ -184,15 +184,23 @@ function getNotificationItem(notification: NotificationBody, localeData: any) {
   );
 }
 
-export const NotificationPopover = () => {
+interface NotificationPopoverProps {
+  updateUnreadCount: () => void;
+}
+
+export const NotificationPopover = ({
+  updateUnreadCount,
+}: NotificationPopoverProps) => {
   const [notificationList, setNotificationList] = useState<NotificationBody[]>(
     [],
   );
+  const [onlyShowUnread, setOnlyShowUnread] = useState(false);
 
   const fetchNotificationList = async () => {
     const notificationList = await NotificationApis.getAllNotifications();
     console.log('[fetchNotificationList] notificationList:', notificationList);
     setNotificationList(notificationList);
+    updateUnreadCount();
   };
 
   useEffect(() => {
@@ -236,6 +244,8 @@ export const NotificationPopover = () => {
               <span>{localeData.OnlyShowUnread}</span>
               <Switch
                 style={{ marginLeft: '5px' }}
+                checked={onlyShowUnread}
+                onChange={(checked) => setOnlyShowUnread(checked)}
                 checkedText={localeData.SwitchOn}
                 uncheckedText={localeData.SwitchOff}
               />
@@ -266,30 +276,34 @@ export const NotificationPopover = () => {
               overflowY: 'auto',
             }}
           >
-            {notificationList.map((notification: any, index: number) => (
-              <div
-                className={'notification-item'}
-                key={index}
-                style={{
-                  padding: '10px',
-                  margin: '15px',
-                  fontWeight: notification.is_read ? 'normal' : 'bold',
-                  backgroundColor: notification.is_read
-                    ? 'transparent'
-                    : '#f0f0f0',
-                }}
-                onClick={() => {
-                  // If click on notification, mark it as read
-                  if (!notification.is_read) {
-                    NotificationApis.markAsRead(notification.id).then(() => {
-                      fetchNotificationList();
-                    });
-                  }
-                }}
-              >
-                {getNotificationItem(notification, localeData)}
-              </div>
-            ))}
+            {notificationList
+              .filter(
+                (notification) => !onlyShowUnread || !notification.is_read,
+              )
+              .map((notification: any, index: number) => (
+                <div
+                  className={'notification-item'}
+                  key={index}
+                  style={{
+                    padding: '10px',
+                    margin: '15px',
+                    fontWeight: notification.is_read ? 'normal' : 'bold',
+                    backgroundColor: notification.is_read
+                      ? 'transparent'
+                      : '#f0f0f0',
+                  }}
+                  onClick={() => {
+                    // If click on notification, mark it as read
+                    if (!notification.is_read) {
+                      NotificationApis.markAsRead(notification.id).then(() => {
+                        fetchNotificationList();
+                      });
+                    }
+                  }}
+                >
+                  {getNotificationItem(notification, localeData)}
+                </div>
+              ))}
           </div>
 
           {/* Content ---- End */}

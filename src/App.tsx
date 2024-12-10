@@ -337,11 +337,15 @@ export default function App() {
                         </Tooltip>
                         <Popover
                           style={{
-                            width: '540px',
+                            width: '440px',
                             height: '90vh',
                           }}
                           position={'bottomRight'}
-                          content={<NotificationPopover />}
+                          content={
+                            <NotificationPopover
+                              updateUnreadCount={fetchUnreadNotificationCount}
+                            />
+                          }
                           trigger="click"
                         >
                           <Button
