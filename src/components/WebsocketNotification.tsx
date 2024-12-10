@@ -1,22 +1,11 @@
 import { useEffect } from 'react';
 import { Image, Notification, Space } from '@douyinfe/semi-ui';
 
-import { getAvatarUrl } from '../common/player-helper.ts';
+import { getAvatarUrl, getColorByDiff } from '../common/player-helper.ts';
 import { getToken } from '../common/common.ts';
 
 let reconnectInterval = 1000; // Initial reconnect interval
 const maxReconnectInterval = 30000; // Maximum reconnect interval
-
-export function getColorByDiff(diff: number) {
-  switch (true) {
-    case diff > 0:
-      return '#2ef72e';
-    case diff < 0:
-      return '#dc3545';
-    default:
-      return '#999';
-  }
-}
 
 /**
  * Send notification when player overall rating updated
