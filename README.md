@@ -54,35 +54,27 @@ And more features are coming soon.
 - Golden player, which shows the top 3 players(overall, potential) on same position.
 - Save all player change history(overall, potential, skill moves, weak foot), in notification page.
 
-doc-images/2024-12-11/detail.webp
-doc-images/2024-12-11/get-started.webp
-doc-images/2024-12-11/list.webp
-doc-images/2024-12-11/notification.webp
-doc-images/2024-12-11/setting.webp
-doc-images/2024-12-11/trends.webp
-
-
-Player List:
+**Player List:**
 
 <img src="doc-images/2024-12-11/list.webp" alt="list" style="width: 800px;">
 
-Trends:
+**Trends:**
 
 <img src="doc-images/2024-12-11/trends.webp" alt="trends" style="width: 800px;">
 
-Notification:
+**Notification:**
 
 <img src="doc-images/2024-12-11/notification.webp" alt="notification" style="width: 800px;">
 
-Detail:
+**Detail:**
 
 <img src="doc-images/2024-12-11/detail.webp" alt="detail" style="width: 800px;">
 
-Setting:
+**Setting:**
 
 <img src="doc-images/2024-12-11/setting.webp" alt="setting" style="width: 800px;">
 
-Get Started:
+**Get Started:**
 
 <img src="doc-images/2024-12-11/get-started.webp" alt="get-started" style="width: 800px;">
 
