@@ -18,34 +18,23 @@ FC24 Career Dashboard:
 - Silent operation, real-time updates (weekly in-game updates, configurable)
 - Player details page
 - Notification when a player's overall rating or potential changes
+- Notification when a player's weak foot or skill moves changes
 - Golden player, which shows the top 3 players(overall, potential) on same position.
 
 And more features are coming soon.
-
-- Notification when a player's weak foot or skill moves changes
 
 ## Installation
 
 ### Dependencies
 
-- Latest **xAranaktu/FC-24-Live-Editor**. (
-  Click [here](https://www.patreon.com/collection/96422?view=expanded) to
-  download)
-- **Secret API key**. (Get it from the settings page)
-- [**lua code snippet**](./lua-scripts/client-script.lua)
-
-> Actually, you don't need to download the lua code snippet and replace the API
-> key.
-> I put everything in the GetStarted page, you can directly copy the code
-> snippet and paste it into the Live Editor of your FC24.
+- Latest **xAranaktu/FC-24-Live-Editor** or **xAranaktu/FC-25-Live-Editor**
+- Lua code, will provide in the GetStarted page.
 
 ### Usage
 
-- Open the FC24 with Live Editor.
+- Open the FC24/FC25 with Live Editor.
 - Go to the Lua script tab in the live editor.
-- Paste the code snippet in GetStarted page.
-- Click the "Execute" button. It will send a init request to the backend.
-- You can see the player list in the player list page.
+- Paste the code snippet in GetStarted page and run the script.
 
 # Change log
 
