@@ -18,11 +18,10 @@ FC24 Career Dashboard:
 - Silent operation, real-time updates (weekly in-game updates, configurable)
 - Player details page
 - Notification when a player's overall rating or potential changes
+- Notification when a player's weak foot or skill moves changes
 - Golden player, which shows the top 3 players(overall, potential) on same position.
 
 And more features are coming soon.
-
-- Notification when a player's weak foot or skill moves changes
 
 ## Installation
 
