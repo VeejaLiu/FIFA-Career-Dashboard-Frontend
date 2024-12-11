@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import {
   Col,
-  Image,
   LocaleConsumer,
   Progress,
   Rating,
@@ -37,6 +36,7 @@ import {
 } from '../../common/player-helper.ts';
 import { CustomTooltip } from '../PlayerTrendsPage/PlayerTrendsPage.tsx';
 import { NoDataComponent } from '../../components/Other.tsx';
+import player_avatar_placeholder from '../../assets/image/player_avatar_placeholder.webp';
 
 function PlayerDetailPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
@@ -93,13 +93,13 @@ function PlayerDetailPage(): React.ReactElement {
   return playerDetail ? (
     <LocaleConsumer componentName={'PlayerDetailPage'}>
       {(localeData: any, localeCode: string, dateFnsLocale: any) => (
-        <div style={{ width: '100vw' }}>
+        <div style={{ width: '100%' }}>
           {/* Player picker */}
           <div
             style={{
               width: '100%',
-              padding: '10px 10px',
               display: 'flex',
+              backgroundColor: '#f4f5f5',
             }}
           >
             {playerDetail?.allPlayer
@@ -120,11 +120,15 @@ function PlayerDetailPage(): React.ReactElement {
                 return (
                   <div
                     style={{
-                      margin: '2px',
+                      marginLeft: '8px',
+                      marginTop: '5px',
                       backgroundColor:
-                        player.playerID === playerID ? '#aaef88' : 'gray',
+                        player.playerID === playerID ? '#aaef88' : '#eaecec',
                       color: 'black',
-                      padding: '5px',
+                      padding: '6px',
+                      cursor: 'pointer',
+                      borderRadius: '3px',
+                      fontWeight: 'bold',
                     }}
                     key={player.playerID}
                     onClick={() => {
@@ -140,7 +144,7 @@ function PlayerDetailPage(): React.ReactElement {
                     >
                       {player.position1}
                     </span>
-                    {player.playerName}
+                    <span>{player.playerName}</span>
                   </div>
                 );
               })}
@@ -150,20 +154,37 @@ function PlayerDetailPage(): React.ReactElement {
           <div
             style={{
               display: 'flex',
-              width: '100%',
               backgroundColor: '#f4f5f5',
+              padding: '30px',
             }}
           >
             {/* Basic info*/}
-            <div style={{ width: '30%' }}>
-              <div style={{ padding: '10px' }}>
+            <div
+              style={{
+                width: '25%',
+                padding: '20px',
+                margin: '0 10px',
+                borderRadius: '3px',
+                background: 'var(--semi-color-bg-0)',
+              }}
+            >
+              <div
+                style={{
+                  padding: '10px',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                }}
+              >
                 {/* Image */}
-                <Image
+                <img
                   width={'116px'}
                   height={'116px'}
                   src={getAvatarUrl(playerDetail?.thisPlayer?.player_id)}
                   alt="player_avatar"
-                  preview={false}
+                  onError={(e) => {
+                    e.currentTarget.src = player_avatar_placeholder;
+                  }}
                 />
                 {/* Name */}
                 <div style={{ fontWeight: 'bold' }}>
@@ -305,6 +326,27 @@ function PlayerDetailPage(): React.ReactElement {
 
             {/* Details */}
             <div className="grid" style={{ width: '100%' }}>
+              {playerDetail?.thisPlayer?.preferredposition1 == 0 && (
+                <Row>
+                  <AttributeSectionCol
+                    title={localeData.Attributes.Goalkeeping}
+                    attributes={[
+                      { label: localeData.Attributes.GKDiving },
+                      { label: localeData.Attributes.GKHandling },
+                      { label: localeData.Attributes.GKKicking },
+                      { label: localeData.Attributes.GKReflexes },
+                      { label: localeData.Attributes.GKPositioning },
+                    ]}
+                    values={[
+                      playerDetail?.thisPlayer?.gkdiving,
+                      playerDetail?.thisPlayer?.gkhandling,
+                      playerDetail?.thisPlayer?.gkkicking,
+                      playerDetail?.thisPlayer?.gkreflexes,
+                      playerDetail?.thisPlayer?.gkpositioning,
+                    ]}
+                  />
+                </Row>
+              )}
               <Row>
                 <AttributeSectionCol
                   title={localeData.Attributes.Pace}
@@ -408,32 +450,6 @@ function PlayerDetailPage(): React.ReactElement {
                     playerDetail?.thisPlayer?.stamina,
                     playerDetail?.thisPlayer?.strength,
                     playerDetail?.thisPlayer?.aggression,
-                  ]}
-                />
-              </Row>
-              <Row>
-                {/*
-                Diving
-                Handling
-                Kicking
-                Reflexes
-                Positioning
-            */}
-                <AttributeSectionCol
-                  title={localeData.Attributes.Goalkeeping}
-                  attributes={[
-                    { label: localeData.Attributes.GKDiving },
-                    { label: localeData.Attributes.GKHandling },
-                    { label: localeData.Attributes.GKKicking },
-                    { label: localeData.Attributes.GKReflexes },
-                    { label: localeData.Attributes.GKPositioning },
-                  ]}
-                  values={[
-                    playerDetail?.thisPlayer?.gkdiving,
-                    playerDetail?.thisPlayer?.gkhandling,
-                    playerDetail?.thisPlayer?.gkkicking,
-                    playerDetail?.thisPlayer?.gkreflexes,
-                    playerDetail?.thisPlayer?.gkpositioning,
                   ]}
                 />
               </Row>
