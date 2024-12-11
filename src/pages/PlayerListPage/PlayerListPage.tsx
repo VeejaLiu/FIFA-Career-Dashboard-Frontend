@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   LocaleConsumer,
   Popover,
@@ -5,8 +6,8 @@ import {
   Table,
   Typography,
 } from '@douyinfe/semi-ui';
-import * as React from 'react';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
 import {
   getAvatarUrl,
@@ -19,7 +20,7 @@ import { IconActivity } from '@douyinfe/semi-icons';
 
 const { Text } = Typography;
 
-const PlayerListColumn = (localeData: any) => [
+const PlayerListColumn = (localeData: any, navigate: any) => [
   {
     title: '',
     dataIndex: 'imageUrl',
@@ -50,11 +51,7 @@ const PlayerListColumn = (localeData: any) => [
     },
   },
   {
-    title: (
-      <Space>
-        <span>{localeData.name}</span>
-      </Space>
-    ),
+    title: localeData.name,
     dataIndex: 'playerName',
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
@@ -67,7 +64,7 @@ const PlayerListColumn = (localeData: any) => [
             }}
             underline
             onClick={() => {
-              window.location.href = `/players-detail?id=${record.playerID}`;
+              navigate(`/players-detail?id=${record.playerID}`);
             }}
           >
             {record.playerName}
@@ -265,6 +262,7 @@ const PlayerListColumn = (localeData: any) => [
 function PlayerListPage(): React.ReactElement {
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState<PlayerOverall[]>([]);
+  const navigate = useNavigate();
 
   const getPlayerList = async () => {
     const players: PlayerOverall[] = await PlayerApis.getPlayerList();
@@ -303,7 +301,7 @@ function PlayerListPage(): React.ReactElement {
                 marginBottom: '100px',
                 scroll: null,
               }}
-              columns={PlayerListColumn(localeData)}
+              columns={PlayerListColumn(localeData, navigate)}
               dataSource={data}
               pagination={false}
               size="small"

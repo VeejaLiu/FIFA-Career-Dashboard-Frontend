@@ -17,7 +17,8 @@
 }
 
 .content {
-    flex: 1; /* 使内容区域占据剩余空间 */
+    flex-grow: 1; /* 使内容区域占据剩余空间 */
+    width: 100vw;
     margin-top: 60px;
     overflow: auto; /* 使内容区域上下滚动 */
 }

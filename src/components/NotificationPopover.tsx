@@ -1,6 +1,7 @@
 import { LocaleConsumer, Switch, Tooltip } from '@douyinfe/semi-ui';
 import { IconCheckChoiceStroked } from '@douyinfe/semi-icons';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   NotificationApis,
   NotificationBody,
@@ -129,7 +130,11 @@ function getNotificationContent(
   }
 }
 
-function getNotificationItem(notification: NotificationBody, localeData: any) {
+function getNotificationItem(
+  notification: NotificationBody,
+  localeData: any,
+  navigate: any,
+) {
   return (
     <div style={{ display: 'flex' }}>
       <div
@@ -139,7 +144,12 @@ function getNotificationItem(notification: NotificationBody, localeData: any) {
           marginRight: '10px',
         }}
       >
-        <a href={`/players-detail/?id=${notification.player_id}`}>
+        <a
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(`/players-detail/?id=${notification.player_id}`);
+          }}
+        >
           <img
             width={50}
             height={50}
@@ -166,7 +176,10 @@ function getNotificationItem(notification: NotificationBody, localeData: any) {
             {notification.player_position}
           </span>
           <a
-            href={`/players-detail/?id=${notification.player_id}`}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(`/players-detail/?id=${notification.player_id}`);
+            }}
             style={{ color: '#333' }}
           >
             {notification.player_name}
@@ -226,6 +239,7 @@ export const NotificationPopover = ({
     [],
   );
   const [onlyShowUnread, setOnlyShowUnread] = useState(false);
+  const navigate = useNavigate();
 
   const fetchNotificationList = async () => {
     const notificationList = await NotificationApis.getAllNotifications();
@@ -325,7 +339,7 @@ export const NotificationPopover = ({
                     }
                   }}
                 >
-                  {getNotificationItem(notification, localeData)}
+                  {getNotificationItem(notification, localeData, navigate)}
                 </div>
               ))}
           </div>

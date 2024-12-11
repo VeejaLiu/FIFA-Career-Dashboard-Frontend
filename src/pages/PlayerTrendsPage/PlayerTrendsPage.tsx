@@ -18,6 +18,7 @@ import {
   getColorByPositionType,
 } from '../../common/player-helper.ts';
 import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
+import { useNavigate } from 'react-router-dom';
 
 function formatDate(inputDate: string) {
   const [, month, day] = inputDate.split('-').map(Number);
@@ -93,6 +94,7 @@ export const CustomTooltip: React.FC<{
 function PlayerTrendsPage(): React.ReactElement {
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState<PlayerTrendData[]>([]);
+  const navigate = useNavigate();
 
   const fetchPlayerTrends = async () => {
     const res = await PlayerApis.getPlayerTrends();
@@ -180,7 +182,7 @@ function PlayerTrendsPage(): React.ReactElement {
                               cursor: 'pointer',
                             }}
                             onClick={() => {
-                              window.location.href = `/players-detail?id=${player.playerID}`;
+                              navigate(`/players-detail?id=${player.playerID}`);
                             }}
                           >
                             <img
@@ -209,7 +211,9 @@ function PlayerTrendsPage(): React.ReactElement {
                                 cursor: 'pointer',
                               }}
                               onClick={() => {
-                                window.location.href = `/players-detail?id=${player.playerID}`;
+                                navigate(
+                                  `/players-detail?id=${player.playerID}`,
+                                );
                               }}
                             >
                               {player.playerName}
