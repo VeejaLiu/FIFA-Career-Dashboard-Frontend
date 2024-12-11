@@ -11,6 +11,7 @@ import {
   getColorByPositionType,
 } from '../common/player-helper.ts';
 import './NotificationPopover.css';
+import player_avatar_placeholder from '../assets/image/player_avatar_placeholder.webp';
 
 function getNotificationContent(
   notification: NotificationBody,
@@ -142,6 +143,9 @@ function getNotificationItem(notification: NotificationBody, localeData: any) {
           }}
           src={getAvatarUrl(notification.player_id)}
           alt={`Player avatar for player ${notification.player_name}`}
+          onError={(e) => {
+            e.currentTarget.src = player_avatar_placeholder;
+          }}
         />
       </a>
       <div>
@@ -163,7 +167,7 @@ function getNotificationItem(notification: NotificationBody, localeData: any) {
         </div>
 
         {/* Game date */}
-        <div style={{ marginBottom: '5px', display: 'flex' }}>
+        <div style={{ marginBottom: '3px', display: 'flex' }}>
           <div style={{ width: '100px' }}>{localeData.GameDate}</div>
           <span style={{ color: '#626f86', fontWeight: 'normal' }}>
             {notification.in_game_date}
