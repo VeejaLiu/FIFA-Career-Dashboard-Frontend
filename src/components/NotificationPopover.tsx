@@ -11,6 +11,7 @@ import {
   getColorByPositionType,
 } from '../common/player-helper.ts';
 import './NotificationPopover.css';
+import player_avatar_placeholder from '../assets/image/player_avatar_placeholder.webp';
 
 function getNotificationContent(
   notification: NotificationBody,
@@ -131,19 +132,29 @@ function getNotificationContent(
 function getNotificationItem(notification: NotificationBody, localeData: any) {
   return (
     <div style={{ display: 'flex' }}>
-      <a href={`/players-detail/?id=${notification.player_id}`}>
-        <img
-          width={50}
-          height={50}
-          style={{
-            borderRadius: '50%',
-            border: '2px solid #FFF',
-            marginRight: '10px',
-          }}
-          src={getAvatarUrl(notification.player_id)}
-          alt={`Player avatar for player ${notification.player_name}`}
-        />
-      </a>
+      <div
+        style={{
+          width: '50px',
+          height: '50px',
+          marginRight: '10px',
+        }}
+      >
+        <a href={`/players-detail/?id=${notification.player_id}`}>
+          <img
+            width={50}
+            height={50}
+            style={{
+              borderRadius: '50%',
+              border: '2px solid #FFF',
+            }}
+            src={getAvatarUrl(notification.player_id)}
+            alt={notification.player_name}
+            onError={(e) => {
+              e.currentTarget.src = player_avatar_placeholder;
+            }}
+          />
+        </a>
+      </div>
       <div>
         <div style={{ fontWeight: 'bold' }}>
           <span
@@ -163,7 +174,7 @@ function getNotificationItem(notification: NotificationBody, localeData: any) {
         </div>
 
         {/* Game date */}
-        <div style={{ marginBottom: '5px', display: 'flex' }}>
+        <div style={{ marginBottom: '3px', display: 'flex' }}>
           <div style={{ width: '100px' }}>{localeData.GameDate}</div>
           <span style={{ color: '#626f86', fontWeight: 'normal' }}>
             {notification.in_game_date}
@@ -303,14 +314,8 @@ export const NotificationPopover = ({
               )
               .map((notification: any, index: number) => (
                 <div
-                  className={'notification-item'}
+                  className={`notification-item ${notification.is_read ? 'read' : 'unread'}`}
                   key={index}
-                  style={{
-                    borderRadius: '4px',
-                    padding: '10px',
-                    margin: '15px',
-                    fontWeight: notification.is_read ? 'normal' : 'bold',
-                  }}
                   onClick={() => {
                     // If click on notification, mark it as read
                     if (!notification.is_read) {
