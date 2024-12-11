@@ -310,9 +310,6 @@ export const NotificationPopover = ({
                     padding: '10px',
                     margin: '15px',
                     fontWeight: notification.is_read ? 'normal' : 'bold',
-                    backgroundColor: notification.is_read
-                      ? 'transparent'
-                      : '#f0f0f0',
                   }}
                   onClick={() => {
                     // If click on notification, mark it as read
@@ -327,7 +324,6 @@ export const NotificationPopover = ({
                 </div>
               ))}
           </div>
-
           {/* Content ---- End */}
         </div>
       )}
