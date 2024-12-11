@@ -100,6 +100,7 @@ function PlayerDetailPage(): React.ReactElement {
               width: '100%',
               display: 'flex',
               backgroundColor: '#f4f5f5',
+              flexWrap: 'wrap',
             }}
           >
             {playerDetail?.allPlayer
