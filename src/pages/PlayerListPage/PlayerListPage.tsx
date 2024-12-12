@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+  Input,
   LocaleConsumer,
   Popover,
   Space,
@@ -21,9 +22,14 @@ import player_avatar_placeholder from '../../assets/image/player_avatar_placehol
 
 const { Text } = Typography;
 
-const PlayerListColumn = (localeData: any, navigate: any) => [
+const PlayerListColumn = (
+  localeData: any,
+  navigate: any,
+  searchValue: string,
+  setSearchValue: React.Dispatch<React.SetStateAction<string>>,
+) => [
   {
-    title: '',
+    title: <div style={{ height: '30px' }}></div>,
     dataIndex: 'imageUrl',
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
@@ -49,7 +55,19 @@ const PlayerListColumn = (localeData: any, navigate: any) => [
     },
   },
   {
-    title: localeData.name,
+    title: (
+      <Space>
+        {localeData.name}
+        <Input
+          placeholder=""
+          style={{ width: 100 }}
+          onChange={(e: any) => {
+            setSearchValue(e);
+          }}
+          showClear
+        />
+      </Space>
+    ),
     dataIndex: 'playerName',
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
@@ -260,6 +278,8 @@ const PlayerListColumn = (localeData: any, navigate: any) => [
 function PlayerListPage(): React.ReactElement {
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState<PlayerOverall[]>([]);
+  const [filteredData, setFilteredData] = React.useState<PlayerOverall[]>([]);
+  const [searchValue, setSearchValue] = React.useState('');
   const navigate = useNavigate();
 
   const getPlayerList = async () => {
@@ -267,6 +287,7 @@ function PlayerListPage(): React.ReactElement {
     players.forEach((player) => {
       player.imageUrl = getAvatarUrl(player.playerID);
     });
+    setFilteredData(players); // 初始化过滤后的数据
     setData(players);
     setIsLoading(false);
   };
@@ -275,15 +296,15 @@ function PlayerListPage(): React.ReactElement {
     getPlayerList().then();
   }, []);
 
+  useEffect(() => {
+    const filtered = data.filter((player) =>
+      player.playerName.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+    setFilteredData(filtered);
+  }, [searchValue, data]);
+
   return (
-    <Space
-      style={
-        {
-          // width: '100vw',
-        }
-      }
-      align={'center'}
-    >
+    <div style={{ width: '100%', height: '100%' }}>
       {isLoading ? (
         <LoadingComponent />
       ) : data.length === 0 ? (
@@ -295,19 +316,22 @@ function PlayerListPage(): React.ReactElement {
               sticky={{ top: 0 }}
               style={{
                 minWidth: '800px',
-                marginTop: '10px',
-                marginBottom: '100px',
                 scroll: null,
               }}
-              columns={PlayerListColumn(localeData, navigate)}
-              dataSource={data}
+              columns={PlayerListColumn(
+                localeData,
+                navigate,
+                searchValue,
+                setSearchValue,
+              )} // 传递 searchValue 和 setSearchValue
+              dataSource={filteredData} // 使用过滤后的数据
               pagination={false}
               size="small"
             />
           )}
         </LocaleConsumer>
       )}
-    </Space>
+    </div>
   );
 }
 

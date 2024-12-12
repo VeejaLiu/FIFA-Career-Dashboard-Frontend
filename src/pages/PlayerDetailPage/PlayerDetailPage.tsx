@@ -35,23 +35,27 @@ import {
   getWorkRateText,
 } from '../../common/player-helper.ts';
 import { CustomTooltip } from '../PlayerTrendsPage/PlayerTrendsPage.tsx';
-import { NoDataComponent } from '../../components/Other.tsx';
+import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
 import player_avatar_placeholder from '../../assets/image/player_avatar_placeholder.svg';
 
 function PlayerDetailPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const id = searchParams.get('id');
 
   const [playerDetail, setPlayerDetail] = useState<PlayerDetail>();
   const [playerID, setPlayerID] = useState<number>(id ? +id : 0);
 
   const getPlayerDetail = async () => {
+    setIsLoading(true);
     const data = await PlayerApis.getPlayerDetail({
       playerID: playerID,
     });
     if (data) {
       setPlayerDetail(data);
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -90,7 +94,9 @@ function PlayerDetailPage(): React.ReactElement {
     );
   };
 
-  return playerDetail ? (
+  return isLoading ? (
+    <LoadingComponent />
+  ) : playerDetail ? (
     <LocaleConsumer componentName={'PlayerDetailPage'}>
       {(localeData: any, localeCode: string, dateFnsLocale: any) => (
         <div style={{ width: '100%' }}>
