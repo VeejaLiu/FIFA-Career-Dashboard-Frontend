@@ -114,7 +114,12 @@ function PlayerTrendsPage(): React.ReactElement {
   }, []);
 
   return (
-    <Space vertical align={'start'} style={{ padding: '20px' }}>
+    <div
+      style={{
+        width: '100%',
+        height: '100%',
+      }}
+    >
       {isLoading ? (
         <LoadingComponent />
       ) : data.length === 0 ? (
@@ -142,134 +147,133 @@ function PlayerTrendsPage(): React.ReactElement {
             color: getColorByPositionType('GK'),
           },
         ].map((item) => {
+          const thisPositionPlayers = data.filter(
+            (player) => player.positionType === item.position,
+          );
+          if (thisPositionPlayers.length === 0) {
+            return null;
+          }
           return (
-            <div style={{ marginBottom: '20px' }}>
+            <div style={{ margin: '10px' }}>
               <h2 style={{ color: item.color }}>{item.text}</h2>
               <Space wrap align={'start'}>
-                {data
-                  .filter((player) => player.positionType === item.position)
-                  .map((player) => {
-                    return (
+                {thisPositionPlayers.map((player) => {
+                  return (
+                    <Space
+                      key={player.playerID}
+                      style={{
+                        borderRadius: '3px',
+                        backgroundColor: '#f4f5f5',
+                        padding: '10px',
+                      }}
+                    >
                       <Space
-                        key={player.playerID}
+                        vertical
                         style={{
-                          borderRadius: '3px',
-                          backgroundColor: '#f4f5f5',
-                          padding: '10px',
+                          background:
+                            'linear-gradient(45deg, #e3c96b, #f3e89b)',
+                          borderRadius: '8px',
+                          width: '120px',
+                          height: '190px',
+                          boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
+                          overflow: 'hidden',
                         }}
                       >
-                        <Space
-                          vertical
+                        <span
                           style={{
-                            backgroundColor: '#e4ce78',
-                            borderRadius: '8px',
-                            width: '120px',
-                            height: '190px',
+                            color: getColorByPositionType(player.positionType),
                           }}
                         >
-                          <span
-                            style={{
-                              color: getColorByPositionType(
-                                player.positionType,
-                              ),
+                          <h4>{player.preferredposition1}</h4>
+                        </span>
+                        <div
+                          style={{
+                            width: 100,
+                            height: 100,
+                            cursor: 'pointer',
+                          }}
+                          onClick={() => {
+                            navigate(`/players-detail?id=${player.playerID}`);
+                          }}
+                        >
+                          <img
+                            style={{ width: 100, height: 100 }}
+                            src={getAvatarUrl(player.playerID)}
+                            alt="player"
+                            onError={(e) => {
+                              e.currentTarget.src = player_avatar_placeholder;
                             }}
-                          >
-                            <h4>{player.preferredposition1}</h4>
-                          </span>
-                          <div
-                            style={{
-                              width: 100,
-                              height: 100,
-                              cursor: 'pointer',
-                            }}
+                          />
+                        </div>
+                        <Popover
+                          showArrow
+                          content={
+                            <article>
+                              <h3>{player.playerName}</h3>
+                              Player ID: {player.playerID}
+                            </article>
+                          }
+                          position={'right'}
+                        >
+                          <a
+                            className="text-container"
                             onClick={() => {
                               navigate(`/players-detail?id=${player.playerID}`);
                             }}
                           >
-                            <img
-                              style={{ width: 100, height: 100 }}
-                              src={getAvatarUrl(player.playerID)}
-                              alt="player"
-                              onError={(e) => {
-                                e.currentTarget.src = player_avatar_placeholder;
-                              }}
-                            />
-                          </div>
-                          <Popover
-                            showArrow
-                            content={
-                              <article>
-                                <h3>{player.playerName}</h3>
-                                Player ID: {player.playerID}
-                              </article>
-                            }
-                            position={'right'}
-                          >
-                            <span
-                              className="text-container"
-                              style={{
-                                marginTop: '5px',
-                                cursor: 'pointer',
-                              }}
-                              onClick={() => {
-                                navigate(
-                                  `/players-detail?id=${player.playerID}`,
-                                );
-                              }}
-                            >
-                              {player.playerName}
-                            </span>{' '}
-                          </Popover>
-                        </Space>
-
-                        <AreaChart
-                          width={300}
-                          height={190}
-                          accessibilityLayer
-                          data={player.trends}
-                          margin={{ right: 30, left: -20, bottom: -0 }}
-                        >
-                          <CartesianGrid vertical={false} />
-                          <XAxis
-                            dataKey="inGameDate"
-                            type={'category'}
-                            tickLine={false}
-                            axisLine={false}
-                            tickMargin={8}
-                            style={{ fontSize: '0.8rem' }}
-                          ></XAxis>
-                          <YAxis
-                            domain={[50, 95]}
-                            tickLine={false}
-                            axisLine={false}
-                            tickMargin={8}
-                            style={{ fontSize: '0.8rem' }}
-                          ></YAxis>
-                          <Tooltip content={<CustomTooltip />} />
-                          <Area
-                            type="linear"
-                            dataKey="potential"
-                            fill="#125427"
-                            stroke="#125427"
-                            fillOpacity={0.4}
-                          ></Area>
-                          <Area
-                            type="linear"
-                            dataKey="overallRating"
-                            fill="#1dc355"
-                            stroke="#1dc355"
-                            fillOpacity={0.4}
-                          ></Area>
-                        </AreaChart>
+                            {player.playerName}
+                          </a>
+                        </Popover>
                       </Space>
-                    );
-                  })}
+
+                      <AreaChart
+                        width={300}
+                        height={190}
+                        accessibilityLayer
+                        data={player.trends}
+                        margin={{ right: 30, left: -20, bottom: -0 }}
+                      >
+                        <CartesianGrid vertical={false} />
+                        <XAxis
+                          dataKey="inGameDate"
+                          type={'category'}
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={8}
+                          style={{ fontSize: '0.8rem' }}
+                        ></XAxis>
+                        <YAxis
+                          domain={[50, 95]}
+                          tickLine={false}
+                          axisLine={false}
+                          tickMargin={8}
+                          style={{ fontSize: '0.8rem' }}
+                        ></YAxis>
+                        <Tooltip content={<CustomTooltip />} />
+                        <Area
+                          type="linear"
+                          dataKey="potential"
+                          fill="#125427"
+                          stroke="#125427"
+                          fillOpacity={0.4}
+                        ></Area>
+                        <Area
+                          type="linear"
+                          dataKey="overallRating"
+                          fill="#1dc355"
+                          stroke="#1dc355"
+                          fillOpacity={0.4}
+                        ></Area>
+                      </AreaChart>
+                    </Space>
+                  );
+                })}
               </Space>
             </div>
           );
         })
       )}
-    </Space>
+    </div>
   );
 }
 

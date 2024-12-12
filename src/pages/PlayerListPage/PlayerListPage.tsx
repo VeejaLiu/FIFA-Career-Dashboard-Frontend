@@ -276,14 +276,7 @@ function PlayerListPage(): React.ReactElement {
   }, []);
 
   return (
-    <Space
-      style={
-        {
-          // width: '100vw',
-        }
-      }
-      align={'center'}
-    >
+    <div style={{ width: '100%', height: '100%' }}>
       {isLoading ? (
         <LoadingComponent />
       ) : data.length === 0 ? (
@@ -307,7 +300,7 @@ function PlayerListPage(): React.ReactElement {
           )}
         </LocaleConsumer>
       )}
-    </Space>
+    </div>
   );
 }
 
