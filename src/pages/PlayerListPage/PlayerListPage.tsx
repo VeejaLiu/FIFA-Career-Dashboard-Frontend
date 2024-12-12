@@ -23,7 +23,7 @@ const { Text } = Typography;
 
 const PlayerListColumn = (localeData: any, navigate: any) => [
   {
-    title: '',
+    title: <div style={{ height: '30px' }}></div>,
     dataIndex: 'imageUrl',
     render: (text: string, record: PlayerOverall, index: number) => {
       return (
@@ -288,8 +288,6 @@ function PlayerListPage(): React.ReactElement {
               sticky={{ top: 0 }}
               style={{
                 minWidth: '800px',
-                marginTop: '10px',
-                marginBottom: '100px',
                 scroll: null,
               }}
               columns={PlayerListColumn(localeData, navigate)}
