@@ -19,6 +19,7 @@ import {
 } from '../../common/player-helper.ts';
 import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
 import { useNavigate } from 'react-router-dom';
+import player_avatar_placeholder from '../../assets/image/player_avatar_placeholder.svg';
 
 function formatDate(inputDate: string) {
   const [, month, day] = inputDate.split('-').map(Number);
@@ -190,7 +191,7 @@ function PlayerTrendsPage(): React.ReactElement {
                               src={getAvatarUrl(player.playerID)}
                               alt="player"
                               onError={(e) => {
-                                e.currentTarget.style.display = 'none';
+                                e.currentTarget.src = player_avatar_placeholder;
                               }}
                             />
                           </div>

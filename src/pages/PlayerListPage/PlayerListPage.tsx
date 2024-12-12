@@ -17,6 +17,7 @@ import {
 } from '../../common/player-helper.ts';
 import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
 import { IconActivity } from '@douyinfe/semi-icons';
+import player_avatar_placeholder from '../../assets/image/player_avatar_placeholder.svg';
 
 const { Text } = Typography;
 
@@ -37,10 +38,7 @@ const PlayerListColumn = (localeData: any, navigate: any) => [
             src={record.imageUrl}
             alt="player"
             onError={(e) => {
-              // Hide the image when the image fails to load
-              e.currentTarget.style.display = 'none';
-              // Clear the src attribute to prevent the last loaded image from being displayed when loading fails
-              e.currentTarget.src = '';
+              e.currentTarget.src = player_avatar_placeholder;
             }}
             onLoad={(e) => {
               e.currentTarget.style.display = 'block';

@@ -36,7 +36,7 @@ import {
 } from '../../common/player-helper.ts';
 import { CustomTooltip } from '../PlayerTrendsPage/PlayerTrendsPage.tsx';
 import { NoDataComponent } from '../../components/Other.tsx';
-import player_avatar_placeholder from '../../assets/image/player_avatar_placeholder.webp';
+import player_avatar_placeholder from '../../assets/image/player_avatar_placeholder.svg';
 
 function PlayerDetailPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
