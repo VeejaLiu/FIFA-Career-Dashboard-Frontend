@@ -12,7 +12,7 @@ import {
   getColorByPositionType,
 } from '../common/player-helper.ts';
 import './NotificationPopover.css';
-import player_avatar_placeholder from '../assets/image/player_avatar_placeholder.webp';
+import player_avatar_placeholder from '../assets/image/player_avatar_placeholder.svg';
 
 function getNotificationContent(
   notification: NotificationBody,
