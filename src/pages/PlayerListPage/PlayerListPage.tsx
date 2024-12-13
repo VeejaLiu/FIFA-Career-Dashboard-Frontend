@@ -17,7 +17,7 @@ import {
   getRankingColor,
 } from '../../common/player-helper.ts';
 import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
-import { IconActivity } from '@douyinfe/semi-icons';
+import { IconActivity, IconSearch } from '@douyinfe/semi-icons';
 import player_avatar_placeholder from '../../assets/image/player_avatar_placeholder.svg';
 
 const { Text } = Typography;
@@ -59,6 +59,7 @@ const PlayerListColumn = (
       <Space>
         {localeData.name}
         <Input
+          prefix={<IconSearch />}
           placeholder=""
           style={{ width: 100 }}
           onChange={(e: any) => {
