@@ -288,7 +288,7 @@ function PlayerListPage(): React.ReactElement {
     players.forEach((player) => {
       player.imageUrl = getAvatarUrl(player.playerID);
     });
-    setFilteredData(players); // 初始化过滤后的数据
+    setFilteredData(players);
     setData(players);
     setIsLoading(false);
   };
