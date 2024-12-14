@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PlayerApis, PlayerOverall } from '../../service/PlayerApis.ts';
-import {
-  getAvatarUrl,
-  getColorByPositionType,
-} from '../../common/player-helper.ts';
+import { getColorByPositionType } from '../../common/player-helper.ts';
 import { LoadingComponent } from '../../components/Other.tsx';
 import './PlayerPickerComponent.css';
 import { IconRefresh } from '@douyinfe/semi-icons';
@@ -24,10 +21,10 @@ const PlayerPickerComponent: React.FC<PlayerPickerComponentProps> = ({
   const getPlayerList = async () => {
     setIsLoading(true);
     const players: PlayerOverall[] = await PlayerApis.getPlayerList();
-    players.forEach((player) => {
-      player.imageUrl = getAvatarUrl(player.playerID);
-    });
     setPlayerList(players);
+    if (!playerID && players.length > 0) {
+      setPlayerID(players[0].playerID);
+    }
     setIsLoading(false);
   };
 
