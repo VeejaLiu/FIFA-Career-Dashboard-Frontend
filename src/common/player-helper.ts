@@ -15,22 +15,21 @@ export function getColorByPositionType(positionType: string) {
 }
 
 export function getColorByOverallRating(overallRating: number) {
-  // 40 - #d31332
-  // 50 - #d31332
-  // 60 - #f7b702
-  // 70 - #36b84b
-  // 80 - #268535
-  // 90 - #268535
-  if (overallRating < 50) {
-    return '#d31332';
-  } else if (overallRating < 60) {
-    return '#f7b702';
-  } else if (overallRating < 70) {
-    return '#36b84b';
+  if (overallRating <= 50) {
+    // 40 < overallRating <= 50
+    return '#e03131';
+  } else if (overallRating <= 60) {
+    // 50 < overallRating <= 60
+    return '#fd7e14';
+  } else if (overallRating <= 70) {
+    // 60 < overallRating <= 70
+    return '#fcc419';
   } else if (overallRating < 80) {
-    return '#268535';
+    // 70 < overallRating < 80
+    return '#66a80f';
   } else {
-    return '#268535';
+    // 80 < overallRating
+    return '#2b8a3e';
   }
 }
 

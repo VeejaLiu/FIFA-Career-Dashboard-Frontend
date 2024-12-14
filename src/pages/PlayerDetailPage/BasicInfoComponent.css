@@ -1,0 +1,35 @@
+.basic-info-container {
+    width: 25%;
+    padding: 20px;
+    margin: 0 10px;
+    border-radius: 8px;
+    background: var(--semi-color-bg-0);
+}
+
+.basic-info-container .image-and-name {
+    text-align: center;
+}
+
+
+.stat {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-label {
+    width: 80%;
+    font-weight: 200;
+}
+
+.stat-info-value {
+    text-align: right;
+    width: 50%;
+}
+
+.stat-value {
+    padding: 1px 3px;
+    margin: 1px;
+    text-align: right;
+    color: white;
+    border-radius: 2px;
+}

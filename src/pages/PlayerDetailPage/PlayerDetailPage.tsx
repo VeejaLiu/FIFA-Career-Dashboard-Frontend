@@ -1,13 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import {
-  Col,
-  LocaleConsumer,
-  Progress,
-  Rating,
-  Row,
-  Space,
-} from '@douyinfe/semi-ui';
+import { Col, LocaleConsumer, Progress, Row, Space } from '@douyinfe/semi-ui';
 import { PlayerApis, PlayerDetail } from '../../service/PlayerApis.ts';
 import './PlayerDetailPage.css';
 import {
@@ -19,21 +12,12 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import {
-  PLAYER_PRIMARY_POS_NAME,
-  PLAYER_PRIMARY_POS_TYPE,
-} from '../../constant/player.ts';
 import { useSearchParams } from 'react-router-dom';
-import {
-  getAvatarUrl,
-  getColorByOverallRating,
-  getColorByPositionType,
-  getWorkRateText,
-} from '../../common/player-helper.ts';
 import { CustomTooltip } from '../PlayerTrendsPage/PlayerTrendsPage.tsx';
 import { LoadingComponent, NoDataComponent } from '../../components/Other.tsx';
-import player_avatar_placeholder from '../../assets/image/player_avatar_placeholder.svg';
 import PlayerPickerComponent from './PlayerPickerComponent';
+import BasicInfoComponent from './BasicInfoComponent.tsx';
+import { getColorByOverallRating } from '../../common/player-helper.ts';
 
 function PlayerDetailPage(): React.ReactElement {
   const [searchParams] = useSearchParams();
@@ -74,16 +58,19 @@ function PlayerDetailPage(): React.ReactElement {
     return (
       <Col span={8}>
         <div className="col-content">
-          <h2>{title}</h2>
-          <Progress
-            percent={average}
-            style={{ height: '8px' }}
-            aria-label="disk usage"
-          />
+          <span className={'title'}>{title}</span>
+          <Progress percent={average} style={{ height: '8px' }} />
           {attributes.map((attr, index) => (
             <div className="stat" key={index}>
               <span className="stat-label">{attr.label}</span>
-              <span className="stat-value">{values[index]}</span>
+              <span
+                className="stat-value"
+                style={{
+                  backgroundColor: getColorByOverallRating(values[index]),
+                }}
+              >
+                {values[index]}
+              </span>
             </div>
           ))}
         </div>
@@ -94,10 +81,9 @@ function PlayerDetailPage(): React.ReactElement {
   return playerDetail ? (
     <LocaleConsumer componentName={'PlayerDetailPage'}>
       {(localeData: any, localeCode: string, dateFnsLocale: any) => (
-        <div style={{ width: '100%' }}>
+        <div className={'detail-page-root'}>
           {/* Player picker ---- start */}
           <PlayerPickerComponent
-            playerDetail={playerDetail}
             playerID={playerID}
             setPlayerID={setPlayerID}
           />
@@ -109,185 +95,19 @@ function PlayerDetailPage(): React.ReactElement {
             <NoDataComponent />
           ) : (
             // Detail info
-            <div style={{ backgroundColor: '#f4f5f5', padding: '30px' }}>
+            <div
+              style={{
+                backgroundColor: '#f4f5f5',
+                padding: '20px',
+                flexGrow: '1',
+              }}
+            >
               <div style={{ display: 'flex' }}>
                 {/* Basic info*/}
-                <div
-                  style={{
-                    width: '25%',
-                    padding: '20px',
-                    margin: '0 10px',
-                    borderRadius: '3px',
-                    background: 'var(--semi-color-bg-0)',
-                  }}
-                >
-                  <div
-                    style={{
-                      padding: '10px',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      textAlign: 'center',
-                    }}
-                  >
-                    {/* Image */}
-                    <img
-                      width={'116px'}
-                      height={'116px'}
-                      src={getAvatarUrl(playerDetail?.thisPlayer?.player_id)}
-                      alt="player_avatar"
-                      onError={(e) => {
-                        e.currentTarget.src = player_avatar_placeholder;
-                      }}
-                    />
-                    {/* Name */}
-                    <div style={{ fontWeight: 'bold' }}>
-                      {playerDetail?.thisPlayer?.player_name}
-                    </div>
-                    {/* Position */}
-                    <h1
-                      style={{
-                        color: getColorByPositionType(
-                          PLAYER_PRIMARY_POS_TYPE[
-                            playerDetail?.thisPlayer?.preferredposition1 || 0
-                          ],
-                        ),
-                      }}
-                    >
-                      {
-                        PLAYER_PRIMARY_POS_NAME[
-                          playerDetail?.thisPlayer?.preferredposition1 || 0
-                        ]
-                      }
-                    </h1>
-                    {/* Overall Rating -> Potential */}
-                    <Space style={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
-                      <span
-                        style={{
-                          color: getColorByOverallRating(
-                            playerDetail?.thisPlayer?.overallrating || 0,
-                          ),
-                        }}
-                      >
-                        {playerDetail?.thisPlayer?.overallrating}
-                      </span>
-                      {'→'}
-                      <span
-                        style={{
-                          color: getColorByOverallRating(
-                            playerDetail?.thisPlayer?.potential || 0,
-                          ),
-                        }}
-                      >
-                        {playerDetail?.thisPlayer?.potential}
-                      </span>
-                    </Space>
-                  </div>
-
-                  {/*Player ID*/}
-                  <div className="stat">
-                    <span className="stat-label">
-                      {localeData.BasicInfo.PlayerID}:
-                    </span>
-                    <span className="stat-info-value">
-                      {playerDetail?.thisPlayer?.player_id}
-                    </span>
-                  </div>
-                  {/*Age*/}
-                  <div className="stat">
-                    <span className="stat-label">
-                      {localeData.BasicInfo.Age}:
-                    </span>
-                    <span className="stat-info-value">
-                      {playerDetail?.thisPlayer?.age}
-                    </span>
-                  </div>
-                  {/*AcceleRATE	Controlled Explosive*/}
-
-                  {/*Skills*/}
-                  <div className="stat">
-                    <span className="stat-label">
-                      {localeData.BasicInfo.Skills}:
-                    </span>
-                    <span className="stat-info-value">
-                      {/*{playerDetail?.thisPlayer?.skillmoves}*/}
-                      <Rating
-                        disabled
-                        size={'small'}
-                        count={(playerDetail?.thisPlayer?.skillmoves || 0) + 1}
-                        value={(playerDetail?.thisPlayer?.skillmoves || 0) + 1}
-                      />
-                    </span>
-                  </div>
-                  {/*Weak Foot*/}
-                  <div className="stat">
-                    <span className="stat-label">
-                      {localeData.BasicInfo.WeakFoot}:
-                    </span>
-                    <span className="stat-info-value">
-                      <Rating
-                        disabled
-                        size={'small'}
-                        count={
-                          playerDetail?.thisPlayer?.weakfootabilitytypecode
-                        }
-                        value={
-                          playerDetail?.thisPlayer?.weakfootabilitytypecode
-                        }
-                      />
-                    </span>
-                  </div>
-                  {/*Foot	Right*/}
-                  <div className="stat">
-                    <span className="stat-label">
-                      {localeData.BasicInfo.Foot}:
-                    </span>
-                    <span className="stat-info-value">
-                      {(playerDetail?.thisPlayer?.preferredfoot || 1) === 1
-                        ? 'Right'
-                        : 'Left'}
-                    </span>
-                  </div>
-                  {/*Height	177cm | 5'10"*/}
-                  <div className="stat">
-                    <span className="stat-label">
-                      {localeData.BasicInfo.Height}:
-                    </span>
-                    <span className="stat-info-value">
-                      {playerDetail?.thisPlayer?.height} cm
-                    </span>
-                  </div>
-                  {/*Weight	67*/}
-                  <div className="stat">
-                    <span className="stat-label">
-                      {localeData.BasicInfo.Weight}:
-                    </span>
-                    <span className="stat-info-value">
-                      {playerDetail?.thisPlayer?.weight} kg
-                    </span>
-                  </div>
-                  {/*Att. WR	High*/}
-                  <div className="stat">
-                    <span className="stat-label">
-                      {localeData.BasicInfo.AttackingWorkRate}:
-                    </span>
-                    <span className="stat-info-value">
-                      {getWorkRateText(
-                        playerDetail?.thisPlayer?.attackingworkrate,
-                      )}
-                    </span>
-                  </div>
-                  {/*Def. WR	High*/}
-                  <div className="stat">
-                    <span className="stat-label">
-                      {localeData.BasicInfo.DefensiveWorkRate}:
-                    </span>
-                    <span className="stat-info-value">
-                      {getWorkRateText(
-                        playerDetail?.thisPlayer?.defensiveworkrate,
-                      )}
-                    </span>
-                  </div>
-                </div>
+                <BasicInfoComponent
+                  playerInfo={playerDetail?.thisPlayer}
+                  localeData={localeData}
+                ></BasicInfoComponent>
 
                 {/* Details */}
                 <div className="grid" style={{ width: '100%' }}>
