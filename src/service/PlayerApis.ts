@@ -96,7 +96,6 @@ export interface PlayerModel {
 }
 
 export interface PlayerDetail {
-  allPlayer: PlayerOverall[];
   thisPlayer: PlayerModel;
   trends: PlayerTrend[];
 }

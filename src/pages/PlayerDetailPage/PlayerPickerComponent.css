@@ -1,0 +1,32 @@
+.player-picker-container {
+    padding: 5px;
+    min-height: 100px;
+    display: flex;
+    background-color: #f4f5f5;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid #d3d3d3;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+
+}
+
+.player-item {
+    margin: 4px;
+    background-color: #eaecec;
+    color: black;
+    padding: 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.player-item.selected {
+    background-color: #aaef88;
+}
+
+.player-position {
+    font-weight: bolder;
+    margin-right: 5px;
+}

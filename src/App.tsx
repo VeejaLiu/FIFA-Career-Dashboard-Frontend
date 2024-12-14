@@ -263,8 +263,6 @@ export default function App() {
                     footer={
                       <div
                         style={{
-                          // height: '50px
-                          // backgroundColor: 'greenyellow',
                           alignItems: 'center',
                           justifyContent: 'center',
                           display: 'flex',
@@ -351,20 +349,24 @@ export default function App() {
                           <Button
                             theme="borderless"
                             icon={<IconBell size="extra-large" />}
-                          >
-                            {unreadNotificationCount > 0 && (
-                              <Badge
-                                count={unreadNotificationCount}
-                                theme="solid"
-                                style={{
-                                  position: 'absolute',
-                                  backgroundColor: 'red',
-                                  top: '-25px',
-                                  right: '-10px',
-                                }}
-                              ></Badge>
-                            )}
-                          </Button>
+                            style={{
+                              color: 'var(--semi-color-text-2)',
+                              marginRight: '12px',
+                              display: 'relative',
+                            }}
+                          ></Button>
+                          {unreadNotificationCount > 0 && (
+                            <Badge
+                              count={unreadNotificationCount}
+                              theme="solid"
+                              style={{
+                                position: 'absolute',
+                                backgroundColor: 'red',
+                                top: '-25px',
+                                right: '10px',
+                              }}
+                            ></Badge>
+                          )}
                         </Popover>
                         <Dropdown
                           position="bottomRight"

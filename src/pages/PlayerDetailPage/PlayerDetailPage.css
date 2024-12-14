@@ -1,3 +1,13 @@
+.detail-page-root {
+    /* 隐藏滚动条 */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.detail-page-root::-webkit-scrollbar {
+    display: none;
+}
+
 .col-content {
     background: var(--semi-color-bg-0);
     padding: 10px;
@@ -5,32 +15,12 @@
     max-width: 600px;
     margin: 3px;
     border-radius: 8px;
+    font-size: 14px;
 }
 
-.col-content h2 {
+.col-content .title {
     margin-bottom: 5px;
-}
-
-.stat {
-    display: flex;
-    justify-content: space-between;
-    padding: 1px 0;
-}
-
-.stat-label {
+    font-size: 16px;
     font-weight: bold;
-    width: 50%;
 }
 
-.stat-info-value {
-    text-align: right;
-    /*font-weight: bold;*/
-    width: 50%;
-}
-
-.stat-value {
-    text-align: right;
-    font-weight: bold;
-    color: #12AB13;
-    width: 50%;
-}
