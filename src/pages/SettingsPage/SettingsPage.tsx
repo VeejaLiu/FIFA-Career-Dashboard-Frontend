@@ -76,9 +76,9 @@ function SettingsPage(): React.ReactElement {
         <Space
           vertical
           style={{
-            marginTop: '20px',
             width: '50vw',
             minWidth: '600px',
+            padding: '20px',
           }}
           align={'start'}
         >
@@ -87,7 +87,7 @@ function SettingsPage(): React.ReactElement {
             vertical
             align={'start'}
             style={{
-              width: '90%',
+              width: '100%',
               padding: '10px',
               border: '1px solid #e8e8e8',
               borderRadius: '5px',
@@ -165,7 +165,7 @@ function SettingsPage(): React.ReactElement {
             vertical
             align={'start'}
             style={{
-              width: '90%',
+              width: '100%',
               padding: '10px',
               border: '1px solid #e8e8e8',
               borderRadius: '5px',
