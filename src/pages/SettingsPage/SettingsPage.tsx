@@ -9,6 +9,7 @@ import {
 } from '@douyinfe/semi-ui';
 import { UserApis } from '../../service/UserApis.ts';
 import ApiSecretKeyComponent from './ApiSecretKeyComponent.tsx';
+import AccountSettingComponent from './AccountSettingComponent.tsx';
 
 function SettingsPage(): React.ReactElement {
   const [userSetting, setUserSetting] = React.useState<any>(null);
@@ -151,13 +152,12 @@ function SettingsPage(): React.ReactElement {
             </Space>
           </Space>
 
-          <h3
-            style={{
-              marginTop: '20px',
-            }}
-          >
-            {localeData?.Logout}
-          </h3>
+          {/* Account Setting ---- START */}
+          <AccountSettingComponent localeData={localeData} />
+          {/* Account Setting ---- END */}
+
+          {/* Do logout ---- START */}
+          <h3 style={{ marginTop: '20px' }}>{localeData?.Logout}</h3>
           <Button
             onClick={() => {
               UserApis.doLogout().then((result) => {
@@ -181,6 +181,7 @@ function SettingsPage(): React.ReactElement {
           >
             {localeData?.ClickToLogout}
           </Button>
+          {/* Do logout ---- END */}
         </Space>
       )}
     </LocaleConsumer>

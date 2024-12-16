@@ -306,4 +306,41 @@ export class UserApis {
       return null;
     }
   }
+
+  static async changePassword({
+    oldPassword,
+    newPassword,
+    confirmNewPassword,
+  }: {
+    oldPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+  }) {
+    try {
+      const token = getToken();
+      // console.log(`[getPlayerList] token: ${token}`);
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/password`,
+        {
+          oldPassword,
+          newPassword,
+          confirmNewPassword,
+        },
+        {
+          headers: {
+            Accept: '*/*',
+            token: token,
+          },
+        },
+      );
+      console.log(`[changePassword] response: ${JSON.stringify(response)}`);
+      return response.data;
+    } catch (e) {
+      console.log(`[changePassword] error: ${e}`);
+      return {
+        success: false,
+        message: 'Failed to change password',
+      };
+    }
+  }
 }
