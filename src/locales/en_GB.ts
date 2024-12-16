@@ -142,9 +142,13 @@ export default {
     AccountChangePassword: 'Change Password',
     AccountClickToChange: 'Click to change',
 
+    OldPassword: 'Old Password',
+    NewPassword: 'New Password',
+    ConfirmNewPassword: 'Confirm New Password',
+
     Logout: 'Logout',
     ClickToLogout: 'Click here to logout',
-    ChangePassword: 'Change Password',
+    ChangePassword: 'Save',
   },
 
   GetStartedPage: {

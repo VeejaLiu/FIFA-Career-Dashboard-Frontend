@@ -135,9 +135,13 @@ export default {
     AccountChangePassword: '修改密码',
     AccountClickToChange: '点击修改',
 
+    OldPassword: '旧密码',
+    NewPassword: '新密码',
+    ConfirmNewPassword: '确认新密码',
+    ChangePassword: '保存',
+
     Logout: '登出',
     ClickToLogout: '点击登出',
-    ChangePassword: '修改密码',
   },
   GetStartedPage: {
     GET_STARTED_TEXT: `

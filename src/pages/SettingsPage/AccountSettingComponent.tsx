@@ -63,7 +63,7 @@ function AccountSettingComponent({
                 }}
                 onClick={() => setShowChangePassword(!showChangePassword)}
               >
-                Click to Change
+                {localeData.AccountClickToChange}
               </a>
             </span>
           </div>
