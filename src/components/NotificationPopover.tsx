@@ -1,4 +1,4 @@
-import { LocaleConsumer, Switch, Tooltip } from '@douyinfe/semi-ui';
+import { LocaleConsumer, Pagination, Switch, Tooltip } from '@douyinfe/semi-ui';
 import { IconCheckChoiceStroked } from '@douyinfe/semi-icons';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -180,7 +180,7 @@ function getNotificationItem(
               e.preventDefault();
               navigate(`/players-detail/?id=${notification.player_id}`);
             }}
-            style={{ color: '#333' }}
+            style={{ color: '#333', cursor: 'pointer' }}
           >
             {notification.player_name}
           </a>
@@ -232,25 +232,39 @@ interface NotificationPopoverProps {
   updateUnreadCount: () => void;
 }
 
+const PAGE_SIZE = 10;
+
 export const NotificationPopover = ({
   updateUnreadCount,
 }: NotificationPopoverProps) => {
-  const [notificationList, setNotificationList] = useState<NotificationBody[]>(
-    [],
-  );
+  const [notificationList, setNotificationList] = useState<{
+    total: number;
+    items: NotificationBody[];
+  }>({
+    total: 0,
+    items: [],
+  });
   const [onlyShowUnread, setOnlyShowUnread] = useState(false);
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const fetchNotificationList = async () => {
-    const notificationList = await NotificationApis.getAllNotifications();
+    const notificationList = await NotificationApis.getAllNotifications({
+      page: currentPage,
+      limit: PAGE_SIZE,
+      onlyUnread: onlyShowUnread,
+    });
     console.log('[fetchNotificationList] notificationList:', notificationList);
     setNotificationList(notificationList);
+    if (notificationList?.items?.length === 0) {
+      setCurrentPage(1);
+    }
     updateUnreadCount();
   };
 
   useEffect(() => {
-    fetchNotificationList();
-  }, []);
+    fetchNotificationList().then();
+  }, [currentPage, onlyShowUnread]);
 
   return (
     <LocaleConsumer componentName={'NotificationPopover'}>
@@ -315,15 +329,9 @@ export const NotificationPopover = ({
           {/* Header ---- End */}
 
           {/* Content ---- Start */}
-          <div
-            style={{
-              flexGrow: 1,
-              overflowY: 'auto',
-              paddingBottom: '20px',
-            }}
-          >
-            {notificationList
-              .filter(
+          <div style={{ flexGrow: 1, overflowY: 'auto' }}>
+            {notificationList?.items
+              ?.filter(
                 (notification) => !onlyShowUnread || !notification.is_read,
               )
               .map((notification: any, index: number) => (
@@ -343,6 +351,19 @@ export const NotificationPopover = ({
                 </div>
               ))}
           </div>
+
+          {/* Pagination */}
+          <Pagination
+            className={'notification-pagination'}
+            total={notificationList.total}
+            currentPage={currentPage}
+            pageSize={PAGE_SIZE}
+            onPageChange={(page) => {
+              setCurrentPage(page);
+            }}
+          ></Pagination>
+          {/* Pagination ---- End */}
+
           {/* Content ---- End */}
         </div>
       )}
