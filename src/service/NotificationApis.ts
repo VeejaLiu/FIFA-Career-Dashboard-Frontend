@@ -69,13 +69,31 @@ export class NotificationApis {
    * Get all notifications
    * @returns NotificationBody[]
    */
-  static async getAllNotifications(): Promise<NotificationBody[]> {
+  static async getAllNotifications({
+    page,
+    limit,
+    onlyUnread = false,
+  }: {
+    page: number;
+    limit: number;
+    onlyUnread?: boolean;
+  }): Promise<{
+    total: number;
+    items: NotificationBody[];
+  }> {
     try {
       const token = getToken();
       const gameVersion = await getDefaultGameVersion();
 
+      const params = new URLSearchParams({
+        gameVersion: gameVersion.toString(),
+        page: page.toString(),
+        limit: limit.toString(),
+        onlyUnread: onlyUnread.toString(),
+      });
+
       const response = await axios.get(
-        `${BACKEND_URL}/api/v1/notification/?gameVersion=${gameVersion}`,
+        `${BACKEND_URL}/api/v1/notification/?${params.toString()}`,
         {
           headers: {
             Accept: '*/*',
@@ -86,14 +104,20 @@ export class NotificationApis {
       if (response.status === 200) {
         return response.data;
       }
-      return [];
+      return {
+        total: 0,
+        items: [],
+      };
     } catch (e: any) {
       console.log(`[getPlayerList] error code: ${e.response.status}`);
       console.log(`[getPlayerList] error message: ${e.message}`);
       if (e.response.status === 401) {
         Toast.error('Please login first');
       }
-      return [];
+      return {
+        total: 0,
+        items: [],
+      };
     }
   }
 

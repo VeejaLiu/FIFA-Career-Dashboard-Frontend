@@ -129,6 +129,17 @@ export default {
     PlayerSkillMoveUpdate: '球员 花式 能力更新',
     PlayerWeakFootUpdate: '球员 弱脚 能力更新',
 
+    AccountInfo: '账户信息',
+    AccountUsername: '用户名',
+    AccountEmail: '邮箱',
+    AccountChangePassword: '修改密码',
+    AccountClickToChange: '点击修改',
+
+    OldPassword: '旧密码',
+    NewPassword: '新密码',
+    ConfirmNewPassword: '确认新密码',
+    ChangePassword: '保存',
+
     Logout: '登出',
     ClickToLogout: '点击登出',
   },

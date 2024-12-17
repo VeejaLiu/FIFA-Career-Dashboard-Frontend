@@ -121,6 +121,7 @@ export default {
 
   SettingsPage: {
     Settings: 'Settings',
+
     APISecretKey: 'API Secret Key',
     ClickToCopy: 'Click to copy your API secret key',
     ClickToRefresh:
@@ -129,12 +130,25 @@ export default {
     FailedToCopyMessage:
       'Failed to copy secret key to clipboard, please try again',
     DoNotShareSecretKey: 'Warning: Do not share your secret key with anyone!',
+
     EnableNotifications: 'Enable Notifications',
     PlayerOverallPotentialUpdate: 'Player Ovr/Pot Update',
     PlayerSkillMoveUpdate: 'Player Skill Move Update',
     PlayerWeakFootUpdate: 'Player Weak Foot Update',
+
+    AccountInfo: 'Account Info',
+    AccountUsername: 'Username',
+    AccountEmail: 'Email',
+    AccountChangePassword: 'Change Password',
+    AccountClickToChange: 'Click to change',
+
+    OldPassword: 'Old Password',
+    NewPassword: 'New Password',
+    ConfirmNewPassword: 'Confirm New Password',
+
     Logout: 'Logout',
     ClickToLogout: 'Click here to logout',
+    ChangePassword: 'Save',
   },
 
   GetStartedPage: {
